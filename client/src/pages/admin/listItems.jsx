@@ -14,11 +14,10 @@ import { Link } from 'react-router-dom';
 export const teacherListItems = (
   <React.Fragment>
     <ListItemButton>
-
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <Link to={'/dashboard'}>
+      <Link to={'/dashboard/overview'}>
         <ListItemText primary="Dashboard" />
       </Link>
 
@@ -27,44 +26,48 @@ export const teacherListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/students'}>
-      <ListItemText primary="Students" />
+      <Link to={'/dashboard/attendance'}>
+      <ListItemText primary="Attendance" />
       </Link>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/teachers'}>
-      <ListItemText primary="Teachers" />
+      <Link to={'/dashboard/markings'}>
+      <ListItemText primary="Markings" />
       </Link>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Other" />
+      <Link to={'/dashboard/notices'}>
+      <ListItemText primary="Notices" />
+      </Link>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Other" />
+      <Link to={'/dashboard/subject'}>
+      <ListItemText primary="Subject" />
+      </Link>
     </ListItemButton>
   </React.Fragment>
 );
 export const adminListItems = (
   <React.Fragment>
-    <ListItemButton>
 
+    <ListItemButton>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <Link to={'/dashboard'}>
         <ListItemText primary="Dashboard" />
       </Link>
-
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <ShoppingCartIcon />
@@ -73,6 +76,7 @@ export const adminListItems = (
       <ListItemText primary="Students" />
       </Link>
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
@@ -81,6 +85,7 @@ export const adminListItems = (
       <ListItemText primary="Teachers" />
       </Link>
     </ListItemButton>
+    
   </React.Fragment>
 );
 
@@ -91,7 +96,7 @@ export const studentListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <Link to={'/dashboard'}>
+      <Link to={'/dashboard/stoverview'}>
         <ListItemText primary="Overview" />
       </Link>
 
@@ -100,16 +105,24 @@ export const studentListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/students'}>
-      <ListItemText primary="Subjects" />
+      <Link to={'/dashboard/modules'}>
+      <ListItemText primary="Modules" />
       </Link>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/teachers'}>
-      <ListItemText primary="Classes" />
+      <Link to={'/dashboard/module'}>
+      <ListItemText primary="ModulePage" />
+      </Link>
+    </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/marks'}>
+      <ListItemText primary="Marks" />
       </Link>
     </ListItemButton>
   </React.Fragment>
@@ -118,31 +131,50 @@ export const studentListItems = (
 export const supportListItems = (
   <React.Fragment>
     <ListItemButton>
-
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <Link to={'/dashboard'}>
+      <Link to={'/dashboard/supoverview'}>
         <ListItemText primary="Dashboard" />
       </Link>
-
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/students'}>
-      <ListItemText primary="Students" />
+      <Link to={'/dashboard/createstudents'}>
+      <ListItemText primary="Create ST Accs" />
       </Link>
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/teachers'}>
-      <ListItemText primary="Teachers" />
+      <Link to={'/dashboard/createteachers'}>
+      <ListItemText primary="Create T Accs" />
       </Link>
     </ListItemButton>
+
+    <ListItemButton>
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/manageacc'}>
+      <ListItemText primary="Manage Accs" />
+      </Link>
+    </ListItemButton>
+
+    <ListItemButton>
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/publishnotices'}>
+      <ListItemText primary="Publish Notice" />
+      </Link>
+    </ListItemButton>
+
   </React.Fragment>
 );
 
