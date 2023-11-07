@@ -82,7 +82,8 @@ export default function Dashboard() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const [userRole, setUserRole] = useState(2);
+  /*Change this state 1-4 to change user dashboard */
+  const [userRole, setUserRole] = useState(4);
   const [navLinks , setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
@@ -90,13 +91,18 @@ export default function Dashboard() {
     switch(userRole){
       case 1: //Admin
         setNavlinks(adminListItems);
+        break;
       case 2: //Student
         setNavlinks(studentListItems);
+        break;
       case 3:
         setNavlinks(supportListItems);
+        break;
       case 4:
         setNavlinks(teacherListItems);
+        break;
     }
+    console.log(userRole);
   },[]);
   
  
@@ -128,7 +134,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             Admin Dashboard
+             {userRole == 1 ? 'Admin' : userRole == 2 ? 'Student' : userRole == 3 ? 'Support': 'Teacher'} Dashboard
             </Typography>
             <IconButton color="inherit" onClick={toggleNotification}>
               <Badge badgeContent={4} color="secondary">
