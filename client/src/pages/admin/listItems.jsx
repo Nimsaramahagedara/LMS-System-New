@@ -85,7 +85,7 @@ export const adminListItems = (
       <ListItemText primary="Teachers" />
       </Link>
     </ListItemButton>
-    
+
   </React.Fragment>
 );
 
@@ -193,13 +193,13 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Last quarter" />
+      <ListItemText primary="Last Term" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <ListItemText primary="Last Year" />
     </ListItemButton>
   </React.Fragment>
 );
