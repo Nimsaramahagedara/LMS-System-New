@@ -19,10 +19,15 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { adminListItems, teacherListItems, studentListItems,supportListItems, secondaryListItems } from '../admin/listItems';
 import { Outlet } from 'react-router-dom';
+import Notifications from '@mui/icons-material/Notifications';
 
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
+
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
 
 const drawerWidth = 240;
@@ -83,7 +88,7 @@ export default function Dashboard() {
     setOpen(!open);
   };
   /*Change this state 1-4 to change user dashboard */
-  const [userRole, setUserRole] = useState(4);
+  const [userRole, setUserRole] = useState(2);
   const [navLinks , setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
@@ -104,6 +109,29 @@ export default function Dashboard() {
     }
     console.log(userRole);
   },[]);
+
+   const notifications = (
+    <React.Fragment>
+      <ListItemButton>
+        <ListItemIcon>
+          <Notifications />
+        </ListItemIcon>
+        <ListItemText primary="Current month" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+        <Notifications />
+        </ListItemIcon>
+        <ListItemText primary="Last Term" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+        <Notifications />
+        </ListItemIcon>
+        <ListItemText primary="Last Year" />
+      </ListItemButton>
+    </React.Fragment>
+  );
   
  
   return (
@@ -144,7 +172,8 @@ export default function Dashboard() {
           </Toolbar>
           <Box sx={{position:'absolute', top:'60px',right:'20px',background:'white', color:'black'}} visibility={notiOpen ? 'visible' : 'hidden'}>
           <List component="nav">
-            {navLinks}
+            {/* Notification Object goes here */}
+            {notifications}
             <Divider sx={{ my: 1 }} />
           </List>
           </Box>
