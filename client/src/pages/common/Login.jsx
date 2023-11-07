@@ -27,7 +27,7 @@ export default function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" className='shadow-lg pt-1 pb-5'>
+    <Container component="main" maxWidth="xs" className='shadow-lg bg-white pt-1 pb-5'>
       <CssBaseline />
       <Box
         sx={{

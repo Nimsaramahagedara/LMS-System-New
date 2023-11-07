@@ -29,6 +29,18 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://localhost:3030/">
+        Dharmapala Knowledge Base
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const drawerWidth = 240;
 
@@ -88,7 +100,7 @@ export default function Dashboard() {
     setOpen(!open);
   };
   /*Change this state 1-4 to change user dashboard */
-  const [userRole, setUserRole] = useState(2);
+  const [userRole, setUserRole] = useState(3);
   const [navLinks , setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
@@ -214,8 +226,8 @@ export default function Dashboard() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             {/* PAGES INCLUDED INTO HERE */}
             <Outlet/>
+            <Copyright sx={{ pt: 4 }} />
           </Container>
-          
         </Box>
       </Box>
   );
