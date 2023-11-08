@@ -9,6 +9,13 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import GradingIcon from '@mui/icons-material/Grading';
+import TaskIcon from '@mui/icons-material/Task';
+import NoteIcon from '@mui/icons-material/Note';
+import ContactsIcon from '@mui/icons-material/ImportContacts';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Link } from 'react-router-dom';
 
 export const teacherListItems = (
@@ -24,7 +31,7 @@ export const teacherListItems = (
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <GradingIcon />
       </ListItemIcon>
       <Link to={'/dashboard/attendance'}>
       <ListItemText primary="Attendance" />
@@ -32,7 +39,7 @@ export const teacherListItems = (
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <PeopleIcon />
+        <TaskIcon />
       </ListItemIcon>
       <Link to={'/dashboard/markings'}>
       <ListItemText primary="Markings" />
@@ -40,7 +47,7 @@ export const teacherListItems = (
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <BarChartIcon />
+        <NoteIcon />
       </ListItemIcon>
       <Link to={'/dashboard/notices'}>
       <ListItemText primary="Notices" />
@@ -48,7 +55,7 @@ export const teacherListItems = (
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <LayersIcon />
+        <ContactsIcon />
       </ListItemIcon>
       <Link to={'/dashboard/subject'}>
       <ListItemText primary="Subject" />
@@ -70,7 +77,7 @@ export const adminListItems = (
 
     <ListItemButton>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <DirectionsWalkIcon />
       </ListItemIcon>
       <Link to={'/dashboard/students'}>
       <ListItemText primary="Students" />
@@ -92,7 +99,6 @@ export const adminListItems = (
 export const studentListItems = (
   <React.Fragment>
     <ListItemButton>
-
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
@@ -141,7 +147,7 @@ export const supportListItems = (
 
     <ListItemButton>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <PersonAddIcon />
       </ListItemIcon>
       <Link to={'/dashboard/createstudents'}>
       <ListItemText primary="Create ST Accs" />
@@ -150,7 +156,7 @@ export const supportListItems = (
 
     <ListItemButton>
       <ListItemIcon>
-        <PeopleIcon />
+        <PersonAddIcon />
       </ListItemIcon>
       <Link to={'/dashboard/createteachers'}>
       <ListItemText primary="Create T Accs" />
@@ -159,7 +165,7 @@ export const supportListItems = (
 
     <ListItemButton>
       <ListItemIcon>
-        <PeopleIcon />
+        <ManageAccountsIcon />
       </ListItemIcon>
       <Link to={'/dashboard/manageacc'}>
       <ListItemText primary="Manage Accs" />
@@ -168,7 +174,7 @@ export const supportListItems = (
 
     <ListItemButton>
       <ListItemIcon>
-        <PeopleIcon />
+        <NoteIcon />
       </ListItemIcon>
       <Link to={'/dashboard/publishnotices'}>
       <ListItemText primary="Publish Notice" />
