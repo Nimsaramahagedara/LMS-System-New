@@ -100,7 +100,7 @@ export default function Dashboard() {
     setOpen(!open);
   };
   /*Change this state 1-4 to change user dashboard */
-  const [userRole, setUserRole] = useState(3);
+  const [userRole, setUserRole] = useState(4);
   const [navLinks , setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
