@@ -6,7 +6,7 @@ const StudentMNG = () => {
 
     /*Add new Stuident navigation button*/
     <div className="button-container">
-    <button type="button" className="button" onClick={() => {navigate('/appointments/lab_add');}}>Add new Student</button>
+    {/* <button type="button" className="button" onClick={() => {navigate('/appointments/lab_add');}}>Add new Student</button> */}
     </div>
 
 
