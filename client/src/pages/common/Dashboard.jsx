@@ -99,7 +99,7 @@ export default function Dashboard() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const [userRole, setUserRole] = useState(4);
+  const [userRole, setUserRole] = useState(1);
   const [navLinks , setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
