@@ -69,7 +69,7 @@ const Notices = () => {
         </DialogActions>
       </Dialog>
     </React.Fragment>
-  )
+  ) 
 }
 
 export default Notices
