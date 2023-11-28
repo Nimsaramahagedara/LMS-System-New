@@ -20,15 +20,14 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { adminListItems, teacherListItems, studentListItems,supportListItems, secondaryListItems } from '../admin/listItems';
 import { Outlet } from 'react-router-dom';
 import Notifications from '@mui/icons-material/Notifications';
-
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
-
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useAuth } from './AuthContext';
+import Cookies from 'js-cookie';
 
 function Copyright(props) {
   return (
@@ -101,27 +100,27 @@ export default function Dashboard() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const {userRole} = useAuth();
+  const userRole = Cookies.get('userRole');
   const [navLinks , setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
   useEffect(()=>{
     switch(userRole){
-      case 1: //Admin
+      case '1': //Admin
         setNavlinks(adminListItems);
         break;
-      case 2: //Student
+      case '2': //Student
         setNavlinks(studentListItems);
         break;
-      case 3: //Support
+      case '3': //Support
         setNavlinks(supportListItems);
         break;
-      case 4: //Teacher
+      case '4': //Teacher
         setNavlinks(teacherListItems);
         break;
     }
     console.log(userRole);
-  },[]);
+  },[userRole]);
 
    const notifications = (
     <React.Fragment>

@@ -18,7 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useAuth } from './AuthContext';
-
+import Cookies from 'js-cookie';
 export default function Login() {
   const [role, setRole] = useState(1);
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ export default function Login() {
       password: data.get('password'),
     });
     login(role)
+    Cookies.set('userRole', role);
     navigate('/dashboard');
   };
 
