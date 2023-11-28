@@ -61,9 +61,8 @@ const StudentMNG = () => {
           <div>
 
             <AdminWelcomeCard />
-            <div style={{ textAlign: 'center' }}>
-              <h1>Manage Students</h1>
-              <br />
+            <div style={{ textAlign: 'center'}}>
+              <h1 style={{ fontSize: '2em' }}>Manage Students</h1>
             </div>
             
             {/* Adding New Student Part Start Here... */}
@@ -236,52 +235,62 @@ const StudentMNG = () => {
       </TableContainer>
       {/* Students and class Table Ends Here... */}
 
-      {/* View Class Details Dialog Table Starts here.. */}
-      <Dialog open={viewOpen} onClose={handleViewClose} maxWidth="xl">
-              <DialogTitle sx={{ textAlign: 'center' }}>
-                Class Details - {selectedClass.grade} {selectedClass.class}
-              </DialogTitle>
-              <DialogContent>
-                <TableContainer style={{ marginTop: '20px' }}sx={{ maxWidth: '100%' }}>
-                <Table sx={{ maxWidth: '100%' }}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>No</TableCell>
-                        <TableCell>Index No</TableCell>
-                        <TableCell>Student Name</TableCell>
-                        <TableCell>DOB</TableCell>
-                        <TableCell>Mobile</TableCell>
-                        <TableCell>Address</TableCell>
-                        <TableCell>Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {viewData.map((student, index) => (
-                        <TableRow key={index}>
-                          <TableCell style={{ whiteSpace: 'nowrap' }}>{student.number}</TableCell>
-                          <TableCell style={{ whiteSpace: 'nowrap' }}>{student.index}</TableCell>
-                          <TableCell style={{ whiteSpace: 'nowrap' }}>{student.name}</TableCell>
-                          <TableCell style={{ whiteSpace: 'nowrap' }}>{student.dob}</TableCell>
-                          <TableCell style={{ whiteSpace: 'nowrap' }}>{student.mobile}</TableCell>
-                          <TableCell style={{ whiteSpace: 'nowrap' }}>{student.address}</TableCell>
-                          <TableCell style={{ whiteSpace: 'nowrap' }}>
-                          <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
-                            Update
-                          </Button>
-                          <Button variant="contained" color="secondary">
-                            Delete
-                          </Button>
-                        </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </DialogContent>
-              <DialogActions style={{ justifyContent: 'center' }}>
-                <Button onClick={handleViewClose}>Close</Button>
-              </DialogActions>
-            </Dialog>
+ {/* View Class Details Dialog Table Starts here.. */}
+<Dialog open={viewOpen} onClose={handleViewClose} maxWidth="xl">
+  <DialogTitle sx={{ textAlign: 'center' }}>
+    Class Details - {selectedClass.grade} {selectedClass.class}
+  </DialogTitle>
+  <DialogContent>
+    <TableContainer style={{ marginTop: '20px' }} sx={{ maxWidth: '100%' }}>
+      <Table sx={{ maxWidth: '100%' }}>
+        <TableHead>
+          <TableRow>
+            <TableCell>No</TableCell>
+            <TableCell>Index No</TableCell>
+            <TableCell>Student Name</TableCell>
+            <TableCell>DOB</TableCell>
+            <TableCell>Mobile</TableCell>
+            <TableCell>Address</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {viewData.map((student, index) => (
+            <TableRow key={index}>
+              <TableCell style={{ whiteSpace: 'nowrap' }}>{student.number}</TableCell>
+              <TableCell style={{ whiteSpace: 'nowrap' }}>{student.index}</TableCell>
+              <TableCell style={{ whiteSpace: 'nowrap' }}>{student.name}</TableCell>
+              <TableCell style={{ whiteSpace: 'nowrap' }}>{student.dob}</TableCell>
+              <TableCell style={{ whiteSpace: 'nowrap' }}>{student.mobile}</TableCell>
+              <TableCell style={{ whiteSpace: 'nowrap' }}>{student.address}</TableCell>
+              <TableCell style={{ whiteSpace: 'nowrap' }}>
+                <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
+                  Update
+                </Button>
+                <Button variant="contained" color="error">
+                  Delete
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+          {/* Add a row for total number of students */}
+          <TableRow>
+            <TableCell colSpan={6} align="right">
+              <strong>Total number of students:</strong>
+            </TableCell>
+            <TableCell align="center">
+              <strong>{viewData.length}</strong>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </DialogContent>
+  <DialogActions style={{ justifyContent: 'center' }}>
+    <Button onClick={handleViewClose}>Close</Button>
+  </DialogActions>
+</Dialog>
+
     </div>
   );
 };
