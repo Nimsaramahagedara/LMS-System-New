@@ -162,6 +162,17 @@ const StudentMNG = () => {
                     variant="outlined"
                   />
 
+                  {/* Student Email Input */}
+                  <TextField
+                    required
+                    id="outlined-required"
+                    label="Email"
+                    placeholder="e.g., 'deneth@mail.com'"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                  />
+
                   {/* Student Grade Input */}
                   <TextField
                     required
@@ -181,7 +192,7 @@ const StudentMNG = () => {
                     required
                     id="outlined-required"
                     label="Student Class"
-                    placeholder="e.g., A/B"
+                    placeholder="e.g., 'A/B'"
                   />
                 </div>
                 {/* Form Ends Here.. */}    
