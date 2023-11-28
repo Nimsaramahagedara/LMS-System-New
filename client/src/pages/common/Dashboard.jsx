@@ -111,10 +111,10 @@ export default function Dashboard() {
       case 2: //Student
         setNavlinks(studentListItems);
         break;
-      case 3:
+      case 3: //Support
         setNavlinks(supportListItems);
         break;
-      case 4:
+      case 4: //Teacher
         setNavlinks(teacherListItems);
         break;
     }
