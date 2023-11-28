@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,18 +13,33 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from '../../components/Logo';
 import { useNavigate } from 'react-router-dom';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useAuth } from './AuthContext';
 
 export default function Login() {
+  const [role, setRole] = useState(1);
   const navigate = useNavigate();
+  const { login } = useAuth();
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate('/dashboard');
+    
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+    login(role)
+    navigate('/dashboard');
   };
+
+  const handleRoleChange =(e)=>{
+    setRole(e.target.value);
+  }
 
   return (
     <Container component="main" maxWidth="xs" className='shadow-lg bg-white pt-1 pb-5'>
@@ -69,6 +84,23 @@ export default function Login() {
             id="password"
             autoComplete="current-password"
           />
+          <Box>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">User Role</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={role}
+                label="Age"
+                onChange={handleRoleChange}
+              >
+                <MenuItem value={1}>Admin</MenuItem>
+                <MenuItem value={4}>Teacher</MenuItem>
+                <MenuItem value={2}>Student</MenuItem>
+                <MenuItem value={3}>Support Team</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
           <Box textAlign={'right'}>
             <Link href="#" variant="body2">
               Forgot password?

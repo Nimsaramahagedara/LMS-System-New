@@ -28,6 +28,7 @@ import Notifications from '@mui/icons-material/Notifications';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { useAuth } from './AuthContext';
 
 function Copyright(props) {
   return (
@@ -92,6 +93,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
   const [notiOpen, setNotiOpen] = useState(false);
+  
 
   const toggleNotification =()=>{
     setNotiOpen(!notiOpen);
@@ -99,7 +101,7 @@ export default function Dashboard() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const [userRole, setUserRole] = useState(1);
+  const {userRole} = useAuth();
   const [navLinks , setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
