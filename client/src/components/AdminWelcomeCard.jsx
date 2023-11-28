@@ -5,11 +5,20 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useAuth } from '../pages/common/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function AdminWelcomeCard({name = 'Nimsara'}) {
 
 const [currentTime, setCurrentTime] = useState(new Date());
+const {logout} = useAuth();
+const navigate = useNavigate();
+
+const handleLogOut = ()=>{
+  logout();
+  navigate('/');
+}
 
 const cardStyle = {
     minWidth: 250,
@@ -44,7 +53,7 @@ const cardStyle = {
         
       </CardContent>
       <CardActions>
-        <Button size="small" >Log out </Button>
+        <Button size="small" onClick={handleLogOut}>Log out </Button>
       </CardActions>
     </Card>
   );
