@@ -150,7 +150,7 @@ export const supportListItems = (
         <PersonAddIcon />
       </ListItemIcon>
       <Link to={'/dashboard/createstudents'}>
-      <ListItemText primary="Create ST Accs" />
+      <ListItemText primary="Student Accounts" />
       </Link>
     </ListItemButton>
 
@@ -159,7 +159,7 @@ export const supportListItems = (
         <PersonAddIcon />
       </ListItemIcon>
       <Link to={'/dashboard/createteachers'}>
-      <ListItemText primary="Create T Accs" />
+      <ListItemText primary="Teacher Accounts" />
       </Link>
     </ListItemButton>
 
@@ -168,7 +168,7 @@ export const supportListItems = (
         <ManageAccountsIcon />
       </ListItemIcon>
       <Link to={'/dashboard/manageacc'}>
-      <ListItemText primary="Manage Accs" />
+      <ListItemText primary="Manage Accounts" />
       </Link>
     </ListItemButton>
 
