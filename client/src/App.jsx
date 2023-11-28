@@ -20,13 +20,16 @@ import CreateStudentAcc from './pages/support/CreateStudentAcc'
 import CreateTeacherAcc from './pages/support/CreateTeacherAcc'
 import ManageAccounts from './pages/support/ManageAccounts'
 import PublishNotices from './pages/support/PublishNotices'
+import { AuthProvider } from './pages/common/AuthContext'
 
 function App() {
 
 
   return (
     <BrowserRouter>
+    <AuthProvider>
       <Routes>
+        
         <Route path='/' element={<Login/>}/>
         <Route path='*' element={<div>ERROR</div>} />
         <Route path='/dashboard' element={<Dashboard/>}>
@@ -64,6 +67,7 @@ function App() {
         <Route path='/' element={}></Route>
         <Route path='/' element={}></Route> */}
       </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
