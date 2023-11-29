@@ -21,6 +21,7 @@ import CreateTeacherAcc from './pages/support/CreateTeacherAcc'
 import ManageAccounts from './pages/support/ManageAccounts'
 import PublishNotices from './pages/support/PublishNotices'
 import { AuthProvider } from './pages/common/AuthContext'
+import ContactParent from './pages/teacher/ContactParent'
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
           <Route path='notices' element={<Notices/>}/>
           <Route path='subject' element={<SubjCreate/>}/>
           <Route path='overview' element={<TOverview/>}/>
+          <Route path='email' element={<ContactParent/>}/>
 
           {/* Student Routes */}
           <Route path='stoverview' element={<StOverview/>}/>

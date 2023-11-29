@@ -17,6 +17,7 @@ import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Link } from 'react-router-dom';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 
 export const teacherListItems = (
   <React.Fragment>
@@ -59,6 +60,14 @@ export const teacherListItems = (
       </ListItemIcon>
       <Link to={'/dashboard/subject'}>
       <ListItemText primary="Subject" />
+      </Link>
+    </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <AlternateEmailIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/email'}>
+      <ListItemText primary="Contact Parents" />
       </Link>
     </ListItemButton>
   </React.Fragment>
