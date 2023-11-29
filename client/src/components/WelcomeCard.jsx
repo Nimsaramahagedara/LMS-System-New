@@ -5,11 +5,13 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function WelcomeCard({name = 'Chamishka'}) {
 
 const [currentTime, setCurrentTime] = useState(new Date());
+const navigate = useNavigate();
 
 const cardStyle = {
     minWidth: 250,
@@ -44,7 +46,7 @@ const cardStyle = {
         
       </CardContent>
       <CardActions>
-        <Button size="small" >Log out </Button>
+        <Button size="small" onClick={()=> navigate('/')}>Log out </Button>
       </CardActions>
     </Card>
   );
