@@ -5,8 +5,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Checkbox from '@mui/material/Checkbox';
-import Avatar from '@mui/material/Avatar';
+import SaveIcon from '@mui/icons-material/Save';
 import TeacherAttendanceDateCard from '../../components/TeacherAttendanceDateCard';
+import { Button } from '@mui/material';
 
 const Attendance = () => {
   const [checked, setChecked] = React.useState([]);
@@ -81,6 +82,9 @@ const Attendance = () => {
           );
         })}
       </List>
+      <div style={{ textAlign: 'center' }} >
+        <Button variant="outlined" startIcon={<SaveIcon />} color="primary" sx={{ marginTop: 2 }} >Submit Attendance</Button>
+      </div>
     </div>
   );
 };
