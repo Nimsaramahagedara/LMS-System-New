@@ -27,7 +27,7 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -35,10 +35,24 @@ export default function Login() {
     });
     login(role)
     Cookies.set('userRole', role);
-    navigate('/dashboard');
+    switch (role) {
+      case 1: //Admin
+        navigate('/dashboard');
+        break;
+      case 2: //Student
+        navigate('/dashboard/stoverview');
+        break;
+      case 3: //Support
+        navigate('/dashboard/supoverview');
+        break;
+      case 4: //Teacher
+        navigate('/dashboard/overview');
+        break;
+    }
+
   };
 
-  const handleRoleChange =(e)=>{
+  const handleRoleChange = (e) => {
     setRole(e.target.value);
   }
 
