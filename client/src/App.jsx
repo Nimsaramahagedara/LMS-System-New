@@ -22,45 +22,46 @@ import ManageAccounts from './pages/support/ManageAccounts'
 import PublishNotices from './pages/support/PublishNotices'
 import { AuthProvider } from './pages/common/AuthContext'
 import ContactParent from './pages/teacher/ContactParent'
+import LandingPage from './pages/common/LandingPage'
 
 function App() {
 
 
   return (
     <BrowserRouter>
-    <AuthProvider>
-      <Routes>
-        
-        <Route path='/' element={<Login/>}/>
-        <Route path='*' element={<div>ERROR</div>} />
-        <Route path='/dashboard' element={<Dashboard/>}>
-          {/* Admin Routes */}
-          <Route path='' element={<AdminHome/>}/>
-          <Route path='students' element={<StudentMNG/>}/>
-          <Route path='teachers' element={<TeacherMNG/>}/>
+      <AuthProvider>
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='*' element={<div>ERROR</div>} />
+          <Route path='/dashboard' element={<Dashboard />}>
+            {/* Admin Routes */}
+            <Route path='' element={<AdminHome />} />
+            <Route path='students' element={<StudentMNG />} />
+            <Route path='teachers' element={<TeacherMNG />} />
 
-          {/* Teacher Routes */}
-          <Route path='attendance' element={<Attendence/>}/>
-          <Route path='markings' element={<Markings/>}/>
-          <Route path='notices' element={<Notices/>}/>
-          <Route path='subject' element={<SubjCreate/>}/>
-          <Route path='overview' element={<TOverview/>}/>
-          <Route path='email' element={<ContactParent/>}/>
+            {/* Teacher Routes */}
+            <Route path='attendance' element={<Attendence />} />
+            <Route path='markings' element={<Markings />} />
+            <Route path='notices' element={<Notices />} />
+            <Route path='subject' element={<SubjCreate />} />
+            <Route path='overview' element={<TOverview />} />
+            <Route path='email' element={<ContactParent />} />
 
-          {/* Student Routes */}
-          <Route path='stoverview' element={<StOverview/>}/>
-          <Route path='module/:id' element={<SingleModuleViewPage/>}/>
-          <Route path='modules' element={<ModulePage/>}/>
-          <Route path='marks' element={<StudentMarks/>}/>
+            {/* Student Routes */}
+            <Route path='stoverview' element={<StOverview />} />
+            <Route path='module/:id' element={<SingleModuleViewPage />} />
+            <Route path='modules' element={<ModulePage />} />
+            <Route path='marks' element={<StudentMarks />} />
 
-          {/* Support Team Routes */}
-          <Route path='supoverview' element={<SpOverview/>}/>
-          <Route path='createstudents' element={<CreateStudentAcc/>}/>
-          <Route path='createteachers' element={<CreateTeacherAcc/>}/>
-          <Route path='manageacc' element={<ManageAccounts/>}/>
-          <Route path='publishnotices' element={<PublishNotices/>}/>
-        </Route>
-        {/* 
+            {/* Support Team Routes */}
+            <Route path='supoverview' element={<SpOverview />} />
+            <Route path='createstudents' element={<CreateStudentAcc />} />
+            <Route path='createteachers' element={<CreateTeacherAcc />} />
+            <Route path='manageacc' element={<ManageAccounts />} />
+            <Route path='publishnotices' element={<PublishNotices />} />
+          </Route>
+          {/* 
         <Route path='/' element={}></Route>
         <Route path='/' element={}></Route>
         <Route path='/' element={}></Route>
@@ -68,7 +69,7 @@ function App() {
         <Route path='/' element={}></Route>
         <Route path='/' element={}></Route>
         <Route path='/' element={}></Route> */}
-      </Routes>
+        </Routes>
       </AuthProvider>
     </BrowserRouter>
   )

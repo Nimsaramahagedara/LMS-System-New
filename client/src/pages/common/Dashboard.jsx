@@ -16,7 +16,8 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import EmailIcon from '@mui/icons-material/Email';
+import DraftsIcon from '@mui/icons-material/Drafts';
 import { adminListItems, teacherListItems, studentListItems,supportListItems, secondaryListItems } from '../admin/listItems';
 import { Outlet } from 'react-router-dom';
 import Notifications from '@mui/icons-material/Notifications';
@@ -126,21 +127,33 @@ export default function Dashboard() {
     <React.Fragment>
       <ListItemButton>
         <ListItemIcon>
-          <Notifications />
+          <EmailIcon />
         </ListItemIcon>
-        <ListItemText primary="Current month" />
+        <ListItemText primary="Notification 01 Title goes here" />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
-        <Notifications />
+        <EmailIcon />
         </ListItemIcon>
-        <ListItemText primary="Last Term" />
+        <ListItemText primary="Notification 02 Title goes here" />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
-        <Notifications />
+        <DraftsIcon />
         </ListItemIcon>
-        <ListItemText primary="Last Year" />
+        <ListItemText primary="Notification 03 title goes here" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+        <EmailIcon />
+        </ListItemIcon>
+        <ListItemText primary="Notification 02" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+        <DraftsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Notification 03" />
       </ListItemButton>
     </React.Fragment>
   );
@@ -178,12 +191,12 @@ export default function Dashboard() {
             </Typography>
             <IconButton color="inherit" onClick={toggleNotification}>
               <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon/>
+                <Notifications/>
               </Badge>
             </IconButton>
           </Toolbar>
           <Box sx={{position:'absolute', top:'60px',right:'20px',background:'white', color:'black'}} visibility={notiOpen ? 'visible' : 'hidden'}>
-          <List component="nav">
+          <List component="nav" sx={{width:'300px'}}>
             {/* Notification Object goes here */}
             {notifications}
             <Divider sx={{ my: 1 }} />
