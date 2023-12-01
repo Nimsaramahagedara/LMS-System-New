@@ -2,7 +2,7 @@ import React from 'react'
 import schoolLogo from '../../assets/school.jpeg';
 import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ isLoggedIn = false }) => {
     const navigate = useNavigate();
 
     return (
@@ -15,12 +15,17 @@ const Header = () => {
                     <h1 className='lg:text-4xl text-xl text-blue-950 font-bold px-3'>Learning Management System</h1>
                 </div>
             </div>
+            {
+                isLoggedIn ?  <div className='space-y-3 px-4 mx-12'>
+                <button className='px-12 py-3 bg-gray-300 hover:bg-gray-400' onClick={() => navigate('/login')}>LMS Log Out</button><br />
+                <a href="#" className='text-yellow-500 block'>Change Your Password ?</a>
+            </div> : <div className='space-y-3 px-4 mx-12'>
+                    <h4>Login Using Your Account</h4>
+                    <button className='px-12 py-3 bg-gray-300 hover:bg-gray-400' onClick={() => navigate('/login')}>LMS Login</button><br />
+                    <a href="#" className='text-yellow-500 block'>Forgot Your Password ?</a>
+                </div>
+            }
 
-            <div className='space-y-3 px-4 mx-12'>
-                <h4>Login Using Your Account</h4>
-                <button className='px-12 py-3 bg-gray-300 hover:bg-gray-400' onClick={() => navigate('/login')}>LMS Login</button><br />
-                <a href="#" className='text-yellow-500 block'>Forgot Your Password ?</a>
-            </div>
         </div>
     )
 }
