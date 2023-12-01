@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../../components/LandingPage/Header'
-import TopNav from '../../components/LandingPage/TopNav'
 import Footer from '../../components/LandingPage/Footer'
 import Cookies from 'js-cookie'
+import TopNav from '../../components/StudentDashboard/TopNav'
 const StudentDashboard = () => {
     const [isLoggedIn, setLogging] = useState();
     useEffect(() => {
@@ -15,7 +15,7 @@ const StudentDashboard = () => {
     return (
         <>
             <Header isLoggedIn={isLoggedIn}/>
-            <TopNav />
+            <TopNav/>
             <Outlet />
             <Footer />
         </>
