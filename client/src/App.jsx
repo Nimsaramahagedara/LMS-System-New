@@ -24,7 +24,8 @@ import { AuthProvider } from './pages/common/AuthContext'
 import ContactParent from './pages/teacher/ContactParent'
 import LandingPage from './pages/common/LandingPage'
 import StudentDashboard from './pages/student/StudentDashboard'
-
+import ClassPage from './pages/student/ClassPage'
+import Notices2  from './pages/student/Notices';
 function App() {
 
 
@@ -60,9 +61,11 @@ function App() {
           <Route path='/portal' element={<StudentDashboard/>}>
             {/* Student Routes */}
             <Route path='' element={<StOverview />} />
-            <Route path='module/:id' element={<SingleModuleViewPage />} />
-            <Route path='modules' element={<ModulePage />} />
+            <Route path='class' element={<ClassPage/>} />
+            <Route path='subject/:id' element={<SingleModuleViewPage />} />
+            <Route path='subject' element={<ModulePage />} />
             <Route path='marks' element={<StudentMarks />} />
+            <Route path='notices' element={<Notices2 />} />
 
           </Route>
           {/* 
