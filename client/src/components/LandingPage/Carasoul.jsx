@@ -31,11 +31,14 @@ export const Carasoul = (props) => {
     ]
 
     return (
+        <div className='relative'>
         <Carousel height={carouselHeight}>
             {
                 items.map((item, i) => <img src={item.src} className='w-full h-full object-cover' key={i} />)
             }
         </Carousel>
+        <MiddleBarOnCarasoul/>
+        </div>
     )
 }
 
