@@ -32,7 +32,7 @@ export const Carasoul = (props) => {
 
     return (
         <div className='relative'>
-        <Carousel height={carouselHeight}>
+        <Carousel height={carouselHeight}  indicatorContainerProps={{ style: { display: 'none' } }}>
             {
                 items.map((item, i) => <img src={item.src} className='w-full h-full object-cover' key={i} />)
             }

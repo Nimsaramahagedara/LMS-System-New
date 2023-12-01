@@ -23,6 +23,7 @@ import PublishNotices from './pages/support/PublishNotices'
 import { AuthProvider } from './pages/common/AuthContext'
 import ContactParent from './pages/teacher/ContactParent'
 import LandingPage from './pages/common/LandingPage'
+import StudentDashboard from './pages/student/StudentDashboard'
 
 function App() {
 
@@ -48,18 +49,21 @@ function App() {
             <Route path='overview' element={<TOverview />} />
             <Route path='email' element={<ContactParent />} />
 
-            {/* Student Routes */}
-            <Route path='stoverview' element={<StOverview />} />
-            <Route path='module/:id' element={<SingleModuleViewPage />} />
-            <Route path='modules' element={<ModulePage />} />
-            <Route path='marks' element={<StudentMarks />} />
-
             {/* Support Team Routes */}
             <Route path='supoverview' element={<SpOverview />} />
             <Route path='createstudents' element={<CreateStudentAcc />} />
             <Route path='createteachers' element={<CreateTeacherAcc />} />
             <Route path='manageacc' element={<ManageAccounts />} />
             <Route path='publishnotices' element={<PublishNotices />} />
+          </Route>
+
+          <Route path='/portal' element={<StudentDashboard/>}>
+            {/* Student Routes */}
+            <Route path='' element={<StOverview />} />
+            <Route path='module/:id' element={<SingleModuleViewPage />} />
+            <Route path='modules' element={<ModulePage />} />
+            <Route path='marks' element={<StudentMarks />} />
+
           </Route>
           {/* 
         <Route path='/' element={}></Route>

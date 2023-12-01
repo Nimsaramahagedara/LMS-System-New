@@ -40,7 +40,7 @@ export default function Login() {
         navigate('/dashboard');
         break;
       case 2: //Student
-        navigate('/dashboard/stoverview');
+        navigate('/portal');
         break;
       case 3: //Support
         navigate('/dashboard/supoverview');
