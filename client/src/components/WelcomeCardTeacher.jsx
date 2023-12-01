@@ -5,12 +5,13 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function WelcomeCardTeacher({name = 'Prasanna'}) {
 
 const [currentTime, setCurrentTime] = useState(new Date());
-
+const navigate = useNavigate();
 const cardStyle = {
     minWidth: 250,
     background: 'linear-gradient(to bottom right, #293660, rgba(0, 0, 0, 0)), url(https://fpdl.in/uploads/[fpdl.in]_education-reading-concept-group-colorful-books-wooden-table-classroom-blackboard-background_627494-1271_large.jpg) top right no-repeat',
@@ -44,7 +45,7 @@ const cardStyle = {
         
       </CardContent>
       <CardActions>
-        <Button size="small" >Log out </Button>
+        <Button size="small" onClick={()=> navigate('/')} >Log out </Button>
       </CardActions>
     </Card>
   );
