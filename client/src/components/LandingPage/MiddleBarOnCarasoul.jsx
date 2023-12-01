@@ -2,7 +2,7 @@ import React from 'react'
 import ComputerIcon from '@mui/icons-material/Computer';
 const MiddleBarOnCarasoul = () => {
   return (
-    <div className='absolute bottom-0 left-1/2 transform -translate-x-1/2 w-max z-10'>
+    <div className='absolute bottom-0 left-1/2 transform -translate-x-1/2 w-max z-10 md:block hidden'>
         <button className='p-14 bg-white text-blue-950 hover:bg-gray-100'>
             <ComputerIcon sx={{fontSize:'32px'}} /><br/>
             Contact Support
