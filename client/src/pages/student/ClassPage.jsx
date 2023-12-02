@@ -1,7 +1,7 @@
 import React from 'react'
 import PageTitle from '../../components/StudentDashboard/PageTitle'
 import AddHomeIcon from '@mui/icons-material/AddHome';
-import ContainerStudent from './ContainerStudent';
+import ContainerStudent from '../../components/StudentDashboard/ContainerStudent';
 import { Card, Link, Typography, colors } from '@mui/material';
 import SubjectCard from '../../components/StudentDashboard/SubjectCard';
 import NoticeCard from '../../components/StudentDashboard/NoticeCard';
@@ -16,7 +16,7 @@ const ClassPage = () => {
   return (
 
     <ContainerStudent>
-      <PageTitle title={'Your Class Room'} icon={<AddHomeIcon sx={{ fontSize: '48px' }} />} bgColor='bg-purple-800' />
+      <PageTitle title={'Your Class Room'} icon={<AddHomeIcon fontSize='large'/>} bgColor='bg-purple-800' />
       <div className='flex items-start mt-5 justify-between'>
         <div className='md:w-5/6 w-full'>
           <div className='px-5 py-2 bg-cyan-200 mb-10'>
