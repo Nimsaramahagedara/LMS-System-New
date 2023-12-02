@@ -12,7 +12,7 @@ const Header = ({ isLoggedIn = false }) => {
                     <img src={schoolLogo} alt="logo" className='w-full h-full object-contain' />
                 </div>
                 <div>
-                    <h1 className='lg:text-4xl text-xl text-blue-950 font-bold px-3'>Learning Management System</h1>
+                    <h1 className='lg:text-4xl text-xl text-blue-950 font-bold px-3'>Darmapala Knowledge Board</h1>
                 </div>
             </div>
             {

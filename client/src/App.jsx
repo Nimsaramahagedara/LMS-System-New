@@ -26,6 +26,7 @@ import LandingPage from './pages/common/LandingPage'
 import StudentDashboard from './pages/student/StudentDashboard'
 import ClassPage from './pages/student/ClassPage'
 import Notices2  from './pages/student/Notices';
+import NotFound from './pages/common/NotFound'
 function App() {
 
 
@@ -35,7 +36,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path='/login' element={<Login />} />
-          <Route path='*' element={<div>ERROR</div>} />
+          <Route path='*' element={<NotFound/>} />
           <Route path='/dashboard' element={<Dashboard />}>
             {/* Admin Routes */}
             <Route path='' element={<AdminHome />} />
