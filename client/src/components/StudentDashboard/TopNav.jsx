@@ -23,8 +23,11 @@ const TopNav = () => {
                 <Link to={'/portal/marks'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                     Marks
                 </Link>
-                <Link to={'/portal/notices'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                <Link to={'/portal/notices'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white relative'>
                     Notices
+                    <span className='absolute top-1 right-0 rounded-md  bg-red-500 text-xs text-center flex justify-center items-center'>
+<span className='w-6 p-1 h-6'>20</span>
+                    </span>
                 </Link>
             </div>
             <div className={`lg:hidden bg-gray-300 relative`}>
