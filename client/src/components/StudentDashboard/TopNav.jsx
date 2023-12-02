@@ -29,6 +29,9 @@ const TopNav = () => {
 <span className='w-6 p-1 h-6'>20</span>
                     </span>
                 </Link>
+                <Link to={'/portal/profile'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                        Profile
+                    </Link>
             </div>
             <div className={`lg:hidden bg-gray-300 relative`}>
                 <button className='p-5 ' onClick={handleMenuExpand}><MenuIcon/></button>
@@ -47,6 +50,9 @@ const TopNav = () => {
                     </Link>
                     <Link to={'/portal/notices'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Notices
+                    </Link>
+                    <Link to={'/portal/profile'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                        Profile
                     </Link>
 
                 </div>

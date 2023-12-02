@@ -27,6 +27,7 @@ import StudentDashboard from './pages/student/StudentDashboard'
 import ClassPage from './pages/student/ClassPage'
 import Notices2  from './pages/student/Notices';
 import NotFound from './pages/common/NotFound'
+import StProfile from './pages/student/StProfile'
 function App() {
 
 
@@ -67,6 +68,7 @@ function App() {
             <Route path='subject' element={<ModulePage />} />
             <Route path='marks' element={<StudentMarks />} />
             <Route path='notices' element={<Notices2 />} />
+            <Route path='profile' element={<StProfile />} />
 
           </Route>
           {/* 

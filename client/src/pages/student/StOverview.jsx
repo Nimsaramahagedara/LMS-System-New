@@ -6,12 +6,12 @@ import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
 import Notifications from '@mui/icons-material/Notifications';
 import BarsDataset from '../../components/AdminBarChart';
 import { Container } from '@mui/material';
-import ContainerStudent from './ContainerStudent';
+import ContainerStudent from '../../components/StudentDashboard/ContainerStudent';
 const StOverview = () => {
   return (
     <ContainerStudent>
       <div>
-        <h1 className='px-4 py-2 bg-blue-950 text-white'><StackedLineChartIcon sx={{fontSize:'48px'}}/> Progress</h1>
+        <h1 className='px-4 py-2 bg-blue-950 text-white'><StackedLineChartIcon fontSize='large'/> Progress</h1>
       </div>
       <div className='flex flex-wrap items-center md:justify-between justify-around md:gap-0 gap-2 '>
         <ColorCard bgColor={'#eafce8'} name={'Current Term'} count={'1/3'} icon={<SignalCellularAltIcon/>}/>
