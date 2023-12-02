@@ -5,9 +5,11 @@ import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
 import Notifications from '@mui/icons-material/Notifications';
 import BarsDataset from '../../components/AdminBarChart';
+import { Container } from '@mui/material';
+import ContainerStudent from './ContainerStudent';
 const StOverview = () => {
   return (
-    <div className='px-4 py-10 bg-white space-y-3'>
+    <ContainerStudent>
       <div>
         <h1 className='px-4 py-2 bg-blue-950 text-white'><StackedLineChartIcon sx={{fontSize:'48px'}}/> Progress</h1>
       </div>
@@ -22,8 +24,8 @@ const StOverview = () => {
         <BarsDataset/>
       </div>
       </div>
-      
-    </div>
+      </ContainerStudent>
+     
   )
 }
 
