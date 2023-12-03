@@ -23,10 +23,10 @@ export const Carasoul = (props) => {
     }, []);
     var items = [
         {
-            src: 'https://img.freepik.com/free-psd/back-school-facebook-cover-banner-template_106176-2848.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699142400&semt=ais'
+            src: "https://live.staticflickr.com/65535/53370602114_7011b87686_z.jpg"
         },
         {
-            src: 'https://images.template.net/wp-content/uploads/2017/02/09154009/school-banners2.jpg'
+            src: "https://live.staticflickr.com/65535/53370602129_e1eb9a7d81_z.jpg"
         }
     ]
 
