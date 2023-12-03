@@ -30,7 +30,7 @@ const TopNav = () => {
             </div>
             <div className={`lg:hidden bg-gray-300 relative`}>
                 <button className='p-5 ' onClick={handleMenuExpand}><MenuIcon/></button>
-                <div className = {`w-full absolute top-16 left-0 z-10 transition-all ease-in-out duration-300 flex-col ${open ? 'flex' : 'hidden'}`}>
+                <div className = {`w-full absolute top-16 left-0 z-10 transition-all ease-in-out duration-300 flex flex-col ${open ? 'visible' : 'invisible'} transform ${open ? 'scale-x-100' : 'scale-x-0'}`}>
                     <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Home
                     </Link>
