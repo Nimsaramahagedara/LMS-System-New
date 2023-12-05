@@ -2,13 +2,15 @@ import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv'
 import { dbConfig } from './utils/dbConfig.js';
+import userRouter from './routes/UserRoutes.js';
 
 
 const port = process.env.PORT || 5000;
 const app = express();
+app.use(express.json());
 dotenv.config();
 
-app.use(express.json());
+
 app.use(morgan('dev'));
 
 app.get('/', async (req,res)=>{
@@ -18,7 +20,7 @@ app.get('/', async (req,res)=>{
 //Put other routes here
 
 //Common Routes
-
+app.use('/',userRouter);
 //Student Routes
 
 //Teacher Routes
