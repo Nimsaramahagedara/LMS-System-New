@@ -1,9 +1,11 @@
 import React from 'react'
 import schoolLogo from '../../assets/school.jpeg';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../pages/common/AuthContext';
 
 const Header = ({ isLoggedIn = false }) => {
     const navigate = useNavigate();
+    const {logout} = useAuth();
 
     return (
         <div className='flex items-center lg:flex-row flex-col justify-between bg-white  border-t-8 border-blue-950 space-y-3 lg:space-y-0'>
@@ -17,7 +19,7 @@ const Header = ({ isLoggedIn = false }) => {
             </div>
             {
                 isLoggedIn ?  <div className='space-y-3 px-4 mx-12'>
-                <button className='px-12 py-3 bg-gray-300 hover:bg-gray-400' onClick={() => navigate('/login')}>LMS Log Out</button><br />
+                <button className='px-12 py-3 bg-gray-300 hover:bg-gray-400' onClick={() => logout()}>LMS Log Out</button><br />
                 <a href="#" className='text-yellow-500 block'>Change Your Password ?</a>
             </div> : <div className='space-y-3 px-4 mx-12'>
                     <h4>Login Using Your Account</h4>
