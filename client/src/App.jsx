@@ -28,11 +28,15 @@ import ClassPage from './pages/student/ClassPage'
 import Notices2  from './pages/student/Notices';
 import NotFound from './pages/common/NotFound'
 import StProfile from './pages/student/StProfile'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
 
 
   return (
     <BrowserRouter>
+    <ToastContainer/>
       <AuthProvider>
         <Routes>
           <Route path='/' element={<LandingPage />} />

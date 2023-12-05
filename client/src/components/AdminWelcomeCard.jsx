@@ -15,10 +15,6 @@ const [currentTime, setCurrentTime] = useState(new Date());
 const {logout} = useAuth();
 const navigate = useNavigate();
 
-const handleLogOut = ()=>{
-  logout();
-  navigate('/');
-}
 
 const cardStyle = {
     minWidth: 250,
@@ -53,7 +49,7 @@ const cardStyle = {
         
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handleLogOut}>Log out </Button>
+        <Button size="small" onClick={()=>  logout()} sx={{color:'white'}}>Log out </Button>
       </CardActions>
     </Card>
   );

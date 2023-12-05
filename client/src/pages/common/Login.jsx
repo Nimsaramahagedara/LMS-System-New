@@ -19,6 +19,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useAuth } from './AuthContext';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
+
+
+
 export default function Login() {
   const [role, setRole] = useState(1);
   const navigate = useNavigate();
@@ -34,20 +38,24 @@ export default function Login() {
       password: data.get('password'),
     });
     login(role)
-    Cookies.set('userRole', role);
     switch (role) {
       case 1: //Admin
+        toast.success('Login Success as an Admin')
         navigate('/dashboard');
         break;
       case 2: //Student
+        toast.success('Login Success as a Student')
         navigate('/portal');
         break;
       case 3: //Support
+      toast.success('Login Success as a Support')
         navigate('/dashboard/supoverview');
         break;
       case 4: //Teacher
+      toast.success('Login Success as a Teacher')
         navigate('/dashboard/overview');
         break;
+
     }
 
   };

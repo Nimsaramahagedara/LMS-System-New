@@ -6,10 +6,11 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../pages/common/AuthContext';
 
 
 export default function WelcomeCardTeacher({name = 'Prasanna'}) {
-
+const {logout} = useAuth();
 const [currentTime, setCurrentTime] = useState(new Date());
 const navigate = useNavigate();
 const cardStyle = {
@@ -45,7 +46,7 @@ const cardStyle = {
         
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={()=> navigate('/')} >Log out </Button>
+        <Button size="small" onClick={()=> logout()} >Log out </Button>
       </CardActions>
     </Card>
   );
