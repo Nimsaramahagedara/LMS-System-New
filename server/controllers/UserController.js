@@ -1,5 +1,6 @@
 import UserModel from "../models/UserModel.js";
 import jwt from 'jsonwebtoken';
+import { sendEmail } from "../utils/sendEmail.js";
 
 //PASS EMAIL ADDRESS HERE AND THIS WILL GENERATE A JWT TOKEN
 const createToken = (email) => {
@@ -23,7 +24,8 @@ export const Login = async (req, res) => {
         }
         const id = isExist._id.toString();
         const token = createToken(id);
-
+        
+        //await sendEmail('nimsaramahagedara@gmail.com', "TEST EMAIL", { name: 'NIMSARA MAHAGEDARA', description: 'TEST DESCRIPTION', }, "./template/emailtemplate.handlebars");
         res.status(200).json({
             token,
             userRole: isExist.role
