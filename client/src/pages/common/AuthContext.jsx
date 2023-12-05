@@ -8,11 +8,11 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const initialUserRole = Cookies.get('userRole') || null;
-  const [userRole, setUserRole] = useState(Number(initialUserRole));
+  const [userRole, setUserRole] = useState(initialUserRole);
 
   // Check if the user role is stored in cookies when the component mounts
   useEffect(() => {
-    const storedUserRole = Number(Cookies.get('userRole'));
+    const storedUserRole = Cookies.get('userRole');
     if (storedUserRole) {
       setUserRole(storedUserRole);
     }else{

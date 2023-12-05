@@ -110,13 +110,13 @@ export default function Dashboard() {
   useEffect(() => {
 
     switch (userRole) {
-      case 1: //Admin
+      case 'admin': //Admin
         setNavlinks(adminListItems);
         break;
-      case 3: //Support
+      case 'support': //Support
         setNavlinks(supportListItems);
         break;
-      case 4: //Teacher
+      case 'teacher': //Teacher
         setNavlinks(teacherListItems);
         break;
       default:
@@ -190,7 +190,7 @@ export default function Dashboard() {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            {userRole == 1 ? 'Admin' : userRole == 2 ? 'Student' : userRole == 3 ? 'Support' : 'Teacher'} Dashboard
+            {userRole == 'admin' ? 'Admin'  : userRole == 'support' ? 'Support' : 'Teacher'} Dashboard
           </Typography>
           <IconButton color="inherit" onClick={toggleNotification}>
             <Badge badgeContent={4} color="secondary">

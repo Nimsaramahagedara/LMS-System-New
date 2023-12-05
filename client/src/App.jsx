@@ -36,7 +36,7 @@ function App() {
 
   return (
     <BrowserRouter>
-    <ToastContainer/>
+    <ToastContainer autoClose={1000}/>
       <AuthProvider>
         <Routes>
           <Route path='/' element={<LandingPage />} />

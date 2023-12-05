@@ -20,7 +20,8 @@ import Select from '@mui/material/Select';
 import { useAuth } from './AuthContext';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
-
+import axios from 'axios';
+import { apiUrl } from '../../utils/Constants';
 
 
 export default function Login() {
@@ -29,40 +30,52 @@ export default function Login() {
   const { login } = useAuth();
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+  
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-    console.log({
+    const payload = {
       email: data.get('email'),
       password: data.get('password'),
-    });
-    login(role)
-    switch (role) {
-      case 1: //Admin
-        toast.success('Login Success as an Admin')
-        navigate('/dashboard');
-        break;
-      case 2: //Student
-        toast.success('Login Success as a Student')
-        navigate('/portal');
-        break;
-      case 3: //Support
-      toast.success('Login Success as a Support')
-        navigate('/dashboard/supoverview');
-        break;
-      case 4: //Teacher
-      toast.success('Login Success as a Teacher')
-        navigate('/dashboard/overview');
-        break;
+    };
+    try {
+      const isLoggedin = await axios.post(`${apiUrl}/login`,payload);
+      if(isLoggedin){
+        console.log(isLoggedin);
+        login(isLoggedin.data.userRole)
 
+        switch (isLoggedin.data.userRole) {
+          case 'admin': //Admin
+            toast.success('Login Success as an Admin')
+            navigate('/dashboard');
+            break;
+          case 'student': //Student
+            toast.success('Login Success as a Student')
+            navigate('/portal');
+            break;
+          case 'support': //Support
+          toast.success('Login Success as a Support')
+            navigate('/dashboard/supoverview');
+            break;
+          case 'teacher': //Teacher
+          toast.success('Login Success as a Teacher')
+            navigate('/dashboard/overview');
+            break;
+        }
+        
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
+    
+
 
   };
 
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
-  }
+  // const handleRoleChange = (e) => {
+  //   setRole(e.target.value);
+  // }
 
   return (
     <Container component="main" maxWidth="xs" className='shadow-lg bg-white pt-1 pb-5'>
@@ -107,7 +120,7 @@ export default function Login() {
             id="password"
             autoComplete="current-password"
           />
-          <Box>
+          {/* <Box>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">User Role</InputLabel>
               <Select
@@ -123,7 +136,7 @@ export default function Login() {
                 <MenuItem value={3}>Support Team</MenuItem>
               </Select>
             </FormControl>
-          </Box>
+          </Box> */}
           <Box textAlign={'right'}>
             <Link href="#" variant="body2">
               Forgot password?
