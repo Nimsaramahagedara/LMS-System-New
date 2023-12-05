@@ -19,6 +19,11 @@ export const Login = async (req, res) => {
         if (!isExist) {
             throw Error('Email Not Exist !!');
         }
+
+        // To Do: After implementing User Create part, enable this method
+        // if(!isExist.isPasswordMatched(password)){
+        //     throw Error('Password Incorrect !!');
+        // }
         if (isExist.password !== password) {
             throw Error('Password Incorrect !!');
         }
