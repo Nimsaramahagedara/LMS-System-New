@@ -16,6 +16,7 @@ export default function AllNotices() {
           
           // Filter the data to include only items with category "men's clothing"
           const menClothingData = data.filter(item => item.category === "men's clothing");
+          console.log(menClothingData);
           
           setNotices(menClothingData);
         } catch (error) {
