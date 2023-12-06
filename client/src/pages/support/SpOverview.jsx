@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import PieChart3 from '../../components/PieChart3';
 import SimpleTable from '../../components/SimpleTable';
+import { getTerm } from '../../utils/usefulFunctions';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,7 +28,7 @@ const SpOverview = () => {
     <Container maxWidth={'800px'} >
       <WelcomeCard/>
       <Box component={'div'} className='flex justify-between items-center'>
-        <SimpleCard name={'Current Term'} to={''} count={'1/3'} icon={<DateRangeIcon color='primary' fontSize='large'/>}/>
+        <SimpleCard name={'Current Term'} to={''} count={`${getTerm()}/3`} icon={<DateRangeIcon color='primary' fontSize='large'/>}/>
         <SimpleCard name={'Students'} to={'manageacc'} count={200} icon={<DirectionsWalkIcon color='secondary' fontSize='large'/>}/>
         <SimpleCard name={'Teachers'} to={'manageacc'} count={20} icon={<SchoolIcon color='error' fontSize='large'/>}/>
         <SimpleCard name={'Subjects'} to={'manageacc'} count={20} icon={<AutoStoriesIcon color='warning' fontSize='large'/>}/>
