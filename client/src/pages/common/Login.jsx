@@ -43,7 +43,7 @@ export default function Login() {
       const isLoggedin = await axios.post(`${apiUrl}/login`,payload);
       if(isLoggedin){
         console.log(isLoggedin);
-        login(isLoggedin.data.userRole)
+        login(isLoggedin.data.userRole, isLoggedin.data.token)
 
         switch (isLoggedin.data.userRole) {
           case 'admin': //Admin
