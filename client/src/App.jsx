@@ -66,6 +66,7 @@ function App() {
           <Route path='/portal' element={<StudentDashboard/>}>
             <Route path='' element={<StOverview />} />
             <Route path='class' element={<ClassPage/>} />
+            <Route path='subjects' element={<SingleModuleViewPage />} />
             <Route path='subject/:id' element={<SingleModuleViewPage />} />
             <Route path='subject' element={<ModulePage />} />
             <Route path='marks' element={<StudentMarks />} />
