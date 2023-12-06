@@ -33,7 +33,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
-
   return (
     <BrowserRouter>
     <ToastContainer autoClose={1000}/>
@@ -65,7 +64,6 @@ function App() {
           </Route>
 
           <Route path='/portal' element={<StudentDashboard/>}>
-            {/* Student Routes */}
             <Route path='' element={<StOverview />} />
             <Route path='class' element={<ClassPage/>} />
             <Route path='subject/:id' element={<SingleModuleViewPage />} />
