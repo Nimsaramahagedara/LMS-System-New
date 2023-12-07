@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema({
     parentId: {
         type: mongoose.Schema.ObjectId,
         ref: 'Users',
+        default:""
     },
     email: {
         type: String,
@@ -38,7 +39,8 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     role: {
-        type: String
+        type: String,
+        enum: ["student", "teacher","parent","admin","support",""],
     },
     classId: {
         type: mongoose.Schema.ObjectId,
