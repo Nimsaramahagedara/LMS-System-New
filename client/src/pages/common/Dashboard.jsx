@@ -30,6 +30,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { useAuth } from './AuthContext';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
+import authAxios from '../../utils/authAxios';
+import { apiUrl } from '../../utils/Constants';
 
 function Copyright(props) {
   return (
@@ -96,6 +98,13 @@ export default function Dashboard() {
   const [notiOpen, setNotiOpen] = useState(false);
   const { logout, userRole } = useAuth();
   const navigate = useNavigate();
+  const [notices, setNotices] = useState([ 
+  <ListItemButton>
+    <ListItemIcon>
+      <EmailIcon />
+    </ListItemIcon>
+    <ListItemText primary="Notification List is Empty" />
+  </ListItemButton>]);
 
   const toggleNotification = () => {
     setNotiOpen(!notiOpen);
@@ -108,6 +117,25 @@ export default function Dashboard() {
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
   useEffect(() => {
+    const getAllNotices = async (userRole) => {
+
+      const allNotices = await authAxios.get(`${apiUrl}/get-notices/${userRole}`);
+
+      const designedNotices = allNotices.data.map((el) => {
+        return (
+          <ListItemButton>
+            <ListItemIcon>
+              <EmailIcon />
+            </ListItemIcon>
+            <ListItemText primary={el.title} />
+          </ListItemButton>
+        )
+      })
+      if (designedNotices) {
+        setNotices(designedNotices);
+      }
+
+    }
 
     switch (userRole) {
       case 'admin': //Admin
@@ -125,41 +153,6 @@ export default function Dashboard() {
     }
 
   }, []);
-
-  const notifications = (
-    <React.Fragment>
-      <ListItemButton>
-        <ListItemIcon>
-          <EmailIcon />
-        </ListItemIcon>
-        <ListItemText primary="Notification 01 Title goes here" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <EmailIcon />
-        </ListItemIcon>
-        <ListItemText primary="Notification 02 Title goes here" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Notification 03 title goes here" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <EmailIcon />
-        </ListItemIcon>
-        <ListItemText primary="Notification 02" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Notification 03" />
-      </ListItemButton>
-    </React.Fragment>
-  );
 
 
   return (
@@ -190,7 +183,7 @@ export default function Dashboard() {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            {userRole == 'admin' ? 'Admin'  : userRole == 'support' ? 'Support' : 'Teacher'} Dashboard
+            {userRole == 'admin' ? 'Admin' : userRole == 'support' ? 'Support' : 'Teacher'} Dashboard
           </Typography>
           <IconButton color="inherit" onClick={toggleNotification}>
             <Badge badgeContent={4} color="secondary">
@@ -201,7 +194,9 @@ export default function Dashboard() {
         <Box sx={{ position: 'absolute', top: '60px', right: '20px', background: 'white', color: 'black' }} visibility={notiOpen ? 'visible' : 'hidden'}>
           <List component="nav" sx={{ width: '300px' }}>
             {/* Notification Object goes here */}
-            {notifications}
+            <React.Fragment>
+              {notices}
+            </React.Fragment>
             <Divider sx={{ my: 1 }} />
           </List>
         </Box>
