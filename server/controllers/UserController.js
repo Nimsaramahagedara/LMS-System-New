@@ -58,7 +58,7 @@ export const CreateAccount = async (req, res) => {
             message: 'Account Created Successfully!'
         })
     } catch (error) {
-        //console.log(error);
+        console.log(error);
         res.status(401).json({ message: error.message });
     }
 

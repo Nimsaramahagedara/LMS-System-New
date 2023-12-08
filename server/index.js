@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import { dbConfig } from './utils/dbConfig.js';
 import userRouter from './routes/UserRoutes.js';
 import cors from 'cors';
+import adminRouter from './routes/AdminRoutes.js';
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -28,6 +29,9 @@ app.use('/',userRouter);
 //Support team Routes
 
 //Parent Routes
+
+//Admin Routes
+app.use('/admin',adminRouter )
 
 dbConfig().then(()=>{
     app.listen(port,()=>{
