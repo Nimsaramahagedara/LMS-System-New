@@ -1,20 +1,24 @@
-import React, { useState } from 'react'
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, RadioGroup, FormControlLabel, Radio, } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, RadioGroup, FormControlLabel, Radio, colors, } from '@mui/material';
 import AdminWelcomeCard from '../../components/AdminWelcomeCard';
 import DateInput from '../../components/DateInput';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
-
+import SimpleCard from '../../components/SimpleCard';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import ColorCard from '../../components/StudentDashboard/ColorCard';
 const SupportTeam = () => {
     const [open, setOpen] = useState(false);
     const [viewOpen, setViewOpen] = useState(false);
-    const [selectedClass, setSelectedClass] = useState({});
-    const [viewData, setViewData] = useState([]);
+    const [selectedSupport, setselectedSupport] = useState({});
     const [data, setData] = useState('');
+    const [allSupport, setAllSupport] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
-    const [formData, setFormData] = useState({
-        id: data.id,
+    //UPDATE SUPPORT FORM DATA
+    const [updateFormData, setUpdateFormData] = useState({
+        regNo: data.regNo,
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
@@ -34,24 +38,42 @@ const SupportTeam = () => {
         gender: 'male'
     });
 
+    //ACCOUNT UPDATE FORM VALUES HANDLER
     const handleChange = (field, value) => {
-        setFormData((prevData) => ({ ...prevData, [field]: value }));
+        setselectedSupport((prevData) => ({ ...prevData, [field]: value }));
     };
 
+    //HANDLE THE ACCOUNT CREATION FIELDS
     const handleCreateChange = (field, value) => {
         setSupportFormData((prevData) => ({ ...prevData, [field]: value }));
     };
 
-    const handleUpdate = () => {
-        // Add validation if needed
+    const handleUpdate = async () => {
+        try {
+            const result = await authAxios.put(`${apiUrl}/admin/update-support/${selectedSupport.email}`, selectedSupport);
 
-        // Call the update function with the updated data
-        onUpdate(formData);
+            if (result) {
+                toast.success('Account Details Updated');
+            }
+            refreshPage();
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
     };
 
-    const handleDelete = () => {
-        // Call the delete function with the ID of the item to delete
-        onDelete(formData.id);
+    const handleDelete = async () => {
+        try {
+            const result = await authAxios.delete(`${apiUrl}/admin/delete-support/${selectedSupport.email}`);
+
+            if (result) {
+                toast.warning('Account Deleted Success');
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }finally{
+            refreshPage();
+            handleViewClose();
+        }
     };
 
     const handleAddSupport = () => {
@@ -67,55 +89,56 @@ const SupportTeam = () => {
     };
 
     const handleView = (row) => {
-        setSelectedClass(row);
-        setViewData(getDummyStudentData()); // Replace with your logic to fetch student data for the selected class
+        setselectedSupport(row);
         setViewOpen(true);
     };
 
-    const getDummyStudentData = () => {
-        // Dummy data for the students in a class
-        return [
-            { number: 1, index: 22436, name: 'A.R.D. Pinsara', dob: '08/07/1999', mobile: '0769379809', address: 'No 13, Yakabe, Pugoda.' },
-            { number: 2, index: 22437, name: 'A.R.D. Pinsara', dob: '08/07/1999', mobile: '0769379809', address: 'No 13, Yakabe, Pugoda.' },
-            { number: 3, index: 22438, name: 'A.R.D. Pinsara', dob: '08/07/1999', mobile: '0769379809', address: 'No 13, Yakabe, Pugoda.' },
-            { number: 4, index: 22439, name: 'A.R.D. Pinsara', dob: '08/07/1999', mobile: '0769379809', address: 'No 13, Yakabe, Pugoda.' },
-            { number: 5, index: 22440, name: 'A.R.D. Pinsara', dob: '08/07/1999', mobile: '0769379809', address: 'No 13, Yakabe, Pugoda.' },
-            // Add more dummy data as needed
-        ];
-    };
+    const refreshPage = ()=>{
+            setRefresh((prev)=> !prev)
+    }
 
+
+    //ACCOUNT CREATION
     const handleSupportSubmit = async () => {
-        // Add logic to handle form submission
         console.log(createSupportFormData);
         try {
             const result = await authAxios.post(`${apiUrl}/admin/create-support`, createSupportFormData);
             if (result) {
                 toast.success(result.data.message);
             }
+            refreshPage();
+            setOpen(false);
         } catch (error) {
             //console.log(error);
             toast.error(error.response.data.message);
         }
-
-
-
-
     };
 
+    useEffect(() => {
+        const getAllSupportMembers = async () => {
+            try {
+                const result = await authAxios.get(`${apiUrl}/admin/get-all-support`);
+                if (result) {
+                    setAllSupport(result.data);
+                } else {
+                    toast.error('Support Accounts None');
+                }
+            } catch (error) {
+                toast.error(error.response.data.message);
+            }
 
-    const dummyData = [
-        { grade: '1', class: 'A', teacher: 'Mrs.P.G. Kusuma', qty: 38 },
-        { grade: '1', class: 'B', teacher: 'Mr.W.M. Sugath', qty: 35 },
-        { grade: '2', class: 'A', teacher: 'Mrs.A.R. Kumari', qty: 40 },
-        { grade: '2', class: 'B', teacher: 'Mr.B.D. Saman', qty: 39 },
-        { grade: '3', class: 'A', teacher: 'Mr.S.M.W. Samarakoon', qty: 37 },
-    ];
+        }
+
+        getAllSupportMembers();
+    }, [refresh])
 
 
     return (
         <div>
 
             <AdminWelcomeCard />
+
+            <ColorCard count={allSupport.length} name={'Support Teams'} icon={<VolunteerActivismIcon/>} bgColor={colors.green[400]}/>
             <div style={{ textAlign: 'center' }}>
                 <h1 style={{ fontSize: '2em' }}>Manage Support Team</h1>
             </div>
@@ -247,7 +270,7 @@ const SupportTeam = () => {
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="controlled-radio-buttons-group"
                             value={createSupportFormData.gender}
-                            onChange={(e)=>handleCreateChange('gender', e.target.value)}
+                            onChange={(e) => handleCreateChange('gender', e.target.value)}
                         >
                             <FormControlLabel value="female" control={<Radio />} label="Female" />
                             <FormControlLabel value="male" control={<Radio />} label="Male" />
@@ -282,12 +305,12 @@ const SupportTeam = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {dummyData.map((row, index) => (
+                        {allSupport.map((row, index) => (
                             <TableRow key={index}>
-                                <TableCell>{row.grade}</TableCell>
-                                <TableCell>{row.class}</TableCell>
-                                <TableCell>{row.teacher}</TableCell>
-                                <TableCell>{row.qty}</TableCell>
+                                <TableCell>{row.regNo}</TableCell>
+                                <TableCell>{row.firstName}</TableCell>
+                                <TableCell>{row.lastName}</TableCell>
+                                <TableCell>{row.email}</TableCell>
                                 <TableCell>
                                     <Button
                                         variant="contained"
@@ -307,37 +330,38 @@ const SupportTeam = () => {
             {/* View Support member Details Dialog Table Starts here.. */}
             <Dialog open={viewOpen} onClose={handleViewClose} maxWidth="xl">
                 <DialogTitle sx={{ textAlign: 'center' }}>
-                    Support Member Details - {selectedClass.grade} {selectedClass.class}
+                    Support Member Details - {selectedSupport.firstName} {selectedSupport.lastName}
                 </DialogTitle>
                 <DialogContent>
                     <form>
                         <TextField
-                            label="ID"
-                            value={formData.id}
+                            label="Reg No"
+                            value={selectedSupport.regNo}
                             disabled
                             fullWidth
                         />
                         <TextField
                             label="First Name"
-                            value={formData.firstName}
+                            value={selectedSupport.firstName}
                             onChange={(e) => handleChange('firstName', e.target.value)}
                             fullWidth
                         />
                         <TextField
                             label="Last Name"
-                            value={formData.lastName}
+                            value={selectedSupport.lastName}
                             onChange={(e) => handleChange('lastName', e.target.value)}
                             fullWidth
                         />
                         <TextField
                             label="Email"
-                            value={formData.email}
+                            value={selectedSupport.email}
                             onChange={(e) => handleChange('email', e.target.value)}
                             fullWidth
                         />
                         <TextField
                             label="Password"
-                            value={formData.password}
+                            disabled
+                            value={selectedSupport.password}
                             onChange={(e) => handleChange('password', e.target.value)}
                             fullWidth
                         />
