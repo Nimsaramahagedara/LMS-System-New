@@ -88,6 +88,15 @@ export const adminListItems = (
       <ListItemIcon>
         <DirectionsWalkIcon />
       </ListItemIcon>
+      <Link to={'/dashboard/support'}>
+      <ListItemText primary="Support" />
+      </Link>
+    </ListItemButton>
+
+    <ListItemButton>
+      <ListItemIcon>
+        <DirectionsWalkIcon />
+      </ListItemIcon>
       <Link to={'/dashboard/students'}>
       <ListItemText primary="Students" />
       </Link>

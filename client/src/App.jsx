@@ -30,6 +30,7 @@ import NotFound from './pages/common/NotFound'
 import StProfile from './pages/student/StProfile'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SupportTeam from './pages/admin/SupportTeam'
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
             <Route path='' element={<AdminHome />} />
             <Route path='students' element={<StudentMNG />} />
             <Route path='teachers' element={<TeacherMNG />} />
+            <Route path='support' element={<SupportTeam />} />
 
             {/* Teacher Routes */}
             <Route path='attendance' element={<Attendence />} />
