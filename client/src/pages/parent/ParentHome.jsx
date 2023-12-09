@@ -1,35 +1,62 @@
-import { Box, Container, Typography } from '@mui/material'
-import React from 'react'
-import SimpleCard from '../../components/SimpleCard'
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
-import SchoolIcon from '@mui/icons-material/School';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import React from 'react';
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Paper,
+  styled,
+  Button,
+} from '@mui/material';
+
 import ParentWelcomeCard from '../../components/ParentWelcomeCard';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import PieChart4 from '../../components/PieChart4';
-import BarChart from '../../components/AdminBarChart';
-import AdminSimpleTable from '../../components/AdminSimpleTable';
-import { getTerm } from '../../utils/usefulFunctions';
+import BarChart from '../../components/ParentBarChart';
 
+// Define the styled Item component
+const Item = styled(Paper)(({ theme }) => ({
+  height: '55vh',
+  padding: theme.spacing(2),
+  textAlign: 'center',
+}));
 
+// Style for the button container
+const ButtonContainer = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  top: '40%',
+  right: theme.spacing(40),
+  transform: 'translateY(-100%)',
+}));
 
 const ParentHome = () => {
-  const date = new Date();
+  // Add an onClick handler for the Button
+  const handleViewChildDetails = () => {
+    // Implement the logic to view child details
+    console.log('View My Child Details');
+  };
 
   return (
-    <Container maxWidth={'800px'} >
-      <ParentWelcomeCard/>
-      
-      
-        
-    
-           
-    </Container>
-  
-  )
-}
+    <Container maxWidth={'800px'} position="relative">
+      <ParentWelcomeCard />
 
-export default ParentHome
+      <Grid container spacing={0} marginTop={1}>
+        <Grid item xs={8}>
+          <Item>
+            <Typography variant='h6'>Progress Of My Child for Last 2 Years</Typography>
+            <BarChart />
+          </Item>
+        </Grid>
+      </Grid>
+
+      {/* Button to view my Child details as a dialog box*/}
+      <ButtonContainer>
+        <Button variant="contained" onClick={handleViewChildDetails}>
+          View My Child
+        </Button>
+      </ButtonContainer>
+    </Container>
+
+    
+  );
+};
+
+export default ParentHome;
