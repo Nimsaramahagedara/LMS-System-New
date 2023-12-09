@@ -62,6 +62,10 @@ export default function Login() {
           toast.success('Login Success as a Teacher')
             navigate('/dashboard/overview');
             break;
+          case 'parent': //Parent
+            toast.success('Login Success as a Parent')
+              navigate('/dashboard/paroverview');
+              break;
         }
         
       }
