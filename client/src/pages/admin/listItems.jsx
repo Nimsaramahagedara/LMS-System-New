@@ -72,6 +72,8 @@ export const teacherListItems = (
     </ListItemButton>
   </React.Fragment>
 );
+
+
 export const adminListItems = (
   <React.Fragment>
 
@@ -225,5 +227,47 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Last Year" />
     </ListItemButton>
+  </React.Fragment>
+);
+
+export const parentListItems = (
+  <React.Fragment>
+
+    <ListItemButton>
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/paroverview'}>
+        <ListItemText primary="Dashboard" />
+      </Link>
+    </ListItemButton>
+
+    <ListItemButton>
+      <ListItemIcon>
+        <DirectionsWalkIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/childmarks'}>
+      <ListItemText primary="Child Marks" />
+      </Link>
+    </ListItemButton>
+
+    <ListItemButton>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/facilityfee'}>
+      <ListItemText primary="Facility Fee" />
+      </Link>
+    </ListItemButton>
+
+    {/* <ListItemButton>
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/notices'}>
+      <ListItemText primary="Notices" />
+      </Link>
+    </ListItemButton> */}
+
   </React.Fragment>
 );

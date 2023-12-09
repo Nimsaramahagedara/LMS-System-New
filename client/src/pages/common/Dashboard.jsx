@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import EmailIcon from '@mui/icons-material/Email';
 import DraftsIcon from '@mui/icons-material/Drafts';
-import { adminListItems, teacherListItems, studentListItems, supportListItems, secondaryListItems } from '../admin/listItems';
+import { adminListItems, teacherListItems, studentListItems, supportListItems, secondaryListItems, parentListItems } from '../admin/listItems';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Notifications from '@mui/icons-material/Notifications';
 // import Chart from './Chart';
@@ -147,6 +147,9 @@ export default function Dashboard() {
       case 'teacher': //Teacher
         setNavlinks(teacherListItems);
         break;
+      case 'parent': //Parent
+        setNavlinks(parentListItems);
+        break;
       default:
         toast.error('Login Expired ! Please Login Again')
         navigate('/')
@@ -183,7 +186,7 @@ export default function Dashboard() {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            {userRole == 'admin' ? 'Admin' : userRole == 'support' ? 'Support' : 'Teacher'} Dashboard
+            {userRole == 'admin' ? 'Admin' : userRole == 'support' ? 'Support' : userRole == 'parent' ? 'parent': 'Teacher'} Dashboard
           </Typography>
           <IconButton color="inherit" onClick={toggleNotification}>
             <Badge badgeContent={4} color="secondary">

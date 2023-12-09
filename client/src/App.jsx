@@ -30,7 +30,11 @@ import NotFound from './pages/common/NotFound'
 import StProfile from './pages/student/StProfile'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SupportTeam from './pages/admin/SupportTeam'
+import SupportTeam from './pages/admin/SupportTeam';
+import ParentHome from './pages/parent/ParentHome';
+import ChildMarks from './pages/parent/ChildMarks';
+import FacilityFee from './pages/parent/FacilityFee';
+
 
 function App() {
 
@@ -63,6 +67,11 @@ function App() {
             <Route path='createteachers' element={<CreateTeacherAcc />} />
             <Route path='manageacc' element={<ManageAccounts />} />
             <Route path='publishnotices' element={<PublishNotices />} />
+
+            {/* Parent Routes */}
+            <Route path='paroverview' element={<ParentHome />} />
+            <Route path='childmarks' element={<ChildMarks />} />
+            <Route path='facilityfee' element={<FacilityFee />} />
           </Route>
 
           <Route path='/portal' element={<StudentDashboard/>}>
