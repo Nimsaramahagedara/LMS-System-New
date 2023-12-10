@@ -3,7 +3,8 @@ import bcrypt from 'bcryptjs';
 
 const UserSchema = new mongoose.Schema({
     regNo: {
-        type: String,
+        type: Number,
+        unique:true
     },
     firstName: {
         type: String,
@@ -60,6 +61,7 @@ UserSchema.pre("save", async function (next) {
 UserSchema.methods.isPasswordMatched = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 }
+
 
 const UserModel = mongoose.model("users", UserSchema);
 

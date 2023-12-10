@@ -2,7 +2,7 @@ import UserModel from "../models/UserModel.js";
 
 // Parent ACCOUNT CREATION
 //THIS WILL RETURN PARENT ID IF ITS AVAILABLE, IF ITS NOT IT WILL CREATE ACCOUNT AND RETURN ID
-export const getParentId = async ({ email }) => {
+export const getParentId = async (email, regNo) => {
     if (!email) {
         throw Error('Parent Email Required');
     }
@@ -21,7 +21,7 @@ export const getParentId = async ({ email }) => {
     }
     //Create new parent account
     const parent = {
-        "regNo": null,
+        "regNo": regNo + 1,
         "firstName": null,
         "lastName": null,
         "gender": '',

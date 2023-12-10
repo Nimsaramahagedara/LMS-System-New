@@ -4,7 +4,7 @@ import ClassModel from "../models/ClassModel.js"
 
 export const getAllClasses = async(req,res)=>{
     try {
-        const classes = await ClassModel.find();
+        const classes = await ClassModel.find().populate('ownedBy').exec();
         
         res.status(200).json(classes);
     } catch (error) {
