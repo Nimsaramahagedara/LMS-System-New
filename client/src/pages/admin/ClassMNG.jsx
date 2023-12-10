@@ -179,7 +179,7 @@ const handleCreateClassData = (field, value) => {
               <TableRow key={index}>
                 <TableCell>{row.grade}</TableCell>
                 <TableCell>{row.subClass}</TableCell>
-                <TableCell>{row.ownedBy}</TableCell>
+                <TableCell>{row.ownedBy ? (row.ownedBy.firstName + ' ' + row.ownedBy.lastName) : 'Not Assigned'}</TableCell>
                 <TableCell>{row.students.length}</TableCell>
                 <TableCell>
                   <Button
@@ -200,7 +200,7 @@ const handleCreateClassData = (field, value) => {
  {/* View Class Details Dialog Table Starts here.. */}
 <Dialog open={viewOpen} onClose={handleViewClose} maxWidth="xl">
   <DialogTitle sx={{ textAlign: 'center' }}>
-    Class Details - {selectedClass.grade} {selectedClass.class}
+    Class Details - {selectedClass.grade} {selectedClass.subClass}
   </DialogTitle>
   <Typography>Class Teacher</Typography>
   <Select

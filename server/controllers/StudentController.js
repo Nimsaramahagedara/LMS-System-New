@@ -10,14 +10,14 @@ export const CreateStudentAccount = async (req, res) => {
             throw Error('Email Already Exist !!');
         }
 
-        if(!data.classId){
+        if(!data.classId || data.classId == null){
             throw Error('Student Must Enroll For a Class When they Register');
         }
-        if(data.email == data.parentId){
+        if(data.email == data.parentEmail){
             throw Error('Parent email and student email cannot be same');
         }
 
-        const gotParentId =await getParentId(data.parentEmail)
+        const gotParentId =await getParentId(data.parentEmail, data.regNo)
         
         const studentData = {
             regNo: data.regNo,
@@ -35,6 +35,7 @@ export const CreateStudentAccount = async (req, res) => {
             ownedClass:null
 
         }
+
         const result = await UserModel.create(studentData);
         
         if(process.env.DEVELOPMENT == 'false'){
