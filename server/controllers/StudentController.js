@@ -37,7 +37,7 @@ export const CreateStudentAccount = async (req, res) => {
         }
         const result = await UserModel.create(studentData);
         
-        if(!process.env.ISDEVELOP){
+        if(process.env.DEVELOPMENT == 'false'){
             sendEmail(data.email, "Account Created Successfully", { name: `Username : ${data.email}`, description: `Password: ${data.password} \n Account Type: ${data.role}`, }, "./template/emailtemplate.handlebars");
         }
 

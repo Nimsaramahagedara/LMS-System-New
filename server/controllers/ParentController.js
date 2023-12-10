@@ -13,7 +13,7 @@ export const getParentId = async ({ email }) => {
         }
 
         //FLOW IF PARENT EMAIL EXIST
-        if(!process.env.ISDEVELOP){
+        if(process.env.DEVELOPMENT == 'false'){
             sendEmail(data.email, "One Student is Added to your account", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
         }
         return isParentExist._id;
@@ -36,7 +36,7 @@ export const getParentId = async ({ email }) => {
     }
     const newParent = await UserModel.create(parent);
     //FLOW IF PARENT EMAIL EXIST
-    if(!process.env.ISDEVELOP){
+    if(process.env.DEVELOPMENT == 'false'){
         sendEmail(data.email, "Parent account is created", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
     }
     return newParent._id;
