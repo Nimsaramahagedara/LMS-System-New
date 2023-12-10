@@ -2,25 +2,27 @@ import mongoose from 'mongoose';
 
 const ClassSchema = new mongoose.Schema({
     grade: {
-        type: String,
+        type: Number,
         required: true
     },
-    subclass: {
+    subClass: {
         type:String,
         required: true
     },
     students: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
     }],
     ownedBy:{
         type: mongoose.Schema.ObjectId,
-        ref: 'users'
+        ref: 'users',
+        default:[null]
     },
-    subjects:{
-        type: mongoose.Schema.ObjectId,
-        ref: 'subjects'
-    }
+    subjects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'subjects',
+        default:[null]
+    }],
 }, { timestamps: true });
 
 

@@ -18,7 +18,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Link } from 'react-router-dom';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 export const teacherListItems = (
   <React.Fragment>
     <ListItemButton>
@@ -97,10 +97,19 @@ export const adminListItems = (
 
     <ListItemButton>
       <ListItemIcon>
-        <DirectionsWalkIcon />
+        <ManageAccountsIcon />
       </ListItemIcon>
       <Link to={'/dashboard/students'}>
       <ListItemText primary="Students" />
+      </Link>
+    </ListItemButton>
+
+    <ListItemButton>
+      <ListItemIcon>
+        <AccountBalanceIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/classes'}>
+      <ListItemText primary="Classes" />
       </Link>
     </ListItemButton>
 
@@ -180,6 +189,15 @@ export const supportListItems = (
       </ListItemIcon>
       <Link to={'/dashboard/createteachers'}>
       <ListItemText primary="Teacher Accounts" />
+      </Link>
+    </ListItemButton>
+
+    <ListItemButton>
+      <ListItemIcon>
+        <AccountBalanceIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/classes'}>
+      <ListItemText primary="Classes" />
       </Link>
     </ListItemButton>
 

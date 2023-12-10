@@ -34,6 +34,7 @@ import SupportTeam from './pages/admin/SupportTeam';
 import ParentHome from './pages/parent/ParentHome';
 import ChildMarks from './pages/parent/ChildMarks';
 import FacilityFee from './pages/parent/FacilityFee';
+import ClassMNG from './pages/admin/ClassMNG'
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
             <Route path='students' element={<StudentMNG />} />
             <Route path='teachers' element={<TeacherMNG />} />
             <Route path='support' element={<SupportTeam />} />
+            <Route path='classes' element={<ClassMNG />} />
 
             {/* Teacher Routes */}
             <Route path='attendance' element={<Attendence />} />
