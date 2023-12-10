@@ -4,15 +4,12 @@ import bcrypt from 'bcryptjs';
 const UserSchema = new mongoose.Schema({
     regNo: {
         type: String,
-        required: true
     },
     firstName: {
         type: String,
-        required: true
     },
     lastName: {
         type: String,
-        required: true
     },
     gender: {
         type: String,
@@ -20,7 +17,6 @@ const UserSchema = new mongoose.Schema({
     },
     contactNo: {
         type: Number,
-        required: true,
     },
     dob: {
         type: Date
@@ -28,7 +24,6 @@ const UserSchema = new mongoose.Schema({
     parentId: {
         type: mongoose.Schema.ObjectId,
         ref: 'Users',
-        default:""
     },
     email: {
         type: String,
