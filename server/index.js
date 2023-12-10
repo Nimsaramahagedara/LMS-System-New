@@ -5,6 +5,7 @@ import { dbConfig } from './utils/dbConfig.js';
 import userRouter from './routes/UserRoutes.js';
 import cors from 'cors';
 import adminRouter from './routes/AdminRoutes.js';
+import studentRouter from './routes/StudentRoutes.js';
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -23,7 +24,7 @@ app.get('/', async (req,res)=>{
 //Common Routes
 app.use('/',userRouter);
 //Student Routes
-
+app.use('/student', studentRouter)
 //Teacher Routes
 
 //Support team Routes

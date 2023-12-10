@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Button,TextField,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,} from '@mui/material';
 import AdminWelcomeCard from '../../components/AdminWelcomeCard';
+import DateInput from '../../components/DateInput';
 
 
 
@@ -98,23 +99,26 @@ const StudentMNG = () => {
                   <TextField
                     required
                     id="outlined-required"
-                    label="Student Name with Initials"
-                    placeholder="e.g., A.R.D. Pinsara"
+                    label="Student First Name"
+                    placeholder="e.g., Deneth"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                  />
+
+                  {/* Student Name Input */}
+                  <TextField
+                    required
+                    id="outlined-required"
+                    label="Student Last Name"
+                    placeholder="e.g., Pinsara"
                     fullWidth
                     margin="normal"
                     variant="outlined"
                   />
 
                   {/* Student DOB Input */}
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Date of Birth"
-                    placeholder="DD/MM/YYYY"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
+                  <DateInput />
 
                   {/* Student Password Input */}
                   <TextField
@@ -144,7 +148,7 @@ const StudentMNG = () => {
                   <TextField
                     required
                     id="outlined-required"
-                    label="Guardian's Mobile No."
+                    label="Guardian's Email"
                     placeholder="e.g., 0769379809"
                     fullWidth
                     margin="normal"
@@ -155,7 +159,7 @@ const StudentMNG = () => {
                   <TextField
                     required
                     id="outlined-required"
-                    label="Student Address"
+                    label="Address"
                     placeholder="e.g., home, village, city"
                     fullWidth
                     margin="normal"
@@ -166,7 +170,7 @@ const StudentMNG = () => {
                   <TextField
                     required
                     id="outlined-required"
-                    label="Email"
+                    label="Student Email"
                     placeholder="e.g., 'deneth@mail.com'"
                     fullWidth
                     margin="normal"
