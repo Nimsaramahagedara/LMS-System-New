@@ -21,12 +21,12 @@ export const Login = async (req, res) => {
         }
 
         // To Do: After implementing User Create part, enable this method
-        // if(!isExist.isPasswordMatched(password)){
-        //     throw Error('Password Incorrect !!');
-        // }
-        if (isExist.password !== password) {
+        if(!isExist.isPasswordMatched(password)){
             throw Error('Password Incorrect !!');
         }
+        // if (isExist.password !== password) {
+        //     throw Error('Password Incorrect !!');
+        // }
         const id = isExist._id.toString();
         const token = createToken(id);
         
