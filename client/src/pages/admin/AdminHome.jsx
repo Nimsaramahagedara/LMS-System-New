@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SimpleCard from '../../components/SimpleCard'
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import SchoolIcon from '@mui/icons-material/School';
@@ -13,6 +13,9 @@ import PieChart4 from '../../components/PieChart4';
 import BarChart from '../../components/AdminBarChart';
 import AdminSimpleTable from '../../components/AdminSimpleTable';
 import { getTerm } from '../../utils/usefulFunctions';
+import PieChart2 from '../../components/PieChart2';
+import authAxios from '../../utils/authAxios';
+import { apiUrl } from '../../utils/Constants';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -22,17 +25,27 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+
 const AdminHome = () => {
   const date = new Date();
+  const [overview, setOverview] = useState({});
+
+  useEffect(()=>{
+    const getOverview = async()=>{
+      const data =  await authAxios.get(`${apiUrl}/admin/get-overview`);
+      setOverview(data.data);
+    }
+    getOverview();
+  },[])
 
   return (
     <Container maxWidth={'800px'} >
       <AdminWelcomeCard/>
       <Box component={'div'} className='flex justify-between items-center'>
         <SimpleCard name={'Current Term'} to={''} count={`${getTerm()}/3`} icon={<DateRangeIcon color='primary' fontSize='large'/>}/>
-        <SimpleCard name={'Subjects'} to={'manageacc'} count={20} icon={<AutoStoriesIcon color='warning' fontSize='large'/>}/>
-        <SimpleCard name={'Students'} to={'manageacc'} count={260} icon={<DirectionsWalkIcon color='secondary' fontSize='large'/>}/>
-        <SimpleCard name={'Teachers'} to={'manageacc'} count={35} icon={<SchoolIcon color='error' fontSize='large'/>}/>
+        <SimpleCard name={'Subjects'} to={'manageacc'} count={overview.subjectCount} icon={<AutoStoriesIcon color='warning' fontSize='large'/>}/>
+        <SimpleCard name={'Students'} to={'manageacc'} count={overview.studentCount} icon={<DirectionsWalkIcon color='secondary' fontSize='large'/>}/>
+        <SimpleCard name={'Teachers'} to={'manageacc'} count={overview.teacherCount} icon={<SchoolIcon color='error' fontSize='large'/>}/>
       </Box>
 
       <Grid container spacing={2} marginTop={1}>
@@ -44,7 +57,8 @@ const AdminHome = () => {
         </Grid>
         <Grid item xs={4}>
           <Item>
-            <PieChart4/>
+            <Typography>Student Diversity</Typography>
+            <PieChart2 value1={overview.maleCount} value2={overview.femaleCount}/>
             </Item>
           </Grid>
       </Grid>
