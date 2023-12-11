@@ -57,7 +57,7 @@ const TeacherMNG = () => {
                 {/* Form Start */}
                 <div>
                   {/* Show Teacher ID - Auto Increment */}
-                  <TextField
+                  {/* <TextField
                     id="outlined-read-only-input"
                     label="Teacher ID"
                     defaultValue="0001"
@@ -67,7 +67,7 @@ const TeacherMNG = () => {
                     fullWidth
                     margin="normal"
                     variant="outlined"
-                  />
+                  /> */}
 
                   {/* Teacher Name Input */}
                   <TextField
