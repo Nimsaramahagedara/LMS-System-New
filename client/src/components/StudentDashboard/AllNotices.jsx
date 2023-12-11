@@ -3,70 +3,54 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Card, CardContent, Typography, colors } from '@mui/material';
+import { Typography } from '@mui/material';
 
-export default function AllNotices() {
-    const [notices, setNotices] = useState([]);
+export default function AllNotices({ role }) {
+  const [notices, setNotices] = useState([]);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetch('https://fakestoreapi.com/products');
-          const data = await response.json();
-          
-          // Filter the data to include only items with category "men's clothing"
-          const menClothingData = data.filter(item => item.category === "men's clothing");
-          console.log(menClothingData);
-          
-          setNotices(menClothingData);
-        } catch (error) {
-          console.error('Error fetching data:', error);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/notices/${role}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      };
-    
-      fetchData();
-    }, []);    
+
+        const dataText = await response.text();
+        console.log('Response text:', dataText);
+
+        // Parse the response text only if it's not empty
+        const data = dataText ? JSON.parse(dataText) : {};
+        setNotices(data.notices || []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [role]);
 
   return (
     <div>
-      {notices.map((value) => {
-        return (
-          <Accordion key={value.id} style={{ margin: '2 16px' }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography  sx={{ fontWeight: 'bold'}} >{value.title}</Typography>
-              <Typography sx={{ color: 'text.secondary', opacity: 0.5, marginLeft: 'auto' }}>
-                {/* {value.date} */}10/13/2023
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                {value.description}
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        );
-      })}
+      {notices.map((value) => (
+        <Accordion key={value._id} style={{ margin: '2 16px' }}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>{value.title}</Typography>
+            <Typography sx={{ color: 'text.secondary', opacity: 0.5, marginLeft: 'auto' }}>
+              10/13/2023
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              {value.description}
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      ))}
     </div>
-  )
+  );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
