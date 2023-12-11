@@ -1,11 +1,11 @@
 import React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 
-const PieChart4 = () => {
+const PieChart4 = ({data}) => {
   return (
     <>
-      <h1>New Student Enrollment Progress</h1>
-      <h3>(Last 6 months)</h3>
+      <h1>Student Diversity</h1>
+      <h3>(All Time)</h3>
       <PieChart
         series={[
           {
