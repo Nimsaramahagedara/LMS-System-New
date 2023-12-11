@@ -121,7 +121,7 @@ const StudentMNG = () => {
           {/* Form Start */}
           <div>
             {/* Show Index Number - Auto Increment */}
-            <TextField
+            {/* <TextField
               id="outlined-read-only-input"
               label="Index Number"
               type='Number'
@@ -130,7 +130,7 @@ const StudentMNG = () => {
               variant="outlined"
               value={createStudentData.regNo}
               onChange={e => handleCreateChange('regNo', e.target.value)}
-            />
+            /> */}
 
             {/* Student Name Input */}
             <TextField
