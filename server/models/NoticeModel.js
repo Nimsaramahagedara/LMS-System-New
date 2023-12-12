@@ -1,11 +1,22 @@
-const mongoose = require('mongoose');
+// NoticesModel.js
 
-const noticesSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true }, // Fix typo in the field name
-  audience: { type: String, required: true },
-});
+import mongoose from 'mongoose';
 
-const NoticeModel = mongoose.model('Notice', noticesSchema); // Fix model name
+const NoticesSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  audience: {
+    type: String,
+    required: true,
+  },
+}, { timestamps: true });
 
-module.exports = NoticeModel;
+const NoticesModel = mongoose.model('noticers', NoticesSchema);
+
+export default NoticesModel;

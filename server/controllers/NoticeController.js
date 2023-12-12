@@ -3,17 +3,23 @@
 //DEPENDS ON USER ROLEE, SHOULD SEND THE NOTICES BELONGS TO THAT USER ROLE + NOTICES BELONGS TO ALL
 
 
-const Notice = require('../models/NoticeModel');
 
-exports.getNotices = async (req, res) => {
-  try {
-    const { role } = req.params;
-    // Fetch notices based on user role and 'all'
-    const notices = await Notice.find({ $or: [{ audience: role }, { audience: 'all' }] });
-    res.status(200).json({ notices });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+
+
+const noticeController = {
+  getAllNotices: async (req, res) => {
+    try {
+      const allNotices = await NoticesModel.find();
+      res.status(200).json(allNotices);
+    } catch (error) {
+      console.error('Error fetching notices:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
 };
+
+export default noticeController;
+
+
+
 
