@@ -292,7 +292,7 @@ const SupportTeam = () => {
 
 
 
-            {/* Students and class Table Start Here... */}
+            {/* View support accounts Table Start Here... */}
             <TableContainer component={Paper} style={{ marginTop: '20px' }}>
                 <Table>
                     <TableHead>
@@ -325,7 +325,8 @@ const SupportTeam = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {/* Students and class Table Ends Here... */}
+            {/* View support accounts Table Ends Here... */}
+
 
             {/* View Support member Details Dialog Table Starts here.. */}
             <Dialog open={viewOpen} onClose={handleViewClose} maxWidth="xl">
