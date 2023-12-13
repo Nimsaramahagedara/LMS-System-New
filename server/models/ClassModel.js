@@ -15,8 +15,7 @@ const ClassSchema = new mongoose.Schema({
     }],
     ownedBy:{
         type: mongoose.Schema.ObjectId,
-        ref: 'users',
-        default:[null]
+        ref: 'users'
     },
     subjects: [{
         type: mongoose.Schema.Types.ObjectId,

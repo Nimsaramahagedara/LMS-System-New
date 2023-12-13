@@ -138,7 +138,7 @@ const SupportTeam = () => {
 
             <AdminWelcomeCard />
 
-            <ColorCard count={allSupport.length} name={'Support Teams'} icon={<VolunteerActivismIcon/>} bgColor={colors.green[400]}/>
+            <ColorCard count={allSupport.length} name={'Support Teams'} icon={<VolunteerActivismIcon/>} bgColor={colors.cyan[400]}/>
             <div style={{ textAlign: 'center' }}>
                 <h1 style={{ fontSize: '2em' }}>Manage Support Team</h1>
             </div>
