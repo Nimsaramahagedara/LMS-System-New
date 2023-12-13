@@ -19,6 +19,6 @@ const NoticesSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-const NoticesModel = mongoose.model('noticers', NoticesSchema);
+const NoticesModel = mongoose.model('notices', NoticesSchema);
 
 export default NoticesModel;
