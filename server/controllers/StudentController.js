@@ -13,9 +13,7 @@ export const CreateStudentAccount = async (req, res) => {
         if(!data.classId || data.classId == null){
             throw Error('Student Must Enroll For a Class When they Register');
         }
-        if(data.email == data.parentEmail){
-            throw Error('Parent email and student email cannot be same');
-        }
+        
 
         const gotParentId =await getParentId(data.parentEmail, data.regNo)
         
