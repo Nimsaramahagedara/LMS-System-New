@@ -116,10 +116,10 @@ export default function Dashboard() {
   const [navLinks, setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
-  useEffect(() => {
+  useEffect(()=>{
     const getAllNotices = async (userRole) => {
 
-      const allNotices = await authAxios.get(`${apiUrl}/get-notices/${userRole}`);
+      const allNotices = await authAxios.get(`${apiUrl}/notices/${userRole}`);
 
       const designedNotices = allNotices.data.map((el) => {
         return (
@@ -137,6 +137,10 @@ export default function Dashboard() {
 
     }
 
+    getAllNotices();
+  },[])
+
+  useEffect(() => {
     switch (userRole) {
       case 'admin': //Admin
         setNavlinks(adminListItems);
@@ -189,7 +193,7 @@ export default function Dashboard() {
             {userRole == 'admin' ? 'Admin' : userRole == 'support' ? 'Support' : userRole == 'parent' ? 'parent': 'Teacher'} Dashboard
           </Typography>
           <IconButton color="inherit" onClick={toggleNotification}>
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={notices.length} color="secondary">
               <Notifications />
             </Badge>
           </IconButton>

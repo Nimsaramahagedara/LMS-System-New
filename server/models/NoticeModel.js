@@ -14,6 +14,8 @@ const NoticesSchema = new mongoose.Schema({
   audience: {
     type: String,
     required: true,
+    enum: ["student", "teacher", "parent", "admin", "support", "all"],
+
   },
 }, { timestamps: true });
 
