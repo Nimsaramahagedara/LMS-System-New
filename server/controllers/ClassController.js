@@ -3,73 +3,97 @@ import UserModel from "../models/UserModel.js";
 
 
 
-export const getAllClasses = async(req,res)=>{
+export const getAllClasses = async (req, res) => {
     try {
         const classes = await ClassModel.find().populate('ownedBy').exec();
-        
+
         res.status(200).json(classes);
     } catch (error) {
         res.status(500).json({
-            message:error.mesasge
+            message: error.mesasge
         })
     }
 }
 
-export const getOneClass = async(req,res)=>{
-    const {id} = req.params();
+export const getOneClass = async (req, res) => {
+    const { id } = req.params;
 
     try {
         const isClassExist = await ClassModel.findById(id);
-        if(!isClassExist){
+        if (!isClassExist) {
             throw Error('That class not exist');
-           
+
         }
         res.status(200).json(isClassExist);
-        
+
     } catch (error) {
         res.status(500).json({
-            message:error.mesasge
+            message: error.mesasge
         })
     }
 }
 
-export const createClass = async(req,res)=>{
+export const createClass = async (req, res) => {
     const data = req.body
 
     try {
         const classData = {
             grade: data.grade,
-            subClass:data.subClass,
-            students:Array(),
-            ownedBy:null,
-            subjects:Array()
+            subClass: data.subClass,
+            students: Array(),
+            ownedBy: null,
+            subjects: Array()
         }
 
         const isSaved = await ClassModel.create(classData);
 
-        res.status(200).json({message:'Class Created Successfully'})
-        
+        res.status(200).json({ message: 'Class Created Successfully' })
+
     } catch (error) {
         res.status(500).json({
-            message:error.mesasge
+            message: error.mesasge
         })
     }
 }
 
-export const getStudentsInClass = async(req,res)=>{
-    const {id} = req.params();
+export const getStudentsInClass = async (req, res) => {
+    const { id } = req.params;
 
     try {
-        const allStudents = await UserModel.find({role:'student', classId:id});
-        if(!allStudents){
+        const allStudents = await UserModel.find({ role: 'student', classId: id });
+        if (!allStudents) {
             throw Error('No Students Or Other Error');
-           
+
         }
         res.status(200).json(allStudents);
-        
+
     } catch (error) {
         res.status(500).json({
-            message:error.mesasge
+            message: error.mesasge
         })
+    }
+}
+
+export const updateClassTeacher = async (req, res) => {
+    const { id } = req.params;
+    const { ownedBy } = req.body;
+
+    try {
+        console.log(id);
+        const updateClass = await ClassModel.findById(id);
+        if (!updateClass) {
+            res.status(500).json({ message: 'Class Not Found' });
+            return
+        }
+
+        updateClass.ownedBy = ownedBy;
+
+        updateClass.save();
+        console.log(updateClass);
+
+        res.status(200).json({ message: 'Class Teacher Assigned Success!!', updateClass });
+
+    } catch (error) {
+        res.status(500).json({ message: error.mesasge })
     }
 }

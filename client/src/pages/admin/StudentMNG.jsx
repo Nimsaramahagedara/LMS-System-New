@@ -322,11 +322,11 @@ const StudentMNG = () => {
               <TableBody>
                 {viewData.map((student, index) => (
                   <TableRow key={index}>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.number}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.index}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.name}</TableCell>
+                    <TableCell style={{ whiteSpace: 'nowrap' }}>{index}</TableCell>
+                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.regNo}</TableCell>
+                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.firstName + ' ' + student.lastName}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.dob}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.mobile}</TableCell>
+                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.contactNo}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.address}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>
                       <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
