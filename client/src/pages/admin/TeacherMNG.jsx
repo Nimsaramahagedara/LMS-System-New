@@ -128,16 +128,20 @@ const TeacherMNG = () => {
             Fill out the form below to add a new Teacher.
           </DialogContentText>
 
-          <div>
-            <TextField
-              id="outlined-read-only-input"
-              label="Teacher ID"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              onChange={(e) => handleCreateChange('regNo', e.target.value)}
-              value={createTeacherFormData.regNo}
-            />
+                {/* Form Start */}
+                <div>
+                  {/* Show Teacher ID - Auto Increment */}
+                  <TextField
+                    id="outlined-read-only-input"
+                    label="Teacher ID"
+                    defaultValue="0001"
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                  />
 
             <TextField
               required

@@ -160,7 +160,7 @@ const SupportTeam = () => {
                     {/* Form Start */}
                     <div>
                         {/* Show Index Number - Auto Increment */}
-                        <TextField
+                        {/* <TextField
                             id="outlined-read-only-input"
                             label="Index Number"
                             InputProps={{
@@ -171,7 +171,7 @@ const SupportTeam = () => {
                             variant="outlined"
                             onChange={(e) => handleCreateChange('regNo', e.target.value)}
                             value={createSupportFormData.regNo}
-                        />
+                        /> */}
 
                         {/* Support F Name Input */}
                         <TextField
