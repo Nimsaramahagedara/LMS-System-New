@@ -7,6 +7,7 @@ import cors from 'cors';
 import adminRouter from './routes/AdminRoutes.js';
 import studentRouter from './routes/StudentRoutes.js';
 import classRoutes from './routes/ClassRoutes.js';
+import noticeRouter from './routes/NoticeRoutes.js';
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -25,6 +26,7 @@ app.get('/', async (req,res)=>{
 //Common Routes
 app.use('/',userRouter);
 app.use('/class', classRoutes);
+app.use('/notices', noticeRouter);
 //Student Routes
 app.use('/student', studentRouter)
 //Teacher Routes
