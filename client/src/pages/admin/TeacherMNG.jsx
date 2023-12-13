@@ -1,12 +1,58 @@
-import React, { useState } from 'react';
-import {Button,TextField,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,} from '@mui/material';
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material';
 import AdminWelcomeCard from '../../components/AdminWelcomeCard';
-
-
+import React, { useState, useEffect } from 'react';
+import { apiUrl } from '../../utils/Constants';
+import authAxios from '../../utils/authAxios';
+import { toast } from 'react-toastify';
 
 const TeacherMNG = () => {
+  const [notices, setNotices] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const [createTeacherFormData, setTeacherFormData] = useState({
+    regNo: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    address: '',
+    dob: '',
+    contactNo: '',
+    gender: ''
+  });
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/admin/get-all-teachers`);
+        const data = await response.json();
+        setNotices(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [refresh]);
+
+  const handleCreateChange = (field, value) => {
+    setTeacherFormData((prevData) => ({ ...prevData, [field]: value }));
+  };
 
   const handleAddTeacher = () => {
     setOpen(true);
@@ -15,212 +61,227 @@ const TeacherMNG = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  function handleSubmit() {
-    // Add logic to handle form submission
-    console.log('Form submitted!');
-    // Add any additional logic you need, such as making an API call to add a new Teacher.
-    handleClose(); // Close the dialog after submission.
+
+
+
+  const refreshPage = () => {
+    setRefresh((prev) => !prev)
   }
 
+  const handleTeacherSubmit = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/admin/create-teacher`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(createTeacherFormData),
+      });
+      const data = await result.json();
 
-  const dummyData = [
-    { no: '1', tName: 'A.R.D. Pinsara', tSubject: 'Physical Edu.', tMobile: '0769379809', tAddress: 'No 13, Yakabe, Pugoda.', tEmail: 'deneth@mail.com', tClass: '1-A'  },
-    { no: '2', tName: 'A.R.D. Pinsara', tSubject: 'Science', tMobile: '0769379809', tAddress: 'No 13, Yakabe, Pugoda.', tEmail: 'deneth@mail.com', tClass: '2-B'  },
-    { no: '3', tName: 'A.R.D. Pinsara', tSubject: 'Mathematics', tMobile: '0769379809', tAddress: 'No 13, Yakabe, Pugoda.', tEmail: 'deneth@mail.com', tClass: '3-B'  },
-    { no: '4', tName: 'A.R.D. Pinsara', tSubject: 'Sinhala', tMobile: '0769379809', tAddress: 'No 13, Yakabe, Pugoda.', tEmail: 'deneth@mail.com', tClass: '5-A'  },
-    { no: '5', tName: 'A.R.D. Pinsara', tSubject: 'English', tMobile: '0769379809', tAddress: 'No 13, Yakabe, Pugoda.', tEmail: 'deneth@mail.com', tClass: '4-B'  },
-  ];
-  
+      if (result.ok) {
+        console.log('Teacher created successfully:', data);
+        toast.success(data.message);
+        refreshPage();
+        setOpen(false);
+        handleClose();
+      } else {
+        console.error('Error creating teacher:', data.message);
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error creating teacher:', error);
+      toast.error('An error occurred while creating the teacher.');
+    }
+  };
+
+  const handleDeleteTeacher = async (email) => {
+    try {
+      const result = await authAxios.delete(`${apiUrl}/admin/delete-teacher/${email}`);
+
+      if (result) {
+        toast.warning('Account Deleted Success');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      refreshPage();
+    }
+  };
+
   return (
+    <div>
+      <AdminWelcomeCard />
+      <div style={{ textAlign: 'center' }}>
+        <h1 style={{ fontSize: '2em' }}>Manage Teachers</h1>
+      </div>
+
+      <Button variant="contained" onClick={handleAddTeacher}>
+        Add New Teacher
+      </Button>
+
+      <Dialog open={open} onClose={handleClose} sx={{ border: '2px solid #ccc' }}>
+        <DialogTitle sx={{ textAlign: 'center' }}>Add New Teacher</DialogTitle>
+        <DialogContent>
+
+          <DialogContentText>
+            Fill out the form below to add a new Teacher.
+          </DialogContentText>
+
           <div>
+            <TextField
+              id="outlined-read-only-input"
+              label="Teacher ID"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('regNo', e.target.value)}
+              value={createTeacherFormData.regNo}
+            />
 
-            <AdminWelcomeCard />
-            <div style={{ textAlign: 'center' }}>
-              <h1 style={{ fontSize: '2em' }}>Manage Teachers</h1>
-             
-            </div>
-            
-            {/* Adding New Teacher Part Start Here... */}
-            <Button variant="contained" onClick={handleAddTeacher}>
-              Add New Teacher
+            <TextField
+              required
+              id="outlined-required"
+              label="First Name"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('firstName', e.target.value)}
+              value={createTeacherFormData.firstName}
+            />
+
+            <TextField
+              required
+              id="outlined-required"
+              label="Last Name"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('lastName', e.target.value)}
+              value={createTeacherFormData.lastName}
+            />
+
+            <TextField
+              required
+              id="outlined-required"
+              type='date'
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('dob', e.target.value)}
+              value={createTeacherFormData.dob}
+            />
+
+            <TextField
+              required
+              id="outlined-password-input"
+              label="Email"
+              type="email"
+              placeholder="Enter new password"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('email', e.target.value)}
+              value={createTeacherFormData.email}
+            />
+
+            <TextField
+              required
+              id="outlined-password-input"
+              label="Password"
+              placeholder="Re-enter new password"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('password', e.target.value)}
+              value={createTeacherFormData.password}
+            />
+
+            <TextField
+              required
+              id="outlined-required"
+              label="Address"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('address', e.target.value)}
+              value={createTeacherFormData.address}
+            />
+
+            <TextField
+              required
+              id="outlined-required"
+              label="Gender"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('gender', e.target.value)}
+              value={createTeacherFormData.gender}
+            />
+
+            <TextField
+              required
+              id="outlined-required"
+              label="Contact No"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('contactNo', e.target.value)}
+              value={createTeacherFormData.contactNo}
+            />
+          </div>
+          <DialogActions style={{ justifyContent: 'center' }}>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleTeacherSubmit} variant="contained" color="primary">
+              Add Teacher
             </Button>
-            
-
-            <Dialog open={open} onClose={handleClose}>
-            <DialogTitle sx={{ textAlign: 'center' }}>Add New Teacher</DialogTitle>
-
-              <DialogContent>
-                <DialogContentText>
-                  Fill out the form below to add a new Teacher.
-                </DialogContentText>
-
-                {/* Form Start */}
-                <div>
-                  {/* Show Teacher ID - Auto Increment */}
-                  <TextField
-                    id="outlined-read-only-input"
-                    label="Teacher ID"
-                    defaultValue="0001"
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  {/* Teacher Name Input */}
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Teacher Name with Initials"
-                    placeholder="e.g., A.R.D. Pinsara"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  {/* Subject Input */}
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Subject"
-                    placeholder="subject"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  {/* Teacher's Mobile Input */}
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Mobile No."
-                    placeholder="e.g., 0769379809"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  {/* Teacher Password Input */}
-                  <TextField
-                    required
-                    id="outlined-password-input"
-                    label="Password"
-                    type="password"
-                    placeholder="Enter new password"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  {/* Teacher Password Re-Enter */}
-                  <TextField
-                    required
-                    id="outlined-password-input"
-                    label="Re-enter Password"
-                    type="password"
-                    placeholder="Re-enter new password"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  
-
-                  {/* Teacher Address Input */}
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Address"
-                    placeholder="e.g., home, village, city"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  {/* Teacher Email Input */}
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Email"
-                    placeholder="e.g., 'deneth@mail.com'"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  
-                  {/* Teacher's Incharge Class Input */}
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Incharge Class"
-                    placeholder="e.g., '1-A, 2-B'"
-                  />
-                </div>
-                {/* Form Ends Here.. */}    
-
+          </DialogActions>
         </DialogContent>
-
-            <DialogActions style={{ justifyContent: 'center' }}>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleSubmit} variant="contained" color="primary">
-                Add Teacher
-              </Button>
-            </DialogActions>
       </Dialog>
-      {/* Adding New Teacher Part Ends Here... */}
 
-
-  
-
-    {/* Teachers Table Start Here... */}
-    <TableContainer component={Paper} style={{ marginTop: '20px' }}>
+      <TableContainer component={Paper} style={{ marginTop: '20px' }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={{ whiteSpace: 'nowrap' }}>No</TableCell>
-              <TableCell>Teacher Name with Initials</TableCell>
-              <TableCell style={{ whiteSpace: 'nowrap' }}>Subject</TableCell>
-              <TableCell style={{ whiteSpace: 'nowrap' }}>Mobile</TableCell>
-              <TableCell style={{ whiteSpace: 'nowrap' }}>Address</TableCell>
-              <TableCell style={{ whiteSpace: 'nowrap' }}>Email</TableCell>
-              <TableCell>In-Charge Class (If it is)</TableCell>
-              
+              <TableCell>No</TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Mobile</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Created At</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {dummyData.map((row, index) => (
+            {notices.map((row, index) => (
               <TableRow key={index}>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{row.no}</TableCell>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{row.tName}</TableCell>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{row.tSubject}</TableCell>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{row.tMobile}</TableCell>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{row.tAddress}</TableCell>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{row.tEmail}</TableCell>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{row.tClass}</TableCell>
-                
-                <TableCell style={{ whiteSpace: 'nowrap' }}>
-                  <Button variant="contained" color="secondary" onClick={() => handleView(row)} sx={{ marginRight: 2 }}> Update </Button>
-                  <Button variant="contained" color="error" onClick={() => handleView(row)}> Remove </Button>
+                <TableCell>{row.regNo}</TableCell>
+                <TableCell>{row.firstName}</TableCell>
+                <TableCell>{row.lastName}</TableCell>
+                <TableCell>{row.contactNo}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.createdAt}</TableCell>
+                <TableCell>
+                  <Button variant="contained" color="secondary" onClick={() => handleView(row)} sx={{ marginRight: 2 }}>
+                    Update
+                  </Button>
+                  <Button variant="contained" color="error" onClick={() => handleDeleteTeacher(row.email)}>
+                    Remove
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
-             {/* Add a row for total number of Teachers */}
             <TableRow>
-            <TableCell colSpan={6} align="right">
-              <strong>Total number of Teachers:</strong>
-            </TableCell>
-            <TableCell align="center">
-              <strong>{dummyData.length}</strong>
-            </TableCell>
-          </TableRow>
+              <TableCell colSpan={6} align="right">
+                <strong>Total number of Teachers:</strong>
+              </TableCell>
+              <TableCell align="center">
+                <strong>{notices.length}</strong>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-      {/* Teachers and class Table Ends Here... */}
-
-
     </div>
   );
 };
