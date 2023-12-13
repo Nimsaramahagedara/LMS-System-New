@@ -1,3 +1,4 @@
+import ClassModel from "../models/ClassModel.js";
 import UserModel from "../models/UserModel.js";
 import { getParentId } from "./ParentController.js";
 
@@ -35,6 +36,9 @@ export const CreateStudentAccount = async (req, res) => {
         }
 
         const result = await UserModel.create(studentData);
+        var enrollClass = await ClassModel.findById(data.classId);
+        enrollClass.students.push(result._id);
+        await enrollClass.save();
         
         if(process.env.DEVELOPMENT == 'false'){
             sendEmail(data.email, "Account Created Successfully", { name: `Username : ${data.email}`, description: `Password: ${data.password} \n Account Type: ${data.role}`, }, "./template/emailtemplate.handlebars");

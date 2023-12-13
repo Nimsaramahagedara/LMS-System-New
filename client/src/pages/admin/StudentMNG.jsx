@@ -50,9 +50,10 @@ const StudentMNG = () => {
     setViewOpen(false);
   };
 
-  const handleView = (row) => {
+  const handleView =async (row) => {
     setSelectedClass(row);
-    setViewData(getDummyStudentData()); // Replace with your logic to fetch student data for the selected class
+    const allStudents = await authAxios.get(`${apiUrl}/class/get-students/${row._id}`);
+    setViewData(allStudents.data); // Replace with your logic to fetch student data for the selected class
     setViewOpen(true);
   };
 
@@ -63,6 +64,7 @@ const StudentMNG = () => {
       const result = await authAxios.post(`${apiUrl}/student/create-student`, createStudentData);
       if(result){
         toast.success('Account Created Successfully')
+        changeRefresh((prev)=> !prev);
         handleClose(); 
       }
     } catch (error) {

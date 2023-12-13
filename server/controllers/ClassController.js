@@ -1,4 +1,5 @@
 import ClassModel from "../models/ClassModel.js"
+import UserModel from "../models/UserModel.js";
 
 
 
@@ -47,6 +48,24 @@ export const createClass = async(req,res)=>{
         const isSaved = await ClassModel.create(classData);
 
         res.status(200).json({message:'Class Created Successfully'})
+        
+    } catch (error) {
+        res.status(500).json({
+            message:error.mesasge
+        })
+    }
+}
+
+export const getStudentsInClass = async(req,res)=>{
+    const {id} = req.params();
+
+    try {
+        const allStudents = await UserModel.find({role:'student', classId:id});
+        if(!allStudents){
+            throw Error('No Students Or Other Error');
+           
+        }
+        res.status(200).json(allStudents);
         
     } catch (error) {
         res.status(500).json({
