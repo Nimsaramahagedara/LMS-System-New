@@ -121,9 +121,9 @@ export default function Dashboard() {
 
       const allNotices = await authAxios.get(`${apiUrl}/notices/${userRole}`);
 
-      const designedNotices = allNotices.data.map((el) => {
+      const designedNotices = allNotices.data.map((el,index) => {
         return (
-          <ListItemButton>
+          <ListItemButton key={index}>
             <ListItemIcon>
               <EmailIcon />
             </ListItemIcon>

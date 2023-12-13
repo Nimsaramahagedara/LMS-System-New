@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
     contactNo: {
         type: Number,
     },
+    address:{
+        type: String,
+        default:'Not Given'
+    },
     dob: {
         type: Date
     },
