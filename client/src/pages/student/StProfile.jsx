@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Button, Avatar } from '@mui/material';
 import EditProfileForm from './EditProfileForm';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ContainerStudent from '../../components/StudentDashboard/ContainerStudent';
+import {toast} from 'react-toastify';
+import authAxios from '../../utils/authAxios';
+import { apiUrl } from '../../utils/Constants';
 
 const StProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const student = {
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    mobileNumber: '123-456-7890',
-    address: '123 Main Street, Cityville',
-    gender: 'Male',
-    grade: '10th',
-    class: 'A',
-  };
+  const [student, setStudent] = useState({
+    firstName:'Loading',
+    lastName:'Loading',
+    grade:'Loading',
+    gender:'Loading',
+    address:'Loading',
+    classId:{
+      subClass:'Loading',
+      grade:'Loadning'
+    }
+  });
   
 
   const handleEditClick = () => {
@@ -27,6 +31,22 @@ const StProfile = () => {
     console.log('Updated Profile:', updatedProfile);
     setIsEditing(false);
   };
+
+
+
+  useEffect(()=>{
+    const getUserDetails = async()=>{
+      try {
+        const data = await authAxios.get(`${apiUrl}/student/`)
+        setStudent(data.data);
+        console.log(data.data);
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    }
+    getUserDetails();
+  },[]);
 
   return (
    <ContainerStudent>
@@ -46,11 +66,11 @@ const StProfile = () => {
               {`${student.firstName} ${student.lastName}`}
             </Typography>
             <Typography>Email: {student.email}</Typography>
-            <Typography>Mobile: {student.mobileNumber}</Typography>
+            <Typography>Mobile: {student.contactNo}</Typography>
             <Typography>Address: {student.address}</Typography>
             <Typography>Gender: {student.gender}</Typography>
-            <Typography>Grade: {student.grade}</Typography>
-            <Typography>Class: {student.class}</Typography>
+            <Typography>Grade: {student.classId.grade}</Typography>
+            <Typography>Class: {student.classId.subClass}</Typography>
             <Button variant="contained" onClick={handleEditClick} sx={{ marginTop: 2 }}>
               Edit Profile
             </Button>

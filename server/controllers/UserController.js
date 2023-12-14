@@ -63,3 +63,19 @@ export const CreateAccount = async (req, res) => {
     }
 
 }
+
+//GET USER DETAILS
+export const getUserDetails = async(req,res)=>{
+    const id = req.loggedInId
+    console.log('API INSIDE :' , id);
+    try {
+        const isExist = await UserModel.findById(id);
+        if(!isExist){
+            res.status(401).json({message:'User Not Exist'});
+        }
+        res.status(200).json(isExist);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message:error.message});
+    }
+}
