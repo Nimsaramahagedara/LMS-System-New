@@ -19,7 +19,10 @@ import {
   FormGroup,
 } from '@mui/material';
 
-import { DeleteIcon, SaveIcon, CancelIcon, VisibilityIcon } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { apiUrl } from '../../utils/Constants';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
@@ -154,7 +157,7 @@ const PublishNotices = () => {
       toast.error(error.response.data.message);
     }
   };
-
+  
   return (
     <div>
       <React.Fragment>
@@ -330,6 +333,7 @@ const PublishNotices = () => {
                         <Button size="small" startIcon={<SaveIcon />} onClick={handleUpdate} variant="contained" color="primary">
                           Update
                         </Button>
+
                         <Button size="small" startIcon={<DeleteIcon />} variant="contained" color="error" onClick={() => handleDeleteNotice(updateFormData._id)}>
                           Remove
                         </Button>
