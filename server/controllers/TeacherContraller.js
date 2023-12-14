@@ -19,7 +19,7 @@ export const CreateTeacherAccount = async (req, res) => {
             dob: data.dob,
             password:data.password,
             email:data.email,
-            gender:"",
+            gender:data.gender,
             role:'teacher',
             contactNo:data.contactNo,
             parentId:null,
@@ -117,9 +117,6 @@ export const updateTeacher = async(req,res)=>{
         ownedClass:null
 
     }
-
-    // const salt = await bcrypt.genSalt(10);
-    // this.password = await bcrypt.hash(this.password, salt);
 
     try {
         const isExist = await UserModel.findOne({email});

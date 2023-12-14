@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   TextField,
@@ -13,9 +14,11 @@ import {
   TableHead,
   TableRow,
   Paper,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from '@mui/material';
 import AdminWelcomeCard from '../../components/AdminWelcomeCard';
-import React, { useState, useEffect } from 'react';
 import { apiUrl } from '../../utils/Constants';
 import authAxios from '../../utils/authAxios';
 import { toast } from 'react-toastify';
@@ -24,6 +27,18 @@ const TeacherMNG = () => {
   const [notices, setNotices] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [createTeacherFormData, setTeacherFormData] = useState({
+    regNo: 0,
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    address: '',
+    dob: '',
+    contactNo: '',
+    gender: '',
+  });
+
+  const [updateFormData, setUpdateFormData] = useState({
     regNo: '',
     firstName: '',
     lastName: '',
@@ -32,9 +47,50 @@ const TeacherMNG = () => {
     address: '',
     dob: '',
     contactNo: '',
-    gender: ''
+    gender: '',
   });
+
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
+
+  const handleCreateChange = (field, value) => {
+    setTeacherFormData((prevData) => ({ ...prevData, [field]: value }));
+  };
+
+  const handleChange = (field, value) => {
+    setUpdateFormData((prevData) => ({ ...prevData, [field]: value }));
+  };
+
+  const handleAddTeacher = () => {
+    setOpen(true);
+  };
+
+  const handleUpdateTeacher = (row) => {
+    setUpdateFormData({
+      regNo: row.regNo,
+      firstName: row.firstName,
+      lastName: row.lastName,
+      email: row.email,
+      password: row.password,
+      address: row.address,
+      dob: row.dob,
+      contactNo: row.contactNo,
+      gender: row.gender,
+    });
+    setOpen2(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+  const refreshPage = () => {
+    setRefresh((prev) => !prev);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,24 +105,6 @@ const TeacherMNG = () => {
 
     fetchData();
   }, [refresh]);
-
-  const handleCreateChange = (field, value) => {
-    setTeacherFormData((prevData) => ({ ...prevData, [field]: value }));
-  };
-
-  const handleAddTeacher = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-
-
-  const refreshPage = () => {
-    setRefresh((prev) => !prev)
-  }
 
   const handleTeacherSubmit = async () => {
     try {
@@ -100,12 +138,26 @@ const TeacherMNG = () => {
       const result = await authAxios.delete(`${apiUrl}/admin/delete-teacher/${email}`);
 
       if (result) {
-        toast.warning('Account Deleted Success');
+        toast.warning('Account Deleted Successfully');
       }
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
       refreshPage();
+    }
+  };
+
+  const handleUpdate = async (email) => {
+    try {
+      const result = await authAxios.put(`${apiUrl}/admin/update-teacher/${email}`, updateFormData);
+
+      if (result) {
+        toast.success('Account Details Updated');
+        handleClose2();
+      }
+      refreshPage();
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
   };
 
@@ -123,13 +175,10 @@ const TeacherMNG = () => {
       <Dialog open={open} onClose={handleClose} sx={{ border: '2px solid #ccc' }}>
         <DialogTitle sx={{ textAlign: 'center' }}>Add New Teacher</DialogTitle>
         <DialogContent>
-
-          <DialogContentText>
-            Fill out the form below to add a new Teacher.
-          </DialogContentText>
+          <DialogContentText>Fill out the form below to add a new Teacher.</DialogContentText>
 
           <div>
-            <TextField
+            {/* <TextField
               id="outlined-read-only-input"
               label="Teacher ID"
               fullWidth
@@ -137,7 +186,7 @@ const TeacherMNG = () => {
               variant="outlined"
               onChange={(e) => handleCreateChange('regNo', e.target.value)}
               value={createTeacherFormData.regNo}
-            />
+            /> */}
 
             <TextField
               required
@@ -174,10 +223,20 @@ const TeacherMNG = () => {
 
             <TextField
               required
+              id="outlined-required"
+              label="Contact No"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => handleCreateChange('contactNo', e.target.value)}
+              value={createTeacherFormData.contactNo}
+            />
+
+            <TextField
+              required
               id="outlined-password-input"
               label="Email"
               type="email"
-              placeholder="Enter new password"
               fullWidth
               margin="normal"
               variant="outlined"
@@ -189,7 +248,6 @@ const TeacherMNG = () => {
               required
               id="outlined-password-input"
               label="Password"
-              placeholder="Re-enter new password"
               fullWidth
               margin="normal"
               variant="outlined"
@@ -206,29 +264,20 @@ const TeacherMNG = () => {
               variant="outlined"
               onChange={(e) => handleCreateChange('address', e.target.value)}
               value={createTeacherFormData.address}
+              multiline  // Set multiline to true
+              rows={4} 
             />
 
-            <TextField
-              required
-              id="outlined-required"
-              label="Gender"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              onChange={(e) => handleCreateChange('gender', e.target.value)}
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
               value={createTeacherFormData.gender}
-            />
+              onChange={(e) => handleCreateChange('gender', e.target.value)}
+            >
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+            </RadioGroup>
 
-            <TextField
-              required
-              id="outlined-required"
-              label="Contact No"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              onChange={(e) => handleCreateChange('contactNo', e.target.value)}
-              value={createTeacherFormData.contactNo}
-            />
           </div>
           <DialogActions style={{ justifyContent: 'center' }}>
             <Button onClick={handleClose}>Cancel</Button>
@@ -246,9 +295,11 @@ const TeacherMNG = () => {
               <TableCell>No</TableCell>
               <TableCell>First Name</TableCell>
               <TableCell>Last Name</TableCell>
+              <TableCell>Gender</TableCell>
               <TableCell>Mobile</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Created At</TableCell>
+              <TableCell>Address</TableCell>
+              <TableCell>Date Of Birth</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -258,14 +309,140 @@ const TeacherMNG = () => {
                 <TableCell>{row.regNo}</TableCell>
                 <TableCell>{row.firstName}</TableCell>
                 <TableCell>{row.lastName}</TableCell>
+                <TableCell>{row.gender}</TableCell>
                 <TableCell>{row.contactNo}</TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>{row.createdAt}</TableCell>
+                <TableCell>{row.address}</TableCell>
+                <TableCell>{row.dob}</TableCell>
                 <TableCell>
-                  <Button variant="contained" color="secondary" onClick={() => handleView(row)} sx={{ marginRight: 2 }}>
+                  <Button  size="small"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleUpdateTeacher(row)}
+                    sx={{ marginRight: 2 }}
+                  >
                     Update
                   </Button>
-                  <Button variant="contained" color="error" onClick={() => handleDeleteTeacher(row.email)}>
+
+                  <Dialog open={open2} onClose={handleClose2} sx={{ border: '2px solid #ccc' }}>
+                    <DialogTitle sx={{ textAlign: 'center' }}>Update {updateFormData.regNo}: {updateFormData.firstName} {updateFormData.lastName}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>Fill out the form below to Update Teacher.</DialogContentText>
+                      <div>
+
+                        <TextField
+                          id="outlined-read-only-input"
+                          label="Teacher ID"
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          onChange={(e) => handleChange('regNo', e.target.value)}
+                          value={updateFormData.regNo}
+                          disabled 
+                        />
+
+                        <TextField
+                          required
+                          id="outlined-required"
+                          label="First Name"
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          onChange={(e) => handleChange('firstName', e.target.value)}
+                          value={updateFormData.firstName}
+                        />
+
+                        <TextField
+                          required
+                          id="outlined-required"
+                          label="Last Name"
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          onChange={(e) => handleChange('lastName', e.target.value)}
+                          value={updateFormData.lastName}
+                        />
+
+                        {/* <TextField
+                          required
+                          id="outlined-required"
+                          type='date'
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          onChange={(e) => handleChange('dob', e.target.value)}
+                          value={updateFormData.dob}
+                        /> */}
+
+                        <TextField
+                          required
+                          id="outlined-required"
+                          label="Contact No"
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          onChange={(e) => handleChange('contactNo', e.target.value)}
+                          value={updateFormData.contactNo}
+                        />
+
+                        <TextField
+                          required
+                          id="outlined-password-input"
+                          label="Email"
+                          type="email"
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          onChange={(e) => handleChange('email', e.target.value)}
+                          value={updateFormData.email}
+                          disabled 
+                        />
+
+                        {/* <TextField
+                          required
+                          id="outlined-password-input"
+                          label="Password"
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          onChange={(e) => handleChange('password', e.target.value)}
+                          value={updateFormData.password}
+                        /> */}
+
+                        <TextField
+                          required
+                          id="outlined-required"
+                          label="Address"
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          onChange={(e) => handleChange('address', e.target.value)}
+                          value={updateFormData.address}
+                          multiline  // Set multiline to true
+                          rows={4} 
+                        />
+
+                        {/* <RadioGroup
+                          aria-labelledby="demo-controlled-radio-buttons-group"
+                          name="controlled-radio-buttons-group"
+                          value={updateFormData.gender}
+                          onChange={(e) => handleChange('gender', e.target.value)}
+                        >
+                          <FormControlLabel value="female" control={<Radio />} label="Female" />
+                          <FormControlLabel value="male" control={<Radio />} label="Male" />
+                        </RadioGroup> */}
+
+                      </div>
+                      <DialogActions style={{ justifyContent: 'center' }}>
+                        <Button onClick={handleClose2}>Cancel</Button>
+                        <Button onClick={() => handleUpdate(updateFormData.email)} variant="contained" color="primary">
+                          Update
+                        </Button>
+                      </DialogActions>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Button  size="small" variant="contained" color="error" onClick={() => handleDeleteTeacher(row.email)}>
                     Remove
                   </Button>
                 </TableCell>
