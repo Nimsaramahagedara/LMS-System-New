@@ -17,6 +17,12 @@ const NoticesSchema = new mongoose.Schema({
     enum: ["student", "teacher", "parent", "admin", "support", "all"],
 
   },
+  publishedBy: {
+    type: String,
+    required: true,
+    enum: ["teacher", "admin", "support"],
+
+  },
 }, { timestamps: true });
 
 const NoticesModel = mongoose.model('notices', NoticesSchema);

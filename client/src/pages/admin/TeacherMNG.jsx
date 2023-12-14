@@ -17,10 +17,11 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  FormLabel,
+  authAxios,
 } from '@mui/material';
 import AdminWelcomeCard from '../../components/AdminWelcomeCard';
 import { apiUrl } from '../../utils/Constants';
-import authAxios from '../../utils/authAxios';
 import { toast } from 'react-toastify';
 
 const TeacherMNG = () => {
@@ -178,15 +179,6 @@ const TeacherMNG = () => {
           <DialogContentText>Fill out the form below to add a new Teacher.</DialogContentText>
 
           <div>
-            {/* <TextField
-              id="outlined-read-only-input"
-              label="Teacher ID"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              onChange={(e) => handleCreateChange('regNo', e.target.value)}
-              value={createTeacherFormData.regNo}
-            /> */}
 
             <TextField
               required
@@ -268,6 +260,7 @@ const TeacherMNG = () => {
               rows={4} 
             />
 
+            <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
             <RadioGroup
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
@@ -363,17 +356,6 @@ const TeacherMNG = () => {
                           value={updateFormData.lastName}
                         />
 
-                        {/* <TextField
-                          required
-                          id="outlined-required"
-                          type='date'
-                          fullWidth
-                          margin="normal"
-                          variant="outlined"
-                          onChange={(e) => handleChange('dob', e.target.value)}
-                          value={updateFormData.dob}
-                        /> */}
-
                         <TextField
                           required
                           id="outlined-required"
@@ -398,17 +380,6 @@ const TeacherMNG = () => {
                           disabled 
                         />
 
-                        {/* <TextField
-                          required
-                          id="outlined-password-input"
-                          label="Password"
-                          fullWidth
-                          margin="normal"
-                          variant="outlined"
-                          onChange={(e) => handleChange('password', e.target.value)}
-                          value={updateFormData.password}
-                        /> */}
-
                         <TextField
                           required
                           id="outlined-required"
@@ -422,22 +393,12 @@ const TeacherMNG = () => {
                           rows={4} 
                         />
 
-                        {/* <RadioGroup
-                          aria-labelledby="demo-controlled-radio-buttons-group"
-                          name="controlled-radio-buttons-group"
-                          value={updateFormData.gender}
-                          onChange={(e) => handleChange('gender', e.target.value)}
-                        >
-                          <FormControlLabel value="female" control={<Radio />} label="Female" />
-                          <FormControlLabel value="male" control={<Radio />} label="Male" />
-                        </RadioGroup> */}
-
                       </div>
                       <DialogActions style={{ justifyContent: 'center' }}>
-                        <Button onClick={handleClose2}>Cancel</Button>
                         <Button onClick={() => handleUpdate(updateFormData.email)} variant="contained" color="primary">
                           Update
                         </Button>
+                        <Button onClick={handleClose2}>Cancel</Button>
                       </DialogActions>
                     </DialogContent>
                   </Dialog>
