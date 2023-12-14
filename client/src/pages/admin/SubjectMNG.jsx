@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, Typography, MenuItem, colors, } from '@mui/material';
-import AdminWelcomeCard from '../../components/AdminWelcomeCard';
-import DateInput from '../../components/DateInput';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
-import SubjectMNG from './SubjectMNG';
 
-const ClassMNG = () => {
+const SubjectMNG = ({ClassList}) => {
   const [open, setOpen] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
   const [selectedClass, setSelectedClass] = useState({});
   const [viewData, setViewData] = useState([]);
   const [selectedClassTeacher, setClassTeachr] = useState('');
-  const [AllClasses, setAllClasses] = useState([]);
   const [refresh, changeRefresh] = useState(false);
   const [allTeachers, setAllTeachers] = useState([]);
 
@@ -31,14 +27,6 @@ const ClassMNG = () => {
     setCreateClassData((prevData) => ({ ...prevData, [field]: value }));
   };
 
-  const handleClassTeacherChange = (e) => {
-    setClassTeachr(e.target.value)
-  }
-
-  const handleCreateClass = () => {
-
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -47,86 +35,55 @@ const ClassMNG = () => {
   const handleViewClose = () => {
     setViewOpen(false);
   };
-  const updateClassTeacher = async () => {
-    try {
-      const data = {
-        ownedBy: selectedClassTeacher
-      }
-      const result = await authAxios.put(`${apiUrl}/class/assign-teacher/${selectedClass._id}`, data)
-
-      console.log(result.data);
-      toast.success(result.data.message);
-
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-  }
 
   const getStudentsInClass = async (id) => {
-    const inClassStudents = await authAxios.get(`${apiUrl}/class/get-students/${id}`);
-    console.log(inClassStudents.data);
-    setViewData(inClassStudents.data);
+    // const inClassStudents = await authAxios.get(`${apiUrl}/class/get-students/${id}`);
+    // console.log(inClassStudents.data);
+    // setViewData(inClassStudents.data);
   }
 
   const handleView = async (row) => {
     setSelectedClass(row);
-    if (row.ownedBy) {
+    console.log(selectedClass);
+
+    if(row.ownedBy){
       setClassTeachr(row.ownedBy._id)
-    } else {
+    }else{
       setClassTeachr(null);
     }
-
+  
     await getStudentsInClass(row._id);
     setViewOpen(true);
   };
 
   const handleCreateClassSubmit = async () => {
-    try {
-      const isClass = await authAxios.post(`${apiUrl}/class/create`, createClassData);
-      if (isClass) {
-        toast.success('Class Created SuccessFully');
-        changeRefresh((prev) => !prev);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
-    }
+    // try {
+    //   const isClass = await authAxios.post(`${apiUrl}/class/create`, createClassData);
+    //   if (isClass) {
+    //     toast.success('Class Created SuccessFully');
+    //     changeRefresh((prev) => !prev);
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error(error.response.data.message);
+    // }
   };
-  const getAllClasses = async () => {
-    try {
-      const allClasses = await authAxios.get(`${apiUrl}/class`);
-      setAllClasses(allClasses.data);
-    } catch (error) {
-      toast.error(error.response.data.message)
-    }
-  }
 
-  const getAllTeachers = async () => {
-    try {
-      const allT = await authAxios.get(`${apiUrl}/admin/get-all-teachers`);
-      setAllTeachers(allT.data);
-    } catch (error) {
-      toast.error(error.response.data.message)
-    }
-  }
   useEffect(() => {
-    getAllClasses();
-    getAllTeachers();
+    //getAllTeachers();
   }, [refresh])
 
 
   return (
     <div>
-
-      <AdminWelcomeCard />
       <div style={{ textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2em' }}>Manage Students Classes</h1>
+        <h1 style={{ fontSize: '2em' }}>Manage Subjects In Classes</h1>
       </div>
 
       {/* Adding New Student Part Start Here... */}
-      <Button variant="contained" onClick={handleCreateClass}>
+      {/* <Button variant="contained" onClick={handleCreateClass}>
         Create New Class
-      </Button>
+      </Button> */}
 
 
       <Dialog open={open} onClose={handleClose}>
@@ -197,7 +154,7 @@ const ClassMNG = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {AllClasses.map((row, index) => (
+            {ClassList.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{row.grade}</TableCell>
                 <TableCell>{row.subClass}</TableCell>
@@ -219,41 +176,21 @@ const ClassMNG = () => {
       </TableContainer>
       {/* Students and class Table Ends Here... */}
 
-      {/* SECOND SECTION */}
-      {
-        AllClasses && <SubjectMNG ClassList={AllClasses}/>
-      }
-      
-
       {/* View Class Details Dialog Table Starts here.. */}
       <Dialog open={viewOpen} onClose={handleViewClose} maxWidth="xl">
         <DialogTitle sx={{ textAlign: 'center' }}>
           Class Details - {selectedClass.grade} {selectedClass.subClass}
         </DialogTitle>
-        <Typography>Class Teacher</Typography>
-        <Select
-          value={selectedClassTeacher}
-          onChange={handleClassTeacherChange}
-          label="Class Teacher"
-          color='warning'
-          variant="outlined"
-        >
-          {allTeachers.map((teac, index) => (
-            <MenuItem value={teac._id} key={index}>{teac.firstName + ' ' + teac.lastName}</MenuItem>
-          ))}
-        </Select>
-        <Button variant='contained' color='warning' onClick={() => updateClassTeacher()}>Update Class Teacher</Button>
+        <Typography>Class Teacher : {selectedClass.ownedBy.firstName + ' ' + selectedClass.ownedBy.lastName}</Typography>
+
         <DialogContent>
           <TableContainer style={{ marginTop: '20px' }} sx={{ maxWidth: '100%' }}>
             <Table sx={{ maxWidth: '100%' }}>
               <TableHead>
                 <TableRow>
                   <TableCell>No</TableCell>
-                  <TableCell>Index No</TableCell>
-                  <TableCell>Student Name</TableCell>
-                  <TableCell>DOB</TableCell>
-                  <TableCell>Mobile</TableCell>
-                  <TableCell>Address</TableCell>
+                  <TableCell>Subject Name</TableCell>
+                  <TableCell>Teacher</TableCell>
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
@@ -263,9 +200,7 @@ const ClassMNG = () => {
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{index}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.regNo}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.firstName}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.dob}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.contactNo}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.address}</TableCell>
+
                     <TableCell style={{ whiteSpace: 'nowrap' }}>
                       <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
                         Update
@@ -279,7 +214,7 @@ const ClassMNG = () => {
                 {/* Add a row for total number of students */}
                 <TableRow>
                   <TableCell colSpan={6} align="right">
-                    <strong>Total number of students:</strong>
+                    <strong>Total number of subjects:</strong>
                   </TableCell>
                   <TableCell align="center">
                     <strong>{viewData.length}</strong>
@@ -298,4 +233,4 @@ const ClassMNG = () => {
   );
 };
 
-export default ClassMNG;
+export default SubjectMNG;
