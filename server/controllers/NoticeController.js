@@ -1,58 +1,25 @@
-//TODO: CREATE AN API CALLED GET NOTICES
-//SHOULD GET THE USER ROLE VIA params
-//DEPENDS ON USER ROLEE, SHOULD SEND THE NOTICES BELONGS TO THAT USER ROLE + NOTICES BELONGS TO ALL
 import NoticesModel from "../models/NoticeModel.js";
-
-// export const getAllNotices = async (req, res) => {
-//   const { userRole } = req.params;
-//   let query = {};
-
-//     // If userRole is provided, filter by userRole or 'all'
-//     if (userRole) {
-//       query = {
-//         $or: [
-//           { audience: userRole },
-//           { audience: 'all' },
-//         ],
-//       };
-//     }
-
-//   try {
-//     const allNotices = await NoticesModel.find(query);
-//     res.status(200).json(allNotices);
-//   } catch (error) {
-//     console.error('Error fetching notices:', error);
-//     res.status(500).json({ message: error.message });
-//   }
-// }
-
-// export const createNotice = async(req,res)=>{
-//   const data = req.body;
-
-//   try {
-//     const createdNotice = await NoticesModel.create(data);
-//     res.status(200).json({message:'Notice Published For' + data.audience});
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({message:error.message})
-//   }
-// }
-
 
 // Create a new notice
 const createNotice = async (req, res) => {
   try {
-    const { title, description, audience } = req.body;
-    
+    const { title, description, audience, publishedBy } = req.body;
+
     // Validate the audience field
     if (!["student", "teacher", "parent", "admin", "support", "all"].includes(audience)) {
       return res.status(400).json({ error: "Invalid audience type" });
+    }
+
+    // Validate the publishedBy field
+    if (!["teacher", "admin", "support"].includes(publishedBy)) {
+      return res.status(400).json({ error: "Invalid publishedBy type" });
     }
 
     const newNotice = await NoticesModel.create({
       title,
       description,
       audience,
+      publishedBy,
     });
 
     return res.status(201).json(newNotice);
@@ -77,16 +44,21 @@ const getAllNotices = async (req, res) => {
 const updateNotice = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, audience } = req.body;
+    const { title, description, audience, publishedBy } = req.body;
 
     // Validate the audience field
     if (audience && !["student", "teacher", "parent", "admin", "support", "all"].includes(audience)) {
       return res.status(400).json({ error: "Invalid audience type" });
     }
 
+    // Validate the publishedBy field
+    if (publishedBy && !["teacher", "admin", "support"].includes(publishedBy)) {
+      return res.status(400).json({ error: "Invalid publishedBy type" });
+    }
+
     const updatedNotice = await NoticesModel.findByIdAndUpdate(
       id,
-      { title, description, audience },
+      { title, description, audience, publishedBy },
       { new: true }
     );
 
@@ -138,5 +110,33 @@ const getNoticesByUserRole = async (req, res) => {
   }
 };
 
-export { createNotice, getAllNotices, updateNotice, deleteNotice, getNoticesByUserRole };
+// ...
+
+// Get notices by publishedBy
+const getNoticesByPublishedBy = async (req, res) => {
+  try {
+    const { publishedBy } = req.params;
+
+    // Validate the publishedBy field
+    if (!["teacher", "admin", "support"].includes(publishedBy)) {
+      return res.status(400).json({ error: "Invalid publishedBy type" });
+    }
+
+    const notices = await NoticesModel.find({ publishedBy });
+
+    return res.status(200).json(notices);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export {
+  createNotice,
+  getAllNotices,
+  updateNotice,
+  deleteNotice,
+  getNoticesByUserRole,
+  getNoticesByPublishedBy, // Add this line
+};
 
