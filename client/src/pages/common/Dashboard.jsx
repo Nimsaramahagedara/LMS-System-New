@@ -137,7 +137,7 @@ export default function Dashboard() {
 
     }
 
-    getAllNotices();
+    getAllNotices(Cookies.get('userRole'));
   },[])
 
   useEffect(() => {
