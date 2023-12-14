@@ -53,3 +53,19 @@ export const CreateStudentAccount = async (req, res) => {
     }
 
 }
+
+
+//GET Student Profile  //LoggedInStudent
+export const getStudentDetails = async(req,res)=>{
+    const id = req.loggedInId
+    try {
+        const isExist = await UserModel.findById(id).populate('classId');
+        if(!isExist){
+            res.status(401).json({message:'User Not Exist'});
+        }
+        res.status(200).json(isExist);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message:error.message});
+    }
+}
