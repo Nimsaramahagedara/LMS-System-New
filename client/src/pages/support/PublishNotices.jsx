@@ -236,8 +236,8 @@ const PublishNotices = () => {
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button onClick={publishNotice}>Publish</Button>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={publishNotice} variant='outlined'>Publish</Button>
+            <Button onClick={handleClose} variant='outlined'>Cancel</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>
