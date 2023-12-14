@@ -15,7 +15,7 @@ const Notices = () => {
 
   const getAllNotices = async ()=>{
     try {
-      const allnotes = await authAxios.get(`${apiUrl}/notices/students`);
+      const allnotes = await authAxios.get(`${apiUrl}/notices/student`);
       setNotices(allnotes.data);
     } catch (error) {
       toast.error(error.response.data.message);
