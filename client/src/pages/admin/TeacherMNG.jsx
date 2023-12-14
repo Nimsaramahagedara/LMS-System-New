@@ -18,11 +18,11 @@ import {
   FormControlLabel,
   Radio,
   FormLabel,
-  authAxios,
 } from '@mui/material';
 import AdminWelcomeCard from '../../components/AdminWelcomeCard';
 import { apiUrl } from '../../utils/Constants';
 import { toast } from 'react-toastify';
+import authAxios from '../../utils/authAxios';
 
 const TeacherMNG = () => {
   const [notices, setNotices] = useState([]);
