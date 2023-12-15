@@ -9,10 +9,6 @@ const ClassSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    students: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
-    }],
     ownedBy:{
         type: mongoose.Schema.ObjectId,
         ref: 'users'

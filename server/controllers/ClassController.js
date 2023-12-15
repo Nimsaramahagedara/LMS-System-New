@@ -7,7 +7,29 @@ export const getAllClasses = async (req, res) => {
     try {
         const classes = await ClassModel.find().populate('ownedBy').exec();
 
-        res.status(200).json(classes);
+        // Create an array to store the modified class objects
+        const classesWithStudentCount = [];
+
+        // Iterate through each class
+        for (const classObj of classes) {
+            // Count the number of students enrolled in the current class
+            const studentCount = await UserModel.countDocuments({ classId: classObj._id, role:'student' });
+
+            const classWithCount = {
+                _id: classObj._id,
+                grade: classObj.grade,
+                subClass: classObj.subClass,
+                ownedBy: classObj.ownedBy,
+                subjects:classObj.subjects,
+                // Add the student count to the class object
+                studentCount: studentCount,
+            };
+
+            // Push the modified class object to the array
+            classesWithStudentCount.push(classWithCount);
+        }
+
+        res.status(200).json(classesWithStudentCount);
     } catch (error) {
         res.status(500).json({
             message: error.mesasge
