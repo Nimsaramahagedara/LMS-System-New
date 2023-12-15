@@ -6,7 +6,7 @@ const SubjectSchema = new mongoose.Schema({
     },
     teachBy: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Users',
+        ref: 'users',
     },
     classId: {
         type: mongoose.Schema.ObjectId,

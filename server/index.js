@@ -8,6 +8,7 @@ import adminRouter from './routes/AdminRoutes.js';
 import studentRouter from './routes/StudentRoutes.js';
 import classRoutes from './routes/ClassRoutes.js';
 import noticeRouter from './routes/NoticeRoutes.js';
+import subjectRoutes from './routes/SubjectRoutes.js';
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -27,6 +28,7 @@ app.get('/', async (req,res)=>{
 app.use('/',userRouter);
 app.use('/class', classRoutes);
 app.use('/notices', noticeRouter);
+app.use('/subject', subjectRoutes)
 //Student Routes
 app.use('/student', studentRouter)
 //Teacher Routes

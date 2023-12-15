@@ -13,11 +13,6 @@ const ClassSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'users'
     },
-    subjects: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'subjects',
-        default:[null]
-    }],
 }, { timestamps: true });
 
 

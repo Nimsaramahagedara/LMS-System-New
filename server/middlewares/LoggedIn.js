@@ -7,11 +7,11 @@ export const LoginValidator = (req, res, next) => {
     if (authorizationHeader) {
       
       const token = authorizationHeader.split(' ')[1];
-      console.log('Token:', token);
+     // console.log('Token:', token);
       const id = verifyToken(token);
 
       // Pass the token to the next middleware or route handler
-      req.loggedInId = id.email;
+      req.loggedInId = id.email; //this email have the document id, its not an email address
   
       next();
     } else {
