@@ -7,7 +7,16 @@ import { apiUrl } from '../../utils/Constants';
 const SubjectMNG = ({ClassList}) => {
   const [open, setOpen] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
-  const [selectedClass, setSelectedClass] = useState({});
+  const [selectedClass, setSelectedClass] = useState({
+      grade: '',
+      subClass: 'A',
+      students: [null],
+      ownedBy: {
+        firstName: '',
+        lastName:''
+      },
+      subjects: [null]
+    });
   const [viewData, setViewData] = useState([]);
   const [selectedClassTeacher, setClassTeachr] = useState('');
   const [refresh, changeRefresh] = useState(false);
@@ -43,9 +52,8 @@ const SubjectMNG = ({ClassList}) => {
   }
 
   const handleView = async (row) => {
+    console.log(row);
     setSelectedClass(row);
-    console.log(selectedClass);
-
     if(row.ownedBy){
       setClassTeachr(row.ownedBy._id)
     }else{
@@ -181,7 +189,7 @@ const SubjectMNG = ({ClassList}) => {
         <DialogTitle sx={{ textAlign: 'center' }}>
           Class Details - {selectedClass.grade} {selectedClass.subClass}
         </DialogTitle>
-        <Typography>Class Teacher : {selectedClass.ownedBy.firstName + ' ' + selectedClass.ownedBy.lastName}</Typography>
+        <Typography>Class Teacher : { selectedClass.ownedBy !== null ? (selectedClass.ownedBy.firstName + ' ' + selectedClass.ownedBy.lastName) : 'Not Assined'}</Typography>
 
         <DialogContent>
           <TableContainer style={{ marginTop: '20px' }} sx={{ maxWidth: '100%' }}>

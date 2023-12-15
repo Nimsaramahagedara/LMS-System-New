@@ -68,4 +68,73 @@ export const getStudentDetails = async(req,res)=>{
         console.log(error);
         res.status(500).json({message:error.message});
     }
-}
+};
+
+
+// Get Students by Class ID
+export const getStudentsByClassId = async (req, res) => {
+    const { classId } = req.params; // Assuming classId is passed as a route parameter
+  
+    try {
+      // Find students with the specified classId and role set to 'student'
+      const students = await UserModel.find({
+        classId,
+        role: 'student',
+      }).populate('classId');
+  
+      res.status(200).json(students);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+
+  // Get All Students
+export const getAllStudents = async (req, res) => {
+    try {
+      // Find all users with the role set to 'student'
+      const students = await UserModel.find({ role: 'student' }).populate('classId');
+  
+      res.status(200).json(students);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+
+  // Update Student by ID
+export const updateStudentById = async (req, res) => {
+    const { id } = req.params; // Assuming the student ID is passed as a route parameter
+    const updateData = req.body;
+  
+    try {
+      const updatedStudent = await UserModel.findByIdAndUpdate(id, updateData, { new: true }).populate('classId');
+  
+      if (!updatedStudent) {
+        return res.status(404).json({ message: 'Student not found' });
+      }
+  
+      res.status(200).json(updatedStudent);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+
+  // Delete Student by ID
+export const deleteStudentById = async (req, res) => {
+    const { id } = req.params; // Assuming the student ID is passed as a route parameter
+  
+    try {
+      const deletedStudent = await UserModel.findByIdAndDelete(id);
+  
+      if (!deletedStudent) {
+        return res.status(404).json({ message: 'Student not found' });
+      }
+  
+      res.status(200).json({ message: 'Student deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
