@@ -333,7 +333,7 @@ const StudentMNG = () => {
                 <TableCell>{row.grade}</TableCell>
                 <TableCell>{row.subClass}</TableCell>
                 <TableCell>{row.ownedBy ? (row.ownedBy.firstName + ' ' + row.ownedBy.lastName) : 'Not Assigned'}</TableCell>
-                <TableCell>{row.students.length} /40</TableCell>
+                <TableCell>{row.studentCount} /40</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
