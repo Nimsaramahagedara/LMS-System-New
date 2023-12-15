@@ -1,5 +1,5 @@
 import express from 'express';
-import { CreateStudentAccount, getStudentDetails, getAllStudents , getStudentsByClassId } from '../controllers/StudentController.js';
+import { CreateStudentAccount, getStudentDetails, getAllStudents , getStudentsByClassId, updateStudentById, deleteStudentById } from '../controllers/StudentController.js';
 import { LoginValidator } from '../middlewares/LoggedIn.js';
 
 const studentRouter = express.Router();
@@ -9,6 +9,7 @@ studentRouter.get('/', LoginValidator,getStudentDetails);
 studentRouter.post('/create-student', CreateStudentAccount);
 studentRouter.get('/:classId', getStudentsByClassId);
 studentRouter.get('/students', getAllStudents);
-
+studentRouter.put('/students/:id', updateStudentById); 
+studentRouter.delete('/students/:id', deleteStudentById); 
 
 export default studentRouter;
