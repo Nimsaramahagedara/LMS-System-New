@@ -30,9 +30,9 @@ import authAxios from '../../utils/authAxios';
 // Additional imports
 import { RadioGroup, FormLabel } from '@mui/material';
 
-const Notice = () => {
+const AdminPublishNotices = () => {
 
-  const publishedBy = "teacher";
+  const publishedBy = "admin";
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -351,4 +351,4 @@ const Notice = () => {
   )
 }
 
-export default Notice
+export default AdminPublishNotices

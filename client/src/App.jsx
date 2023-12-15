@@ -20,6 +20,7 @@ import CreateStudentAcc from './pages/support/CreateStudentAcc'
 import CreateTeacherAcc from './pages/support/CreateTeacherAcc'
 import ManageAccounts from './pages/support/ManageAccounts'
 import PublishNotices from './pages/support/PublishNotices'
+import AdminPublishNotices from './pages/admin/PublishNotice';
 import { AuthProvider } from './pages/common/AuthContext'
 import ContactParent from './pages/teacher/ContactParent'
 import LandingPage from './pages/common/LandingPage'
@@ -56,6 +57,7 @@ function App() {
             <Route path='teachers' element={<TeacherMNG />} />
             <Route path='support' element={<SupportTeam />} />
             <Route path='classes' element={<ClassMNG />} />
+            <Route path='publishNotice' element={<AdminPublishNotices />} />
 
             {/* Teacher Routes */}
             <Route path='attendance' element={<Attendence />} />

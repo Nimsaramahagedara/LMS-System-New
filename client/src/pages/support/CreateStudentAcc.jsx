@@ -11,9 +11,9 @@ const CreateStudentAcc = () => {
   const [open, setOpen] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
   const [selectedClass, setSelectedClass] = useState({});
-  const [viewData, setViewData] = useState([]);
+  const [data, setData] = useState('');
   const [AllClasses, setAllClasses] = useState([]);
-  const [refresh, changeRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
  //UPDATE SUPPORT FORM DATA
  const [createStudentData, setCreateStudent] = useState({
@@ -51,38 +51,46 @@ const handleViewClose = () => {
 
 const handleView = (row) => {
   setSelectedClass(row);
-  setViewData(getDummyStudentData()); // Replace with your logic to fetch student data for the selected class
   setViewOpen(true);
 };
 
+const refreshPage = ()=>{
+      setRefresh((prev)=> !prev)
+}
 
 
-const handleSubmit =async () => {
+
+
+
+const handleSubmit = async () => {
   try {
     const result = await authAxios.post(`${apiUrl}/student/create-student`, createStudentData);
-    if(result){
-      toast.success('Account Created Successfully')
-      handleClose(); 
+    if (result) {
+      toast.success('Account Created Successfully');
+      handleClose();
     }
   } catch (error) {
-    toast.error(error.response.data.message)
+    toast.error(error.response.data.message);
   }
-  
 };
 
 
 useEffect(() => {
   const getAllClasses = async () => {
     try {
-      const allClasses = await authAxios.get(`${apiUrl}/class`);
-      setAllClasses(allClasses.data);
+      const result = await authAxios.get(`${apiUrl}/class`);
+      if (result) {
+        setAllClasses(result.data);
+      } else {
+        toast.error('Class Data Not Available');
+      }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
     }
-  }
+  };
 
   getAllClasses();
-}, [refresh])
+}, [refresh]);
 
 
 
@@ -285,6 +293,9 @@ useEffect(() => {
             {/* Form Ends Here.. */}
 
 
+
+
+
           </DialogContent>
   
           <DialogActions style={{ justifyContent: 'center' }}>
@@ -297,9 +308,42 @@ useEffect(() => {
         {/* Adding New Student Part Ends Here... */}
   
   
-  
-      </div>
-    );
-  };
+       {/* Students and class Table Start Here... */}
+       <TableContainer component={Paper} style={{ marginTop: '20px' }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {AllClasses.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>{row.regNo}</TableCell>
+                <TableCell>{row.firstName}</TableCell>
+                <TableCell>{row.lastName}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleView(row)}
+                  >
+                    View
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {/* ... Existing code ... */}
+    </div>
+  );
+};
 
 export default CreateStudentAcc;
