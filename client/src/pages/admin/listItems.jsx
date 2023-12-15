@@ -122,6 +122,15 @@ export const adminListItems = (
       </Link>
     </ListItemButton>
 
+    <ListItemButton>
+      <ListItemIcon>
+        <NoteIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/publishNotice'}>
+      <ListItemText primary="Publish Notices" />
+      </Link>
+    </ListItemButton>
+
   </React.Fragment>
 );
 
