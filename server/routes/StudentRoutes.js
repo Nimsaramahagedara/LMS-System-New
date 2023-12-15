@@ -9,7 +9,7 @@ studentRouter.get('/', LoginValidator,getStudentDetails);
 studentRouter.post('/create-student', CreateStudentAccount);
 studentRouter.get('/:classId', getStudentsByClassId);
 studentRouter.get('/students', getAllStudents);
-studentRouter.put('/students/:id', updateStudentById); 
-studentRouter.delete('/students/:id', deleteStudentById); 
+studentRouter.put('/update-student/:id', updateStudentById); 
+studentRouter.delete('/delete-student/:id', deleteStudentById); 
 
 export default studentRouter;
