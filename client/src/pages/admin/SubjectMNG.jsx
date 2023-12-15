@@ -3,150 +3,70 @@ import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentT
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
+import AddSubjectModal from '../../components/AddSubjectModal';
+import { getAllSubjectsInClass } from '../../../../server/controllers/SubjectController';
 
-const SubjectMNG = ({ClassList}) => {
-  const [open, setOpen] = useState(false);
+const SubjectMNG = ({ ClassList }) => {
   const [viewOpen, setViewOpen] = useState(false);
-  const [selectedClass, setSelectedClass] = useState({
-      grade: '',
-      subClass: 'A',
-      students: [null],
-      ownedBy: {
-        firstName: '',
-        lastName:''
-      },
-      subjects: [null]
-    });
-  const [viewData, setViewData] = useState([]);
-  const [selectedClassTeacher, setClassTeachr] = useState('');
-  const [refresh, changeRefresh] = useState(false);
   const [allTeachers, setAllTeachers] = useState([]);
-
-  //UPDATE SUPPORT FORM DATA
-  const [createClassData, setCreateClassData] = useState({
+  const [selectedClass, setSelectedClass] = useState({
     grade: '',
     subClass: 'A',
     students: [null],
-    ownedBy: null,
-    subjects: [null]
+    ownedBy: {
+      firstName: '',
+      lastName: ''
+    },
   });
+  const [viewData, setViewData] = useState([]);
+  const [refresh, changeRefresh] = useState(false);
 
-  //ACCOUNT UPDATE FORM VALUES HANDLER
-  const handleCreateClassData = (field, value) => {
-    setCreateClassData((prevData) => ({ ...prevData, [field]: value }));
-  };
+  const getAllTeachers = async () => {
+    try {
+      const allT = await authAxios.get(`${apiUrl}/admin/get-all-teachers`);
+      setAllTeachers(allT.data);
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
 
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  useEffect(() => {
+    getAllTeachers();
+  }, [])
 
   const handleViewClose = () => {
     setViewOpen(false);
   };
 
-  const getStudentsInClass = async (id) => {
-    // const inClassStudents = await authAxios.get(`${apiUrl}/class/get-students/${id}`);
+  const getSubjectsInClass = async (id) => {
+    const subjectsinClass = await authAxios.get(`${apiUrl}/subject/${id}`);
     // console.log(inClassStudents.data);
-    // setViewData(inClassStudents.data);
+    setViewData(subjectsinClass.data);
   }
 
   const handleView = async (row) => {
-    console.log(row);
     setSelectedClass(row);
-    if(row.ownedBy){
-      setClassTeachr(row.ownedBy._id)
-    }else{
-      setClassTeachr(null);
-    }
-  
-    await getStudentsInClass(row._id);
+    await getSubjectsInClass(row._id);
     setViewOpen(true);
   };
 
-  const handleCreateClassSubmit = async () => {
-    // try {
-    //   const isClass = await authAxios.post(`${apiUrl}/class/create`, createClassData);
-    //   if (isClass) {
-    //     toast.success('Class Created SuccessFully');
-    //     changeRefresh((prev) => !prev);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error(error.response.data.message);
-    // }
-  };
-
-  useEffect(() => {
-    //getAllTeachers();
-  }, [refresh])
-
+  const handleDelete = async (id) => {
+    try {
+      const isDeleted = await authAxios.delete(`${apiUrl}/subject/${id}`);
+      if (isDeleted.data) {
+        toast.success('Subject Deleted Successfully');
+        getAllSubjectsInClass(selectedClass._id)
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
 
   return (
     <div>
       <div style={{ textAlign: 'center' }}>
         <h1 style={{ fontSize: '2em' }}>Manage Subjects In Classes</h1>
       </div>
-
-      {/* Adding New Student Part Start Here... */}
-      {/* <Button variant="contained" onClick={handleCreateClass}>
-        Create New Class
-      </Button> */}
-
-
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle sx={{ textAlign: 'center' }}>Create New Class</DialogTitle>
-
-        <DialogContent>
-          <DialogContentText>
-            Fill out the form below to Create a new Class.
-          </DialogContentText>
-
-          {/* Form Start */}
-          <div>
-
-            {/* Grade Input */}
-            <TextField
-              required
-              id="outlined-required"
-              type='number'
-              label="Grade"
-              placeholder="e.g., 10"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              onChange={e => handleCreateClassData('grade', e.target.value)}
-            />
-
-            {/* Sub Class Input */}
-            <TextField
-              required
-              id="outlined-required"
-              label="Sub Class"
-              placeholder="e.g., A / B"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              inputProps={{
-                maxLength: 1,
-              }}
-              onChange={e => handleCreateClassData('subClass', e.target.value)}
-            />
-          </div>
-          {/* Form Ends Here.. */}
-
-        </DialogContent>
-
-        <DialogActions style={{ justifyContent: 'center' }}>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleCreateClassSubmit} variant="contained" color="primary">
-            Create Class
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* Adding New Student Part Ends Here... */}
-
-
 
 
       {/* Students and class Table Start Here... */}
@@ -189,8 +109,10 @@ const SubjectMNG = ({ClassList}) => {
         <DialogTitle sx={{ textAlign: 'center' }}>
           Class Details - {selectedClass.grade} {selectedClass.subClass}
         </DialogTitle>
-        <Typography>Class Teacher : { selectedClass.ownedBy !== null ? (selectedClass.ownedBy.firstName + ' ' + selectedClass.ownedBy.lastName) : 'Not Assined'}</Typography>
-
+        <Typography className='text-center' variant='subtitle2'>Class Teacher : {selectedClass.ownedBy !== null ? (selectedClass.ownedBy.firstName + ' ' + selectedClass.ownedBy.lastName) : 'Not Assined'}</Typography>
+        {
+          allTeachers && <AddSubjectModal allTeachers={allTeachers} classId={selectedClass._id} handleRefresh={getSubjectsInClass} />
+        }
         <DialogContent>
           <TableContainer style={{ marginTop: '20px' }} sx={{ maxWidth: '100%' }}>
             <Table sx={{ maxWidth: '100%' }}>
@@ -203,23 +125,23 @@ const SubjectMNG = ({ClassList}) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {viewData.map((student, index) => (
+                {viewData.map((subject, index) => (
                   <TableRow key={index}>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{index}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.regNo}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.firstName}</TableCell>
+                    <TableCell style={{ whiteSpace: 'nowrap' }}>{subject.subName}</TableCell>
+                    <TableCell style={{ whiteSpace: 'nowrap' }}>{subject.teachBy && subject.teachBy.lastName}</TableCell>
 
                     <TableCell style={{ whiteSpace: 'nowrap' }}>
                       <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
                         Update
                       </Button>
-                      <Button variant="contained" color="error">
+                      <Button variant="contained" color="error" onClick={() => handleDelete(subject._id)}>
                         Remove
                       </Button>
                     </TableCell>
                   </TableRow>
                 ))}
-                {/* Add a row for total number of students */}
+                {/* Add a row for total number of subjects */}
                 <TableRow>
                   <TableCell colSpan={6} align="right">
                     <strong>Total number of subjects:</strong>
@@ -233,7 +155,7 @@ const SubjectMNG = ({ClassList}) => {
           </TableContainer>
         </DialogContent>
         <DialogActions style={{ justifyContent: 'center' }}>
-          <Button onClick={handleViewClose}>Close</Button>
+          <Button onClick={handleViewClose} variant='outlined'>Close</Button>
         </DialogActions>
       </Dialog>
 
