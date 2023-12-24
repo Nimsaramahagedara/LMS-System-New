@@ -192,11 +192,11 @@ const MySubject = () => {
             Create New Activity
           </Typography>
           <div className='flex flex-col w-full space-y-5 mb-10'>
-            <TextField placeholder='Title' fullWidth label='Title' onChange={(e) => handleCreateChange('title', e.target.value)}></TextField>
+            <TextField placeholder='Title' fullWidth label='Title' value={activity.title} onChange={(e) => handleCreateChange('title', e.target.value)}></TextField>
 
-            <TextField placeholder='Description' fullWidth label='Description' onChange={e => handleCreateChange('desc', e.target.value)}></TextField>
+            <TextField placeholder='Description' fullWidth label='Description' value={activity.desc} onChange={e => handleCreateChange('desc', e.target.value)}></TextField>
 
-            <TextField placeholder='Link' fullWidth label='Link' onChange={e => handleCreateChange('link', e.target.value)}></TextField>
+            <TextField placeholder='Link' fullWidth label='Link' value={activity.link} onChange={e => handleCreateChange('link', e.target.value)}></TextField>
           </div>
           <FormControl>
             <FormLabel id="demo-row-radio-buttons-group-label">Activity Type</FormLabel>
@@ -204,6 +204,7 @@ const MySubject = () => {
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
+              value={activity.actType}
               onChange={e => handleCreateChange('actType', e.target.value)}
             >
               <FormControlLabel value="activity" control={<Radio />} label="Assignment" />
