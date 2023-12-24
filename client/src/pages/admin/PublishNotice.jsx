@@ -29,6 +29,7 @@ import authAxios from '../../utils/authAxios';
 
 // Additional imports
 import { RadioGroup, FormLabel } from '@mui/material';
+import Loader from '../../components/Loader/Loader';
 
 const AdminPublishNotices = () => {
 
@@ -37,6 +38,7 @@ const AdminPublishNotices = () => {
   const [open2, setOpen2] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [notices, setNotices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [newNotice, setNewNotice] = useState({
     title: '',
     description: '',
@@ -85,7 +87,7 @@ const AdminPublishNotices = () => {
         const response = await fetch(`${apiUrl}/notices/get-notice-by-publisher/${publishedBy}`);
         const data = await response.json();
         setNotices(data);
-        console.log(data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -253,7 +255,7 @@ const AdminPublishNotices = () => {
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          { !isLoading ? <TableBody>
             {notices.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
@@ -344,7 +346,8 @@ const AdminPublishNotices = () => {
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody>
+          </TableBody> :<Loader/>
+}
         </Table>
       </TableContainer>
     </div>

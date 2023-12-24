@@ -8,6 +8,7 @@ import { apiUrl } from '../../utils/Constants';
 import SimpleCard from '../../components/SimpleCard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ColorCard from '../../components/StudentDashboard/ColorCard';
+import Loader from '../../components/Loader/Loader';
 const SupportTeam = () => {
     const [open, setOpen] = useState(false);
     const [viewOpen, setViewOpen] = useState(false);
@@ -15,6 +16,7 @@ const SupportTeam = () => {
     const [data, setData] = useState('');
     const [allSupport, setAllSupport] = useState([]);
     const [refresh, setRefresh] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     //UPDATE SUPPORT FORM DATA
     const [updateFormData, setUpdateFormData] = useState({
@@ -120,6 +122,7 @@ const SupportTeam = () => {
                 const result = await authAxios.get(`${apiUrl}/admin/get-all-support`);
                 if (result) {
                     setAllSupport(result.data);
+                    setIsLoading(false);
                 } else {
                     toast.error('Support Accounts None');
                 }
@@ -304,7 +307,8 @@ const SupportTeam = () => {
                             <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
+                    {
+                        !isLoading ? <TableBody>
                         {allSupport.map((row, index) => (
                             <TableRow key={index}>
                                 <TableCell>{row.regNo}</TableCell>
@@ -322,7 +326,8 @@ const SupportTeam = () => {
                                 </TableCell>
                             </TableRow>
                         ))}
-                    </TableBody>
+                    </TableBody> : <Loader/>
+}
                 </Table>
             </TableContainer>
             {/* View support accounts Table Ends Here... */}
