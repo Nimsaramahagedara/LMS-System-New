@@ -38,6 +38,7 @@ import MyClass from './pages/teacher/MyClass'
 import SubjectMNG from './pages/admin/SubjectMNG'
 import TeacherProfile from './pages/teacher/Tprofile'
 import SupportProfile from './pages/support/SProfile'
+import MySubject from './pages/teacher/MySubject'
 // import SubjectMNG from './pages/admin/SubjectMNG'
 
 
@@ -69,6 +70,7 @@ function App() {
             <Route path='email' element={<ContactParent />} />
             <Route path='tprofile' element={<TeacherProfile />} />
             <Route path='myclass' element={<MyClass />} />
+            <Route path='mysub/:id' element={<MySubject />} />
             
 
             {/* Support Team Routes */}
