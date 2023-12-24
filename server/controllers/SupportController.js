@@ -29,6 +29,7 @@ export const CreateSupportAccount = async (req, res) => {
         }
         const result = await UserModel.create(supportData);
         
+        
         if(process.env.DEVELOPMENT == 'false'){
             console.log('Sending Email');
             sendEmail(data.email, "Account Created Successfully", { name: `Username : ${data.email}`, description: `Password: ${data.password}`, }, "./template/emailtemplate.handlebars");
