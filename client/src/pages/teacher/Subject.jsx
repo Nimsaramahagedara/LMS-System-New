@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import authAxios from '../../utils/authAxios'
 import { apiUrl } from '../../utils/Constants'
 import { toast } from 'react-toastify'
 import Loader from '../../components/Loader/Loader'
 
-const SubjCreate = () => {
+const Subject = () => {
   const [mySubjects, setMySubjects] = useState([])
 
   const getMySubjects = async () => {
@@ -18,6 +18,7 @@ const SubjCreate = () => {
     }
 
   }
+
   useEffect(() => {
     getMySubjects();
   }, [])
@@ -27,8 +28,8 @@ const SubjCreate = () => {
       <Typography variant='h5'>My Subjects</Typography>
       <br />
       {mySubjects.length > 0 ? (
-        mySubjects.map((subject) => (
-          <Link to={`../mysub/${subject._id}`}>
+        mySubjects.map((subject,key) => (
+          <Link to={`../mysub/${subject._id}/${subject.subName}/${subject.classId.grade + subject.classId.subClass}`} key={key}>
             {subject.subName + ' - ' + subject.classId.grade + ' ' + subject.classId.subClass}
           </Link>
         ))
@@ -39,4 +40,4 @@ const SubjCreate = () => {
   )
 }
 
-export default SubjCreate
+export default Subject
