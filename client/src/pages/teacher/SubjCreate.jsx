@@ -1,61 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from '@mui/material';
+import { Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import authAxios from '../../utils/authAxios'
+import { apiUrl } from '../../utils/Constants'
+import { toast } from 'react-toastify'
+import Loader from '../../components/Loader/Loader'
 
-import { apiUrl } from '../../utils/Constants';
+const SubjCreate = () => {
+  const [mySubjects, setMySubjects] = useState([])
 
-const SubjCreate = ({ classId }) => {
-  const [subjects, setSubjects] = useState([]);
+  const getMySubjects = async () => {
+    try {
+      const data = await authAxios.get(${apiUrl}/teacher/my-subjects);
+      setMySubjects(data.data)
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
 
+  }
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Check if classId is defined before making the API request
-        if (classId) {
-          const response = await fetch(`${apiUrl}/subjects/${classId}`);
-          const data = await response.json();
-          setSubjects(data);
-        } else {
-          console.error('classId is undefined.');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    getMySubjects();
+  }, [])
 
-    fetchData();
-  }, [classId]);
   return (
-    <div>
-      <TableContainer component={Paper} style={{ marginTop: '20px' }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>No</TableCell>
-              <TableCell>Subject Name</TableCell>
-              <TableCell>Teacher</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {subjects.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{row.subName}</TableCell>
-                <TableCell>{row.teachBy}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <div className='flex flex-col items-center space-y-4 bg-white p-3 rounded shadow-md relative'>
+      <Typography variant='h5'>My Subjects</Typography>
+      <br />
+      {mySubjects.length > 0 ? (
+        mySubjects.map((subject) => (
+          <Link to={../mysub/${subject._id}}>
+            {subject.subName + ' - ' + subject.classId.grade + ' ' + subject.classId.subClass}
+          </Link>
+        ))
+      ) : (
+        <Loader />
+      )}
     </div>
-  );
-};
+  )
+}
 
-export default SubjCreate;
+export default SubjCreate

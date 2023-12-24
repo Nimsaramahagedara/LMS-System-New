@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
 import SubjectMNG from './SubjectMNG';
+import Loader from '../../components/Loader/Loader';
 
 const ClassMNG = () => {
   const [open, setOpen] = useState(false);
@@ -16,7 +17,7 @@ const ClassMNG = () => {
   const [AllClasses, setAllClasses] = useState([]);
   const [refresh, changeRefresh] = useState(false);
   const [allTeachers, setAllTeachers] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   //UPDATE SUPPORT FORM DATA
   const [createClassData, setCreateClassData] = useState({
     grade: '',
@@ -105,6 +106,7 @@ const ClassMNG = () => {
     try {
       const allT = await authAxios.get(`${apiUrl}/admin/get-all-teachers`);
       setAllTeachers(allT.data);
+      setIsLoading(false);
     } catch (error) {
       toast.error(error.response.data.message)
     }
@@ -196,7 +198,8 @@ const ClassMNG = () => {
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {
+            !isLoading ? <TableBody>
             {AllClasses.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{row.grade}</TableCell>
@@ -214,7 +217,8 @@ const ClassMNG = () => {
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody>
+          </TableBody> : <Loader/>
+}
         </Table>
       </TableContainer>
       {/* Students and class Table Ends Here... */}
