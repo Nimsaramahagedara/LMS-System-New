@@ -7,13 +7,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useAuth } from '../pages/common/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
-export default function AdminWelcomeCard({name = 'Nimsara'}) {
+export default function AdminWelcomeCard() {
 
 const [currentTime, setCurrentTime] = useState(new Date());
 const {logout} = useAuth();
 const navigate = useNavigate();
+const [firstName, setFirstName]= useState('Loading');
 
 
 const cardStyle = {
@@ -28,6 +30,7 @@ const cardStyle = {
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
+    setFirstName(Cookies.get('firstName'));
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
@@ -37,7 +40,7 @@ const cardStyle = {
     <Card sx={cardStyle} className='mb-3'>
       <CardContent className='text-white'>
         <Typography variant='h5' gutterBottom>
-          Welcome, {name}
+          Welcome, {firstName}
         </Typography>
         <Typography variant="subtitle1" component="div">
             Admin Dashboard
