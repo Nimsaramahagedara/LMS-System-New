@@ -33,7 +33,8 @@ export const Login = async (req, res) => {
         //await sendEmail('nimsaramahagedara@gmail.com', "TEST EMAIL", { name: 'NIMSARA MAHAGEDARA', description: 'TEST DESCRIPTION', }, "./template/emailtemplate.handlebars");
         res.status(200).json({
             token,
-            userRole: isExist.role
+            userRole: isExist.role,
+            firstName: isExist.firstName
         })
     } catch (error) {
         //console.log(error);
