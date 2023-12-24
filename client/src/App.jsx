@@ -9,7 +9,7 @@ import TeacherMNG from './pages/admin/TeacherMNG'
 import Attendence from './pages/teacher/Attendence'
 import Markings from './pages/teacher/Markings'
 import Notices from './pages/teacher/Notices'
-import SubjCreate from './pages/teacher/SubjCreate'
+import SubjCreate from './pages/teacher/Subject'
 import TOverview from './pages/teacher/TOverview'
 import StOverview from './pages/student/StOverview'
 import SingleModuleViewPage from './pages/student/SingleModuleViewPage'
@@ -38,6 +38,7 @@ import MyClass from './pages/teacher/MyClass'
 import SubjectMNG from './pages/admin/SubjectMNG'
 import TeacherProfile from './pages/teacher/Tprofile'
 import SupportProfile from './pages/support/SProfile'
+import Subject from './pages/teacher/Subject'
 import MySubject from './pages/teacher/MySubject'
 // import SubjectMNG from './pages/admin/SubjectMNG'
 
@@ -70,7 +71,7 @@ function App() {
             <Route path='email' element={<ContactParent />} />
             <Route path='tprofile' element={<TeacherProfile />} />
             <Route path='myclass' element={<MyClass />} />
-            <Route path='mysub/:id' element={<MySubject />} />
+            <Route path='mysub/:id/:subject/:grade' element={<MySubject />} />
             
 
             {/* Support Team Routes */}
