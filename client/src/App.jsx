@@ -38,7 +38,7 @@ import MyClass from './pages/teacher/MyClass'
 import SubjectMNG from './pages/admin/SubjectMNG'
 import TeacherProfile from './pages/teacher/Tprofile'
 import SupportProfile from './pages/support/SProfile'
-import SubjectMNG from './pages/admin/SubjectMNG'
+// import SubjectMNG from './pages/admin/SubjectMNG'
 
 
 function App() {
