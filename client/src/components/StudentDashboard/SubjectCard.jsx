@@ -11,6 +11,7 @@ import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { colors } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
+import { useNavigate } from 'react-router-dom';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -23,12 +24,10 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function SubjectCard({title = 'Title', subtitle = 'Subtitle', description = 'Description', bgColor}) {
-  const [expanded, setExpanded] = React.useState(false);
+export default function SubjectCard({title = 'Title', subtitle = 'Subtitle', description = 'Description', bgColor, to}) {
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const navigate = useNavigate();
+
 
   return (
     <Card sx={{ maxWidth: 345, minWidth: 270 }}>
@@ -57,12 +56,10 @@ export default function SubjectCard({title = 'Title', subtitle = 'Subtitle', des
       </CardContent>
       <CardActions disableSpacing>
         <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
+          onClick={()=> navigate(to)}
+          aria-label="navigate"
         >
-          <FolderIcon />
+          <FolderIcon/>
         </ExpandMore>
       </CardActions>
     </Card>

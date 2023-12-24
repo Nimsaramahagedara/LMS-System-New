@@ -62,3 +62,31 @@ export const updateSubject = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+export const getSubjectTeacher = async(req,res)=>{
+    //pass the Subject id
+    const {id} = req.params;
+    try {
+        if (id) {
+            try {
+                const teacher = await SubjectModel.findById(id).populate('teachBy');
+                if (!teacher) {
+                    throw Error('No Subjects Or Other Error');
+        
+                }
+                res.status(200).json(teacher);
+        
+            } catch (error) {
+                res.status(500).json({
+                    message: error.mesasge
+                })
+            }
+
+        }else{
+            throw Error('Subject Id Required')
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message:error.message});
+    }
+}
