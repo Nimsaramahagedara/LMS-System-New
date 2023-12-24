@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Button, Avatar } from '@mui/material';
-import EditProfileForm from '../student/EditProfileForm';
+import EditProfileForm from './EditProfileForm';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
@@ -71,8 +71,7 @@ const TeacherProfile = () => {
                 <Typography variant="h5" gutterBottom>
                   {`${teacher.firstName} ${teacher.lastName}`}
                 </Typography>
-                <Typography>First Name: {teacher.firstName}</Typography>
-                <Typography>Last Name: {teacher.lastName}</Typography>
+               
                 <Typography>Email: {teacher.email}</Typography>
                 <Typography>Gender: {teacher.gender}</Typography>
                 <Typography>Address: {teacher.address}</Typography>
