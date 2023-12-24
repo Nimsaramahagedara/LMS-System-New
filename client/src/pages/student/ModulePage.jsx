@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PageTitle from '../../components/StudentDashboard/PageTitle';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
@@ -17,31 +17,51 @@ import FunctionsIcon from '@mui/icons-material/Functions';
 import StarIcon from '@mui/icons-material/Star';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import Loader from '../../components/Loader/Loader';
+import { apiUrl } from '../../utils/Constants';
+import { toast } from 'react-toastify';
+import authAxios from '../../utils/authAxios';
 
 const ModulePage = () => {
-  const subjects = [
-    'Sinhala Language and Literature',
-    'English Language and Literature',
-    'Mathematics',
-    'Science',
-    'Health and Physical Education',
-    'Religion and Civilization',
-  ];
+  const [subjects, setSubjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const currentYear = new Date().getFullYear();
+  const [teacherInCharge, setTeacher] = useState('');
+  const [Mates, setMates] = useState([]);
+
+  const getSubjects = async () => {
+    try {
+      const data = await authAxios.get(`${apiUrl}/student/get-subjects`);
+      const classMates = await authAxios.get(`${apiUrl}/student/get-classmates`);
+      setSubjects(data.data.subjects);
+      setTeacher(data.data.ownedBy);
+      setMates(classMates.data);
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+
+  useEffect(() => {
+    getSubjects()
+  }, [])
 
   return (
     <ContainerStudent>
       <PageTitle title={'Subjects'} icon={<BookIcon fontSize='large' />} bgColor='bg-purple-800' />
-      <div className='flex items-start mt-5 justify-between'>
+      {
+        !isLoading ? <div className='flex items-start mt-5 justify-between'>
         <div className='md:w-5/6 w-full'>
           <div className='px-5 py-2 bg-cyan-200 mb-4  mt-5'>Enrolled Subjects</div>
           <div className='px-5'>
             <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
               <List>
-                {subjects.map((subject, ind) => (
+                {subjects && subjects.map((subject, ind) => (
                   <ListItem key={ind} disablePadding>
-                    <Link to={`/portal/subject/${subject}`}>
+                    <Link to={`/portal/subject/${subject._id}`}>
                       <ListItemButton>
-                        <ListItemText primary={subject} />
+                        <ListItemText primary={subject.subName} />
                       </ListItemButton>
                     </Link>
                   </ListItem>
@@ -52,12 +72,19 @@ const ModulePage = () => {
         </div>
         <div className='md:w-1/6 hidden md:block border-l-2 border-gray-500 px-3'>
           <Typography variant='h6' color={colors.yellow[900]}>
-            Enroll a Subject
+            Class Mates
           </Typography>
           <hr />
-          <Button variant='outlined'>Enroll</Button>
+          {
+            Mates && Mates.map((student) => (
+              <Link ><Typography variant='subtitle2' color={colors.grey[500]}>{student.firstName}</Typography></Link>
+            )
+            )
+          }
+          {/* <Button variant='outlined'>Enroll</Button> */}
         </div>
       </div>
+ : <Loader/>}
     </ContainerStudent>
   );
 };

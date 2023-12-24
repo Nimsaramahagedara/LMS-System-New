@@ -1,4 +1,5 @@
 import ClassModel from "../models/ClassModel.js";
+import SubjectModel from "../models/SubjectModel.js";
 import UserModel from "../models/UserModel.js";
 import { getParentId } from "./ParentController.js";
 
@@ -134,3 +135,35 @@ export const deleteStudentById = async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   };
+
+  export const getAllSubjectsInClassUsingStId = async (req, res) => {
+    try {
+        const { loggedInId } = req;
+
+        const loggedInUser = await UserModel.findById(loggedInId);
+
+        const teacher = await ClassModel.findById(loggedInUser.classId).populate('ownedBy');
+        
+        const allSubjects = await SubjectModel.find({classId : loggedInUser.classId}).populate('teachBy');
+
+        const allDetails = {
+          subjects: allSubjects,
+          ownedBy: teacher.ownedBy.firstName + ' ' + teacher.ownedBy.lastName 
+        }
+        res.status(200).json(allDetails);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getClassMatesUsingStId = async (req, res) => {
+  try {
+      const { loggedInId } = req;
+
+      const loggedInUser = await UserModel.findById(loggedInId);      
+      const allStudents = await UserModel.find({classId : loggedInUser.classId})
+      res.status(200).json(allStudents);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+}
