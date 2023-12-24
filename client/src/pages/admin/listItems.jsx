@@ -212,15 +212,6 @@ export const supportListItems = (
 
     <ListItemButton>
       <ListItemIcon>
-        <ManageAccountsIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/manageSubj'}>
-      <ListItemText primary="Manage Subjects" />
-      </Link>
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
         <NoteIcon />
       </ListItemIcon>
       <Link to={'/dashboard/publishnotices'}>
