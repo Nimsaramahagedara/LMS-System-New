@@ -19,6 +19,9 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Link } from 'react-router-dom';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+
 export const teacherListItems = (
   <React.Fragment>
     <ListItemButton>
@@ -30,6 +33,7 @@ export const teacherListItems = (
       </Link>
 
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <GradingIcon />
@@ -37,7 +41,9 @@ export const teacherListItems = (
       <Link to={'/dashboard/attendance'}>
       <ListItemText primary="Attendance" />
       </Link>
+
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <TaskIcon />
@@ -45,7 +51,9 @@ export const teacherListItems = (
       <Link to={'/dashboard/markings'}>
       <ListItemText primary="Markings" />
       </Link>
+
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <NoteIcon />
@@ -53,7 +61,9 @@ export const teacherListItems = (
       <Link to={'/dashboard/notices'}>
       <ListItemText primary="Notices" />
       </Link>
+
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <ContactsIcon />
@@ -61,7 +71,9 @@ export const teacherListItems = (
       <Link to={'/dashboard/subject'}>
       <ListItemText primary="Subject" />
       </Link>
+
     </ListItemButton>
+
     <ListItemButton>
       <ListItemIcon>
         <AlternateEmailIcon />
@@ -69,7 +81,19 @@ export const teacherListItems = (
       <Link to={'/dashboard/email'}>
       <ListItemText primary="Contact Parents" />
       </Link>
+
     </ListItemButton>
+
+    <ListItemButton>
+      <ListItemIcon>
+      <AccountCircleIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/tprofile'}>
+        <ListItemText primary="My Profile" />
+      </Link>
+
+    </ListItemButton>
+    
   </React.Fragment>
 );
 
@@ -84,6 +108,7 @@ export const adminListItems = (
       <Link to={'/dashboard'}>
         <ListItemText primary="Dashboard" />
       </Link>
+      
     </ListItemButton>
 
     <ListItemButton>
@@ -93,6 +118,7 @@ export const adminListItems = (
       <Link to={'/dashboard/support'}>
       <ListItemText primary="Support" />
       </Link>
+
     </ListItemButton>
 
     <ListItemButton>
@@ -102,6 +128,7 @@ export const adminListItems = (
       <Link to={'/dashboard/students'}>
       <ListItemText primary="Students" />
       </Link>
+
     </ListItemButton>
 
     <ListItemButton>
@@ -111,6 +138,7 @@ export const adminListItems = (
       <Link to={'/dashboard/classes'}>
       <ListItemText primary="Classes" />
       </Link>
+
     </ListItemButton>
 
     <ListItemButton>
@@ -129,6 +157,7 @@ export const adminListItems = (
       <Link to={'/dashboard/publishNotice'}>
       <ListItemText primary="Publish Notices" />
       </Link>
+
     </ListItemButton>
 
   </React.Fragment>
@@ -152,6 +181,7 @@ export const studentListItems = (
       <Link to={'/dashboard/modules'}>
       <ListItemText primary="Modules" />
       </Link>
+
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
@@ -160,6 +190,7 @@ export const studentListItems = (
       <Link to={'/dashboard/module'}>
       <ListItemText primary="ModulePage" />
       </Link>
+
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
@@ -168,6 +199,7 @@ export const studentListItems = (
       <Link to={'/dashboard/marks'}>
       <ListItemText primary="Marks" />
       </Link>
+
     </ListItemButton>
   </React.Fragment>
 );
@@ -181,6 +213,7 @@ export const supportListItems = (
       <Link to={'/dashboard/supoverview'}>
         <ListItemText primary="Dashboard" />
       </Link>
+
     </ListItemButton>
 
     <ListItemButton>
@@ -190,6 +223,7 @@ export const supportListItems = (
       <Link to={'/dashboard/createstudents'}>
       <ListItemText primary="Student Accounts" />
       </Link>
+
     </ListItemButton>
 
     <ListItemButton>
@@ -208,6 +242,7 @@ export const supportListItems = (
       <Link to={'/dashboard/classes'}>
       <ListItemText primary="Classes" />
       </Link>
+
     </ListItemButton>
 
     <ListItemButton>
@@ -217,6 +252,7 @@ export const supportListItems = (
       <Link to={'/dashboard/manageSubj'}>
       <ListItemText primary="Manage Subjects" />
       </Link>
+
     </ListItemButton>
 
     <ListItemButton>
@@ -226,6 +262,15 @@ export const supportListItems = (
       <Link to={'/dashboard/publishnotices'}>
       <ListItemText primary="Publish Notice" />
       </Link>
+
+    </ListItemButton>
+
+    <ListItemButton>
+      <AccountCircleIcon />
+       <Link to={'/dashboard/sprofile'}>
+      <ListItemText primary="My Profile" />
+      </Link>
+
     </ListItemButton>
 
   </React.Fragment>
