@@ -10,6 +10,7 @@ import classRoutes from './routes/ClassRoutes.js';
 import noticeRouter from './routes/NoticeRoutes.js';
 import subjectRoutes from './routes/SubjectRoutes.js';
 import TeacherRouter from './routes/TeacherRoutes.js';
+import ActivityRouter from './routes/ActivityRoutes.js';
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -30,6 +31,7 @@ app.use('/',userRouter);
 app.use('/class', classRoutes);
 app.use('/notices', noticeRouter);
 app.use('/subject', subjectRoutes)
+app.use('/activity', ActivityRouter);
 //Student Routes
 app.use('/student', studentRouter)
 //Teacher Routes
