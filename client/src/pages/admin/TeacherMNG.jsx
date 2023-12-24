@@ -284,6 +284,8 @@ const TeacherMNG = () => {
         </DialogContent>
       </Dialog>
 
+
+      {/*Table of All teacher details starts here...*/}
       <TableContainer component={Paper} style={{ marginTop: '20px' }}>
         <Table>
           <TableHead>
