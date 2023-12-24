@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Button, Avatar } from '@mui/material';
 import EditProfileForm from '../student/EditProfileForm';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ContainerStudent from '../../components/StudentDashboard/ContainerStudent';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
