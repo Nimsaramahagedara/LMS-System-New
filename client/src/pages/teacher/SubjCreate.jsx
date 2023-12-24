@@ -11,7 +11,7 @@ const SubjCreate = () => {
 
   const getMySubjects = async () => {
     try {
-      const data = await authAxios.get(${apiUrl}/teacher/my-subjects);
+      const data = await authAxios.get(`${apiUrl}/teacher/my-subjects`);
       setMySubjects(data.data)
     } catch (error) {
       toast.error(error.response.data.message);
@@ -28,7 +28,7 @@ const SubjCreate = () => {
       <br />
       {mySubjects.length > 0 ? (
         mySubjects.map((subject) => (
-          <Link to={../mysub/${subject._id}}>
+          <Link to={`../mysub/${subject._id}`}>
             {subject.subName + ' - ' + subject.classId.grade + ' ' + subject.classId.subClass}
           </Link>
         ))
