@@ -20,25 +20,9 @@ const Attendance = () => {
   useEffect(() => {
     const getStudentList = async () => {
       try {
-        const userDetails = await authAxios.get(`${apiUrl}/get-user`);
-        if (userDetails) {
-          try {
-            const classDetails = await authAxios.get(`${apiUrl}/class/get-class-by-teacher/${userDetails.data._id}`);
-            if (classDetails) {
-              try {
-                const studentList = await authAxios.get(`${apiUrl}/class/get-students/${classDetails.data._id}`);
-                if (studentList) {
-                  console.log(studentList.data);
-                  setStudentList(studentList.data);
-                }
-              } catch (error) {
-                console.log(error.response.data.message);
-              }
-            }
-          } catch (error) {
-          console.log(error.response.data.message);
-        }
-      }
+        const userDetails = await authAxios.get(`${apiUrl}/teacher/get-students-in-class`);
+        setStudentList(userDetails.data);
+        console.log(userDetails.data);
       } catch (error) {
       console.log(error.response.data.message);
     }
