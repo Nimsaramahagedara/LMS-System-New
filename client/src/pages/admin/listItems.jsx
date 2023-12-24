@@ -252,7 +252,6 @@ export const supportListItems = (
       <Link to={'/dashboard/manageSubj'}>
       <ListItemText primary="Manage Subjects" />
       </Link>
-
     </ListItemButton>
 
     <ListItemButton>

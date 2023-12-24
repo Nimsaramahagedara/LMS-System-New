@@ -16,8 +16,6 @@ import SingleModuleViewPage from './pages/student/SingleModuleViewPage'
 import ModulePage from './pages/student/ModulePage'
 import StudentMarks from './pages/student/StudentMarks'
 import SpOverview from './pages/support/SpOverview'
-import CreateStudentAcc from './pages/support/CreateStudentAcc'
-import CreateTeacherAcc from './pages/support/CreateTeacherAcc'
 import ManageAccounts from './pages/support/ManageAccounts'
 import PublishNotices from './pages/support/PublishNotices'
 import AdminPublishNotices from './pages/admin/PublishNotice';
@@ -40,6 +38,7 @@ import MyClass from './pages/teacher/MyClass'
 import SubjectMNG from './pages/admin/SubjectMNG'
 import TeacherProfile from './pages/teacher/Tprofile'
 import SupportProfile from './pages/support/SProfile'
+import SubjectMNG from './pages/admin/SubjectMNG'
 
 
 function App() {
@@ -77,8 +76,6 @@ function App() {
             <Route path='createstudents' element={<StudentMNG />} />
             <Route path='createteachers' element={<TeacherMNG />} />
             <Route path='manageacc' element={<ManageAccounts />} />
-            <Route path='manageSubj' element={<ManageAccounts />} />
-            {/* <Route path='manageSubj' element={<SubjectMNG />} /> */}
             <Route path='publishnotices' element={<PublishNotices />} />
             <Route path='sprofile' element={<SupportProfile />} />
 
