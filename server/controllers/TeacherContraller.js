@@ -155,3 +155,29 @@ export const getMySubjects = async (req, res) => {
         res.status(500).json(error.message);
     }
 }
+
+export const getStudentsInClass = async(req,res)=>{
+    const id = req.loggedInId
+    try {
+        const isClassExist = await ClassModel.findOne({ ownedBy: id });
+        if (isClassExist) {
+            try {
+                const allStudents = await UserModel.find({ role: 'student', classId: isClassExist._id });
+                if (!allStudents) {
+                    throw Error('No Students Or Other Error');
+        
+                }
+                res.status(200).json(allStudents);
+        
+            } catch (error) {
+                res.status(500).json({
+                    message: error.mesasge
+                })
+            }
+
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message:error.message});
+    }
+}
