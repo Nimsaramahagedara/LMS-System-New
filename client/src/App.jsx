@@ -35,6 +35,7 @@ import ChildMarks from './pages/parent/ChildMarks';
 import FacilityFee from './pages/parent/FacilityFee';
 import ClassMNG from './pages/admin/ClassMNG'
 import MyClass from './pages/teacher/MyClass'
+import MySubject from './pages/teacher/MySubject'
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
             <Route path='overview' element={<TOverview />} />
             <Route path='email' element={<ContactParent />} />
             <Route path='myclass' element={<MyClass />} />
+            <Route path='mysub/:id' element={<MySubject />} />
 
             {/* Support Team Routes */}
             <Route path='supoverview' element={<SpOverview />} />

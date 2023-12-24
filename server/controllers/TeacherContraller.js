@@ -1,3 +1,5 @@
+import ClassModel from "../models/ClassModel.js";
+import SubjectModel from "../models/SubjectModel.js";
 import UserModel from "../models/UserModel.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import bcrypt from 'bcryptjs';
@@ -10,26 +12,26 @@ export const CreateTeacherAccount = async (req, res) => {
         if (isExist) {
             throw Error('Email Already Exist !!');
         }
-        
+
         const teacherData = {
             regNo: data.regNo,
             firstName: data.firstName,
-            lastName:data.lastName,
-            address:data.address,
+            lastName: data.lastName,
+            address: data.address,
             dob: data.dob,
-            password:data.password,
-            email:data.email,
-            gender:data.gender,
-            role:'teacher',
-            contactNo:data.contactNo,
-            parentId:null,
-            classId:null,
-            ownedClass:null
+            password: data.password,
+            email: data.email,
+            gender: data.gender,
+            role: 'teacher',
+            contactNo: data.contactNo,
+            parentId: null,
+            classId: null,
+            ownedClass: null
 
         }
         const result = await UserModel.create(teacherData);
-        
-        if(process.env.DEVELOPMENT == 'false'){
+
+        if (process.env.DEVELOPMENT == 'false') {
             console.log('Sending Email');
             sendEmail(data.email, "Account Created Successfully", { name: `Username : ${data.email}`, description: `Password: ${data.password}`, }, "./template/emailtemplate.handlebars");
         }
@@ -44,97 +46,112 @@ export const CreateTeacherAccount = async (req, res) => {
 
 }
 
-export const getAllTeachers = async(req,res)=>{
+export const getAllTeachers = async (req, res) => {
     try {
-        const result = await UserModel.find({role:'teacher'});
-        
-        if(result){
+        const result = await UserModel.find({ role: 'teacher' });
+
+        if (result) {
             res.status(200).json(result);
         }
     } catch (error) {
         res.status(500).json({
-            message:error.message
+            message: error.message
         })
     }
 }
 
-export const getTeacher = async(req,res)=>{
-    const {email} = req.params;
+export const getTeacher = async (req, res) => {
+    const { email } = req.params;
 
     try {
-        const result = await UserModel.findOne({email});
-        if(result){
+        const result = await UserModel.findOne({ email });
+        if (result) {
             res.status(200).json(result);
-        }else{
+        } else {
             throw Error('Account not exist');
         }
     } catch (error) {
         res.status(500).json({
-            message:error.message
+            message: error.message
         })
     }
 }
-export const deleteTeacher = async(req,res)=>{
-    const {email} = req.params;
+export const deleteTeacher = async (req, res) => {
+    const { email } = req.params;
 
     try {
-        const isExist = await UserModel.findOne({email});
-        if(!isExist){
+        const isExist = await UserModel.findOne({ email });
+        if (!isExist) {
             console.log('Account not exist');
             throw Error('Account Not Exist')
         }
-        const isDeleted = await UserModel.findOneAndDelete({email});
+        const isDeleted = await UserModel.findOneAndDelete({ email });
 
-        if(isDeleted){
+        if (isDeleted) {
             res.status(200).json({
-                message:'Successfully Deleted'
+                message: 'Successfully Deleted'
             });
         }
     } catch (error) {
         res.status(500).json({
-            message:error.message
+            message: error.message
         })
     }
 }
 
-export const updateTeacher = async(req,res)=>{
-    const {email} = req.params;
+export const updateTeacher = async (req, res) => {
+    const { email } = req.params;
     const data = req.body;
 
     const teacherData = {
         regNo: data.regNo,
         firstName: data.firstName,
-        lastName:data.lastName,
-        address:data.address,
+        lastName: data.lastName,
+        address: data.address,
         dob: data.dob,
-        password:data.password,
-        email:data.email,
-        gender:data.gender,
-        role:'teacher',
-        contactNo:data.contactNo,
-        parentId:null,
-        classId:null,
-        ownedClass:null
+        password: data.password,
+        email: data.email,
+        gender: data.gender,
+        role: 'teacher',
+        contactNo: data.contactNo,
+        parentId: null,
+        classId: null,
+        ownedClass: null
 
     }
 
     try {
-        const isExist = await UserModel.findOne({email});
-        if(!isExist){
+        const isExist = await UserModel.findOne({ email });
+        if (!isExist) {
             res.status(500).json({
-                message:'Account Not Exist'
+                message: 'Account Not Exist'
             });
         }
-        const isUpdated = await UserModel.findOneAndUpdate({email}, teacherData);
+        const isUpdated = await UserModel.findOneAndUpdate({ email }, teacherData);
 
-        if(isUpdated){
+        if (isUpdated) {
             res.status(200).json({
-                message:'Successfully Updated'
+                message: 'Successfully Updated'
             });
         }
     } catch (error) {
         res.status(500).json({
-            message:error.message
+            message: error.message
         })
+    }
+}
+
+//Get My Subjects
+export const getMySubjects = async (req, res) => {
+    const { loggedInId } = req;
+    if (!loggedInId) {
+        res.status(401).json({ message: 'Please Log in to get Your Classes' });
+    }
+    try {
+        console.log(loggedInId);
+        const classes = await SubjectModel.find({teachBy:loggedInId}).populate('classId');
+        res.status(200).json(classes);
+    } catch (error) {
+        res.status(500).json(error.message);
     }
 }

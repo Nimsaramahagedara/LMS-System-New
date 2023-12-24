@@ -9,6 +9,7 @@ import studentRouter from './routes/StudentRoutes.js';
 import classRoutes from './routes/ClassRoutes.js';
 import noticeRouter from './routes/NoticeRoutes.js';
 import subjectRoutes from './routes/SubjectRoutes.js';
+import TeacherRouter from './routes/TeacherRoutes.js';
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -32,7 +33,7 @@ app.use('/subject', subjectRoutes)
 //Student Routes
 app.use('/student', studentRouter)
 //Teacher Routes
-
+app.use('/teacher', TeacherRouter);
 //Support team Routes
 
 //Parent Routes

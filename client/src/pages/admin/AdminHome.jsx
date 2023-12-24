@@ -16,6 +16,7 @@ import { getTerm } from '../../utils/usefulFunctions';
 import PieChart2 from '../../components/PieChart2';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
+import Loader from '../../components/Loader/Loader';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -29,17 +30,21 @@ const Item = styled(Paper)(({ theme }) => ({
 const AdminHome = () => {
   const date = new Date();
   const [overview, setOverview] = useState({});
+  const [isLoading,setIsLoading] = useState(true);
 
   useEffect(()=>{
     const getOverview = async()=>{
       const data =  await authAxios.get(`${apiUrl}/admin/get-overview`);
       setOverview(data.data);
+      setIsLoading(false);
     }
     getOverview();
   },[])
 
   return (
-    <Container maxWidth={'800px'} >
+    <>
+    {
+      !isLoading ? (<Container maxWidth={'800px'} >
       <AdminWelcomeCard/>
       <Box component={'div'} className='flex justify-between items-center'>
         <SimpleCard name={'Current Term'} to={''} count={`${getTerm()}/3`} icon={<DateRangeIcon color='primary' fontSize='large'/>}/>
@@ -63,7 +68,10 @@ const AdminHome = () => {
           </Grid>
       </Grid>
            
-    </Container>
+    </Container>) : (<Loader/>)
+    }
+
+    </>
   
   )
 }

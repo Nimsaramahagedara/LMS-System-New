@@ -23,10 +23,12 @@ import AdminWelcomeCard from '../../components/AdminWelcomeCard';
 import { apiUrl } from '../../utils/Constants';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
+import Loader from '../../components/Loader/Loader';
 
 const TeacherMNG = () => {
   const [notices, setNotices] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [createTeacherFormData, setTeacherFormData] = useState({
     regNo: 0,
     firstName: '',
@@ -99,6 +101,7 @@ const TeacherMNG = () => {
         const response = await fetch(`${apiUrl}/admin/get-all-teachers`);
         const data = await response.json();
         setNotices(data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -257,7 +260,7 @@ const TeacherMNG = () => {
               onChange={(e) => handleCreateChange('address', e.target.value)}
               value={createTeacherFormData.address}
               multiline  // Set multiline to true
-              rows={4} 
+              rows={4}
             />
 
             <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
@@ -296,7 +299,7 @@ const TeacherMNG = () => {
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {!isLoading ? <TableBody>
             {notices.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{row.regNo}</TableCell>
@@ -308,7 +311,7 @@ const TeacherMNG = () => {
                 <TableCell>{row.address}</TableCell>
                 <TableCell>{row.dob}</TableCell>
                 <TableCell>
-                  <Button  size="small"
+                  <Button size="small"
                     variant="contained"
                     color="secondary"
                     onClick={() => handleUpdateTeacher(row)}
@@ -331,7 +334,7 @@ const TeacherMNG = () => {
                           variant="outlined"
                           onChange={(e) => handleChange('regNo', e.target.value)}
                           value={updateFormData.regNo}
-                          disabled 
+                          disabled
                         />
 
                         <TextField
@@ -377,7 +380,7 @@ const TeacherMNG = () => {
                           variant="outlined"
                           onChange={(e) => handleChange('email', e.target.value)}
                           value={updateFormData.email}
-                          disabled 
+                          disabled
                         />
 
                         <TextField
@@ -390,7 +393,7 @@ const TeacherMNG = () => {
                           onChange={(e) => handleChange('address', e.target.value)}
                           value={updateFormData.address}
                           multiline  // Set multiline to true
-                          rows={4} 
+                          rows={4}
                         />
 
                       </div>
@@ -403,7 +406,7 @@ const TeacherMNG = () => {
                     </DialogContent>
                   </Dialog>
 
-                  <Button  size="small" variant="contained" color="error" onClick={() => handleDeleteTeacher(row.email)}>
+                  <Button size="small" variant="contained" color="error" onClick={() => handleDeleteTeacher(row.email)}>
                     Remove
                   </Button>
                 </TableCell>
@@ -417,7 +420,8 @@ const TeacherMNG = () => {
                 <strong>{notices.length}</strong>
               </TableCell>
             </TableRow>
-          </TableBody>
+          </TableBody> : <Loader />
+          }
         </Table>
       </TableContainer>
     </div>
