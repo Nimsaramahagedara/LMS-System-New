@@ -119,3 +119,21 @@ export const updateClassTeacher = async (req, res) => {
         res.status(500).json({ message: error.mesasge })
     }
 }
+
+export const getOneClassByTeacherId = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const isClassExist = await ClassModel.findOne({ ownedBy: id });
+        if (!isClassExist) {
+            throw Error('That class not exist');
+
+        }
+        res.status(200).json(isClassExist);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.mesasge
+        })
+    }
+}
