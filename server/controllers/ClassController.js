@@ -102,12 +102,16 @@ export const updateClassTeacher = async (req, res) => {
 
     try {
         console.log(id);
+        const isAlreadyHaveClass = await ClassModel.find({ownedBy:ownedBy});
+
+        if(isAlreadyHaveClass){
+            throw Error('One Teacher Can Own Only One Class');
+        }
         const updateClass = await ClassModel.findById(id);
         if (!updateClass) {
             res.status(500).json({ message: 'Class Not Found' });
             return
         }
-
         updateClass.ownedBy = ownedBy;
 
         updateClass.save();
