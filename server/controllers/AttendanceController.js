@@ -30,7 +30,7 @@ export const getAttendanceByOwnerId = async (req, res) => {
     try {
         // Fetch attendance data based on the ownedBy ID
         const attendanceData = await AttendanceModel.find({ ownedBy: ownerUserId })
-            .populate('attendedStudents', 'username') // Populate attendedStudents with user details if needed
+            .populate('attendedStudents') // Populate attendedStudents with user details if needed
             .populate('classId', 'className'); // Populate classId with class details if needed
 
         res.status(200).json({ attendanceData });
