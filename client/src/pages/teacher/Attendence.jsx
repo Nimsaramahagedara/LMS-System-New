@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Checkbox from '@mui/material/Checkbox';
-import SaveIcon from '@mui/icons-material/Save';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TeacherAttendanceDateCard from '../../components/TeacherAttendanceDateCard';
 import {
   Button,
-  TextField,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -24,9 +17,7 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Radio,
   FormControlLabel,
-  FormGroup,
 } from '@mui/material';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
@@ -193,7 +184,7 @@ const Attendance = () => {
               <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.date}</TableCell>
-                <TableCell>{row.studentCount}</TableCell>
+                <TableCell>{row.attendedStudents.length}</TableCell>
                 <TableCell>
                   <Button variant="outlined"
                     startIcon={<VisibilityIcon />}
@@ -227,8 +218,8 @@ const Attendance = () => {
                             <TableBody>
                               {(row.attendedStudents).map((student, index) => (
                                 <TableRow key={index}>
-                                  <TableCell>{index + 1}</TableCell>
-                                  <TableCell>{student._id}</TableCell>
+                                  <TableCell>{student.regNo}</TableCell>
+                                  <TableCell>{student.firstName} {student.lastName}</TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
