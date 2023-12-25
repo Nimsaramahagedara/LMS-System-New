@@ -8,15 +8,18 @@ import { Typography, colors, Link } from '@mui/material';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
+import Loader from '../../components/Loader/Loader';
 
 const Notices = () => {
   const [notices, setNotices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [otherStudents] = useState(['N D Namal', 'S K Kamal', 'John Cobra', 'Saman Perera']);
 
   const getAllNotices = async ()=>{
     try {
       const allnotes = await authAxios.get(`${apiUrl}/notices/student`);
       setNotices(allnotes.data);
+      setIsLoading(false);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -27,6 +30,9 @@ const Notices = () => {
 
   return (
     <ContainerStudent>
+      {
+        isLoading ? <Loader/> : <></>
+      }
       <PageTitle title={'Notices'} icon={<CircleNotificationsIcon fontSize='large' />} bgColor='bg-purple-800' />
       <div className='flex items-start mt-5 justify-between'>
         <div className='md:w-5/6 w-full'>

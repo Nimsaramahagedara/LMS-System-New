@@ -51,22 +51,22 @@ const TopNav = () => {
             <div className={`lg:hidden bg-gray-300 relative`}>
                 <button className='p-5 ' onClick={handleMenuExpand}><MenuIcon /></button>
                 <div className={`w-full absolute top-16 left-0 z-10 transition-all ease-in-out duration-300 flex-col ${open ? 'flex' : 'hidden'}`}>
-                    <Link to={'/portal'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/portal'} onClick={handleMenuExpand} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Home
                     </Link>
-                    <Link to={'/portal/class'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/portal/class'} onClick={handleMenuExpand} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Class
                     </Link>
-                    <Link to={'/portal/subject'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/portal/subject'} onClick={handleMenuExpand} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Subjects
                     </Link>
-                    <Link to={'/portal/marks'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/portal/marks'} onClick={handleMenuExpand} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Marks
                     </Link>
-                    <Link to={'/portal/notices'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/portal/notices'} onClick={handleMenuExpand} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Notices
                     </Link>
-                    <Link to={'/portal/profile'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/portal/profile'} onClick={handleMenuExpand} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Profile
                     </Link>
 

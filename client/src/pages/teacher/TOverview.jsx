@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SimpleCard from '../../components/SimpleCard'
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
@@ -14,6 +14,10 @@ import WelcomeCardTeacher from '../../components/WelcomeCardTeacher';
 import LineChartTeacher from '../../components/LineChartTeacher';
 import NextClassTeacher from '../../components/NextClassTeacher';
 import ActiveAssignments from '../../components/ActiveAssignments';
+import { toast } from 'react-toastify';
+import authAxios from '../../utils/authAxios';
+import { apiUrl } from '../../utils/Constants';
+import Loader from '../../components/Loader/Loader';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -25,15 +29,34 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const TOverview = () => {
   const date = new Date();
+  const [overview, setOverview] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const getOverview = async()=>{
+    try {
+      const data = await authAxios.get(`${apiUrl}/teacher/get-overview`);
+      setOverview(data.data);
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+
+  useEffect(()=>{
+    getOverview();
+  },[])
 
   return (
     <Container maxWidth={'800px'} >
+      {
+        isLoading ? <Loader/> : <></>
+      }
       <WelcomeCardTeacher/>
       <Box component={'div'} className='flex justify-between items-center'>
         <SimpleCard name={'Attendance'} to={''} count={30} icon={<GradingIcon color='primary' fontSize='large'/>}/>
         <SimpleCard name={'Subjects'} to={'manageacc'} count={9} icon={<ContactsIcon color='error' fontSize='large'/>}/>
         <SimpleCard name={'Fasility Fee'} to={'manageacc'} count={25} icon={<AccountBalanceWalletIcon color='secondary' fontSize='large'/>}/>
-        <SimpleCard name={'Class'} to={'manageacc'} count={'11-A'} icon={<MeetingRoomIcon color='warning' fontSize='large'/>}/>
+        <SimpleCard name={'Owned Class'} to={'manageacc'} count={overview.className || 'Loading'} icon={<MeetingRoomIcon color='warning' fontSize='large'/>}/>
       </Box>
 
       <Grid container spacing={2} marginTop={1}>
