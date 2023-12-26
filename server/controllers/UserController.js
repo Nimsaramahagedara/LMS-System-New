@@ -80,3 +80,21 @@ export const getUserDetails = async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 }
+
+export const sendNewEmail = async (req,res)=>{
+    try{
+        const data = req.body
+        if(!data.sendTo || !data.description || !data.subject){
+            throw Error ('All fields must be fillded..')
+
+
+        }
+        await sendEmail(data.sendTo, data.subject, { name: ``, description: data.description }, "./template/emailtemplate.handlebars");
+        res.status(200).json({
+            message: 'Email Sent successfully!'
+        });
+    }catch(error) {
+        console.log();
+        res.status(500).json({message:error.message});
+    }
+}

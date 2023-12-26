@@ -1,3 +1,4 @@
+import ClassModel from "../models/ClassModel.js";
 import UserModel from "../models/UserModel.js";
 
 // Parent ACCOUNT CREATION
@@ -41,3 +42,30 @@ export const getParentId = async (email, regNo) => {
     }
     return newParent._id;
 }
+
+
+    //get all students with parent
+    export const getStudentsWithParent = async (req, res) => {
+      
+        const teacherId = req.loggedInId;
+        try {
+           
+            const allClasses = await ClassModel.find({ ownedBy: teacherId});
+            // Extract the class IDs from the teacher's classes
+        const classIds = allClasses.map((teacherClass) => teacherClass._id);
+
+        // Find all students in the specified class IDs and populate the 'parentId' field
+        const allStudents = await UserModel.find({ role: 'student', classId: { $in: classIds } }).populate('parentId');
+            if (!allStudents) {
+                throw Error('No Students Or Other Error');
+
+            }
+            res.status(200).json(allStudents);
+
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                message: error.mesasge
+            })
+        }
+    }

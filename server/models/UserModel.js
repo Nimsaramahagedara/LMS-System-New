@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
     },
     parentId: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Users',
+        ref: 'users',
     },
     email: {
         type: String,

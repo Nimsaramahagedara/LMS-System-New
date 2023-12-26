@@ -11,6 +11,7 @@ import noticeRouter from './routes/NoticeRoutes.js';
 import subjectRoutes from './routes/SubjectRoutes.js';
 import TeacherRouter from './routes/TeacherRoutes.js';
 import ActivityRouter from './routes/ActivityRoutes.js';
+import parentRoutes from './routes/ParentRoutes.js';
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -32,16 +33,20 @@ app.use('/class', classRoutes);
 app.use('/notices', noticeRouter);
 app.use('/subject', subjectRoutes)
 app.use('/activity', ActivityRouter);
+
 //Student Routes
-app.use('/student', studentRouter)
+app.use('/student', studentRouter);
+
 //Teacher Routes
 app.use('/teacher', TeacherRouter);
+
 //Support team Routes
 
 //Parent Routes
+app.use('/parent', parentRoutes);
 
 //Admin Routes
-app.use('/admin',adminRouter )
+app.use('/admin',adminRouter);
 
 dbConfig().then(()=>{
     app.listen(port,()=>{
