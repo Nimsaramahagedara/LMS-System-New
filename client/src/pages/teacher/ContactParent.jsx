@@ -1,175 +1,181 @@
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import SendIcon from '@mui/icons-material/Send';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-
-
-
-import Button from '@mui/material/Button';
+import { Table, TableHead, TableBody, TableRow, TableCell, Paper, TextField, Modal, Box, Typography } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import TeacherAttendanceDateCard from '../../components/TeacherAttendanceDateCard';
+import { Button } from '@mui/material';
+import { toast } from 'react-toastify';
+import authAxios from '../../utils/authAxios';
+import { apiUrl } from '../../utils/Constants';
+import WelcomeCardTeacher from '../../components/WelcomeCardTeacher';
+import Loader from '../../components/Loader/Loader';
 
 
 const ContactParent = () => {
+  const [studentList, setStudentList] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredStudentList, setFilteredStudentList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [description, setDescription] = useState('');
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleOpen = () => {
     setOpen(true);
-  };
+  }
 
   const handleClose = () => {
     setOpen(false);
+  }
+
+
+const handleSelectedEmail = (email) => {
+  setSelectedEmail (email);
+  handleOpen();
+  console.log('function called');
+}
+
+const sendToParent = async () => {
+  const data={
+    sendTo: selectedEmail,
+    subject : subject,
+    description : description}
+  try {
+    const isSent = await authAxios.post(`${apiUrl}/send-email`, data );
+    if (isSent){
+      toast.success ('Email has sent successfully!...')
+    }
+    handleClose();
+
+  } catch(error){
+    toast.error (error.response.data.message)
+  }
+}
+
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    borderRadius: '20px',
+    boxShadow: 24,
+    p: 4,
   };
 
+
   useEffect(() => {
-    // Fetch data from the API
-    fetch('https://fakestoreapi.com/users')
-      .then((response) => response.json())
-      .then((data) => {
-        setUsers(data);
-      })
-      .catch((error) => console.error('Error fetching data:', error));
+    const getStudentList = async () => {
+      try {
+        const userDetails = await authAxios.get(`${apiUrl}/parent/get-students`);
+        setStudentList(userDetails.data);
+        setIsLoading(false);
+        console.log(userDetails.data);
+        setFilteredStudentList(userDetails.data); // Initialize filtered list with all students
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    };
+
+    getStudentList();
   }, []);
 
-  useEffect(() => {
-    // Filter users based on the search term
-    const filteredResults = users.filter((user) =>
-      `${user.name.firstname} ${user.name.lastname}`
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    );
+  const columns = [
+    { id: 'firstName', label: 'First Name' },
+    { id: 'lastName', label: 'Last Name' },
+    { id: 'email', label: 'Email' },
+    { id: 'parentEmail', label: 'Parent Email' },
+  ];
 
-    setFilteredUsers(filteredResults);
-  }, [searchTerm, users]);
+  // Function to filter the student list based on search input
+  const handleSearch = () => {
+    const filteredList = studentList.filter(
+      (student) =>
+        student.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
+        student.email.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setFilteredStudentList(filteredList);
+  };
 
   return (
     <div>
-      <Box
-        sx={{
-          width: 500,
-          maxWidth: '100%',
-        }}
-      >
-        <TextField fullWidth label="Search Student" id="input-with-icon-textfield"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PersonSearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box>
+      {isLoading ? <Loader /> : <></>}
+      <WelcomeCardTeacher />
 
-      <TableContainer component={Paper} style={{ marginTop: '20px' }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      {/* Search bar */}
+      <TextField
+        label="Search by first name or email"
+        variant="outlined"
+        margin="normal"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e) {
+            handleSearch();
+          }
+        }}
+      />
+
+      <Paper elevation={3} style={{ margin: '20px' }}>
+        <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="right">Student Name</TableCell>
-              <TableCell align="right">Parent Email</TableCell>
-              <TableCell align="right">Contact</TableCell>
+              {columns.map((column) => (
+                <TableCell key={column.id} style={{ fontWeight: 'bold' }}>
+                  {column.label}
+                </TableCell>
+
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {searchTerm && filteredUsers.length > 0 && filteredUsers.map((user, row) => (
-              <TableRow
-                key={user.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell>{user.id}</TableCell>
-                <TableCell align="right">{user.name.firstname} {user.name.lastname}</TableCell>
-                <TableCell align="right">{user.email}</TableCell>
-                <TableCell align="right">
-                  <React.Fragment>
-                  <Tooltip title="Send Email">
-                    <IconButton onClick={handleClickOpen}>
-                      <SendIcon />
-                    </IconButton>
-                  </Tooltip>
-                    <Dialog open={open} onClose={handleClose}>
-                      <DialogTitle>Send Mail to {user.name.firstname} {user.name.lastname}'s Parent</DialogTitle>
-                      <DialogContent>
-                        <Box
-                          component="form"
-                          sx={{
-                            '& .MuiTextField-root': {
-                              m: 1,
-                              width: 500,
-                              maxWidth: '100%',
-                            },
-                          }}
-                        >
-                          <div>
-                            <TextField
-                              id="notice-title"
-                              label="Student Name"
-                              defaultValue={user.name.firstname}
-                              InputProps={{
-                                readOnly: true,
-                              }}
-                            />
-                          </div>
-                          <div>
-                            <TextField
-                              id="notice-title"
-                              label="Parent Email"
-                              defaultValue={user.email}
-                              InputProps={{
-                                readOnly: true,
-                              }}
-                            />
-                          </div>
-                          <div>
-                            <TextField
-                              id="notice-title"
-                              label="Teacher's Name"
-                            />
-                          </div>
-                          <div>
-                            <TextField
-                              id="notice-discription"
-                              label="Message"
-                              multiline
-                              rows={4}
-                            />
-                          </div>
-                        </Box>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={handleClose}>Send</Button>
-                        <Button onClick={handleClose}>Cancel</Button>
-                      </DialogActions>
-                    </Dialog>
-                  </React.Fragment>
-                </TableCell>
+            {filteredStudentList.map((student) => (
+              <TableRow key={student.id}>
+                <TableCell>{student.firstName}</TableCell>
+                <TableCell>{student.lastName}</TableCell>
+                <TableCell>{student.email}</TableCell>
+                <TableCell>
+                  <Button  sx={{textTransform:'lowercase'}} onClick={() => handleSelectedEmail(student.parentId.email)}>{student.parentId ? student.parentId.email : 'N/A'}</Button></TableCell>
+
+
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </Paper>
 
+      
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className='flex items-center flex-col w-full space-y-5'>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Send Email
+          </Typography>
+
+          <Typography>
+            Send to: {selectedEmail}
+          </Typography>
+          <TextField onChange={(e)=> setSubject (e.target.value)} value={subject} type='text' variant='outlined' label='subject' fullWidth>
+           </TextField>
+
+          <TextField onChange={(e) => setDescription (e.target.value)} value={description} type='text' variant='outlined' label='description' fullWidth multiline rows={5}>
+            </TextField>   
+
+          <Button onClick={sendToParent} variant='contained'>Send</Button>
+          </div>
+        </Box>
+      </Modal>
 
     </div>
+
   );
 };
 
