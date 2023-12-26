@@ -103,8 +103,7 @@ export const updateClassTeacher = async (req, res) => {
     try {
         console.log(id);
         const isAlreadyHaveClass = await ClassModel.find({ownedBy:ownedBy});
-
-        if(isAlreadyHaveClass){
+        if(isAlreadyHaveClass.length ==1 ){
             throw Error('One Teacher Can Own Only One Class');
         }
         const updateClass = await ClassModel.findById(id);
@@ -120,6 +119,7 @@ export const updateClassTeacher = async (req, res) => {
         res.status(200).json({ message: 'Class Teacher Assigned Success!!', updateClass });
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.mesasge })
     }
 }

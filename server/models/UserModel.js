@@ -20,9 +20,9 @@ const UserSchema = new mongoose.Schema({
     contactNo: {
         type: Number,
     },
-    address:{
+    address: {
         type: String,
-        default:'Not Given'
+        default: 'Not Given'
     },
     dob: {
         type: Date
