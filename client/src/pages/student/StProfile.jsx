@@ -11,6 +11,7 @@ import Loader from '../../components/Loader/Loader';
 const StProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(true);
   const [student, setStudent] = useState({
     firstName: 'Loading',
     lastName: 'Loading',
@@ -31,6 +32,16 @@ const StProfile = () => {
   const handleSave = (updatedProfile) => {
     // Handle saving the updated profile (e.g., send to the server).
     console.log('Updated Profile:', updatedProfile);
+    try {
+      const isUpdated = authAxios.put(`${apiUrl}/update-student/${updatedProfile._id}`, updatedProfile);
+      if(isUpdated){
+        toast.success('Profile Updated');
+        setRefresh((prev)=> !prev);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message)
+    }
     setIsEditing(false);
   };
 
@@ -48,7 +59,7 @@ const StProfile = () => {
       }
     }
     getUserDetails();
-  }, []);
+  }, [refresh]);
 
   return (
 

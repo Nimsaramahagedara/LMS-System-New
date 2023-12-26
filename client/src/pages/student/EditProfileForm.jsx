@@ -46,15 +46,15 @@ const EditProfileForm = ({ student, onSave }) => {
       />
       <TextField
         label="Mobile"
-        name="mobile"
-        value={editedProfile.mobile}
+        name="contactNo"
+        value={editedProfile.contactNo}
         onChange={handleChange}
         fullWidth
         sx={{ marginBottom: 2 }}
       />
       <TextField
         label="Address"
-        name="adress"
+        name="address"
         value={editedProfile.address}
         onChange={handleChange}
         fullWidth
