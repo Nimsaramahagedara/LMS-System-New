@@ -6,9 +6,11 @@ import ContainerStudent from '../../components/StudentDashboard/ContainerStudent
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
+import Loader from '../../components/Loader/Loader';
 
 const StProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [student, setStudent] = useState({
     firstName: 'Loading',
     lastName: 'Loading',
@@ -39,7 +41,7 @@ const StProfile = () => {
       try {
         const data = await authAxios.get(`${apiUrl}/student/`)
         setStudent(data.data);
-        console.log(data.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         toast.error(error.response.data.message);
@@ -51,6 +53,7 @@ const StProfile = () => {
   return (
 
       <div className='w-full bg-blue-950 py-4 '>
+        {isLoading ? <Loader/> : <></>}
         <Card sx={{ padding: '60px 40px', width: 'fit-content', margin: '10px auto' }}>
           <CardContent >
             {isEditing ? (

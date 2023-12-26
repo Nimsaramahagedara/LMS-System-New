@@ -181,3 +181,19 @@ export const getStudentsInClass = async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 }
+
+export const teacherOverview = async(req,res)=>{
+    try {
+        const id = req.loggedInId
+        const teacherAcc = await UserModel.findById(id);
+        
+        const ownedClass = await ClassModel.findOne({ownedBy:teacherAcc._id});
+
+        //TODO: ADD MORE DATA TO TEACHER OVERVIEW
+
+        res.status(200).json({className:ownedClass.grade + ' ' + ownedClass.subClass})
+        
+    } catch (error) {
+        res.status(500).json({message:error.mesasge});
+    }
+}
