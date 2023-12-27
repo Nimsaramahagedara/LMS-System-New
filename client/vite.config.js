@@ -9,5 +9,9 @@ export default defineConfig({
       external: ['mongoose'],
     },
   },
+  server: {
+    host: '0.0.0.0', // This allows access from outside localhost
+    port: 4173, // or any other port you prefer
+  },
   plugins: [react()],
 });
