@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Typography } from '@mui/material';
 
 
 const rows = [
@@ -81,6 +82,7 @@ function createData(
 const Markings = () => {
   return (
     <div>
+      <Typography textAlign={'center'} variant='h5'>Publish Your Class Marks</Typography>
       <Button variant="outlined" style={{ marginRight: '20px' }}>
         Update Marks
       </Button>
