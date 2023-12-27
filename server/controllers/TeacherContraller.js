@@ -190,8 +190,12 @@ export const teacherOverview = async(req,res)=>{
         const ownedClass = await ClassModel.findOne({ownedBy:teacherAcc._id});
 
         //TODO: ADD MORE DATA TO TEACHER OVERVIEW
+        if(ownedClass){
+            res.status(200).json({className:ownedClass.grade + ' ' + ownedClass.subClass})
+        }else{
+            res.status(200).json({className:'Not Assigned'})
+        }
 
-        res.status(200).json({className:ownedClass.grade + ' ' + ownedClass.subClass})
         
     } catch (error) {
         res.status(500).json({message:error.mesasge});

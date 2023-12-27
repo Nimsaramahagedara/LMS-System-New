@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
 import AddSubjectModal from '../../components/AddSubjectModal';
-import { getAllSubjectsInClass } from '../../../../server/controllers/SubjectController';
 
 const SubjectMNG = ({ ClassList }) => {
   const [viewOpen, setViewOpen] = useState(false);
@@ -55,7 +54,7 @@ const SubjectMNG = ({ ClassList }) => {
       const isDeleted = await authAxios.delete(`${apiUrl}/subject/${id}`);
       if (isDeleted.data) {
         toast.success('Subject Deleted Successfully');
-        getAllSubjectsInClass(selectedClass._id)
+        getSubjectsInClass(selectedClass._id)
       }
     } catch (error) {
       toast.error(error.response.data.message);
