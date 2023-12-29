@@ -28,12 +28,13 @@ export default function Login() {
   const [role, setRole] = useState(1);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [buttonDisable, setBtnDisabled] = useState(false)
 
 
   const handleSubmit = async (event) => {
   
     event.preventDefault();
-
+    setBtnDisabled(true);
     const data = new FormData(event.currentTarget);
     const payload = {
       email: data.get('email'),
@@ -71,7 +72,12 @@ export default function Login() {
         
       }
     } catch (error) {
+      if(error.message){
+        toast.error(error.message);
+      }
       toast.error(error.response.data.message);
+    }finally{
+      setBtnDisabled(false);
     }
     
 
@@ -153,6 +159,7 @@ export default function Login() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={buttonDisable}
           >
             Login
           </Button>
