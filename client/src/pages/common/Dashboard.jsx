@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Dialog, DialogTitle, DialogContent } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -32,6 +33,9 @@ import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { ClickOutHandler } from 'react-clickout-ts';
 
 function Copyright(props) {
   return (
@@ -58,7 +62,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   ...(open && {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100 % - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -98,13 +102,12 @@ export default function Dashboard() {
   const [notiOpen, setNotiOpen] = useState(false);
   const { logout, userRole } = useAuth();
   const navigate = useNavigate();
-  const [notices, setNotices] = useState([ 
-  <ListItemButton>
-    <ListItemIcon>
-      <EmailIcon />
-    </ListItemIcon>
-    <ListItemText primary="Notification List is Empty" />
-  </ListItemButton>]);
+  const [selectedNotification, setSelectedNotification] = useState(null);
+  const [notices, setNotices] = useState([
+    <div className='flex items-center justify-start py-2 gap-2 cursor-pointer hover:bg-gray-300 px-1 relative'>
+      < ChatBubbleOutlineOutlinedIcon sx={{ color: 'green' }} />
+      <p className='text-xs text-left'>Ooops! No Notifications Here</p>
+    </div>]);
 
   const toggleNotification = () => {
     setNotiOpen(!notiOpen);
@@ -112,23 +115,42 @@ export default function Dashboard() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  // Function to handle opening the dialog
+  const handleOpen = () => {
+    setSelectedNotification(notification);
+    setNotiOpen(true);
+  };
+
+  // Function to handle closing the dialog
+  const handleClickOut = () => {
+    setNotiOpen(false);
+  };
+
   // const userRole = Cookies.get('userRole');
   const [navLinks, setNavlinks] = useState(studentListItems);
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
-  useEffect(()=>{
+
+
+
+  //Handle notifications
+  useEffect(() => {
     const getAllNotices = async (userRole) => {
 
       const allNotices = await authAxios.get(`${apiUrl}/notices/${userRole}`);
 
-      const designedNotices = allNotices.data.map((el,index) => {
+      const designedNotices = allNotices.data.map((el, index) => {
+        const createdAt = new Date(el.createdAt);
+        const formattedDate = createdAt.toLocaleDateString("en-GB");
         return (
-          <ListItemButton key={index}>
-            <ListItemIcon>
-              <EmailIcon />
-            </ListItemIcon>
-            <ListItemText primary={el.title} />
-          </ListItemButton>
+
+          <div className='flex items-center justify-start py-2 gap-2 cursor-pointer hover:bg-gray-300 px-1 relative rounded-md' key={index}>
+            < ChatBubbleOutlineOutlinedIcon sx={{ color: 'green' }} />
+            <p className='text-xs text-left'>{el.title}</p>
+            <p className='text-xs text-right text-gray-400 absolute bottom-0 right-0'>{formattedDate}</p>
+
+          </div>
         )
       })
       if (designedNotices) {
@@ -138,7 +160,9 @@ export default function Dashboard() {
     }
 
     getAllNotices(Cookies.get('userRole'));
-  },[])
+  }, [])
+
+
 
   useEffect(() => {
     switch (userRole) {
@@ -162,6 +186,10 @@ export default function Dashboard() {
   }, []);
 
 
+
+
+
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -180,6 +208,7 @@ export default function Dashboard() {
               marginRight: '36px',
               ...(open && { display: 'none' }),
             }}
+
           >
             <MenuIcon />
           </IconButton>
@@ -190,7 +219,7 @@ export default function Dashboard() {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            {userRole == 'admin' ? 'Admin' : userRole == 'support' ? 'Support' : userRole == 'parent' ? 'parent': 'Teacher'} Dashboard
+            {userRole == 'admin' ? 'Admin' : userRole == 'support' ? 'Support' : userRole == 'parent' ? 'parent' : 'Teacher'} Dashboard
           </Typography>
           <IconButton color="inherit" onClick={toggleNotification}>
             <Badge badgeContent={notices.length} color="secondary">
@@ -198,15 +227,48 @@ export default function Dashboard() {
             </Badge>
           </IconButton>
         </Toolbar>
-        <Box sx={{ position: 'absolute', top: '60px', right: '20px', background: 'white', color: 'black' }} visibility={notiOpen ? 'visible' : 'hidden'}>
-          <List component="nav" sx={{ width: '300px' }}>
-            {/* Notification Object goes here */}
-            <React.Fragment>
-              {notices}
-            </React.Fragment>
-            <Divider sx={{ my: 1 }} />
-          </List>
-        </Box>
+
+
+        {/* Notifications in top */}
+        {/* <Box className={relative}>
+          <div onClick={handleOpen} className="cursor-pointer">
+            
+            <i className="fas fa-bell text-2xl"></i>
+          </div>
+
+          <Dialog sx={{position:'absolute', top:'0', left:'0'}} open={notiOpen} onClose={handleClose}>
+            <DialogTitle>Notifications</DialogTitle>
+            <DialogContent>
+              <List component="nav" className="w-80">
+               
+                <React.Fragment>
+                  {notices}
+                </React.Fragment>
+                <Divider className="my-1" />
+              </List>
+            </DialogContent>
+          </Dialog>
+        </Box> */}
+
+        <ClickOutHandler onClickOut={handleClickOut}>
+          <Box sx={{ position: 'absolute', boxShadow: '0 10px 10px rgba(0, 0, 0, 0.2)', top: '60px', right: '20px', background: 'white', color: 'black', padding: '20px', borderRadius: '10px' }} visibility={notiOpen ? 'visible' : 'hidden'}>
+            <List component="nav" sx={{ width: '300px' }}>
+              {/* Notification Object goes here */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <Typography variant='subtitle1'>Notification</Typography>
+                <SettingsOutlinedIcon />
+              </Box>
+              <React.Fragment>
+                {notices}
+              </React.Fragment>
+              <Divider sx={{ my: 1 }} />
+            </List>
+          </Box>
+        </ClickOutHandler>
+
+
+
+
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <Toolbar
