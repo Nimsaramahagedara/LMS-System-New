@@ -36,17 +36,7 @@ import { apiUrl } from '../../utils/Constants';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { ClickOutHandler } from 'react-clickout-ts';
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { useAuth } from "./AuthContext";
-import Cookies from "js-cookie";
-import { toast } from "react-toastify";
-import authAxios from "../../utils/authAxios";
-import { apiUrl } from "../../utils/Constants";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { ClickOutHandler } from "react-clickout-ts";
+
 
 function Copyright(props) {
   return (
