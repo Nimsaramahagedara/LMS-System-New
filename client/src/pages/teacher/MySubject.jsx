@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Modal, Radio, RadioGroup, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
@@ -14,7 +14,7 @@ const MySubject = () => {
   const [refresh, setRefresh] = useState(true);
   const [open, setOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
-
+  const navigate = useNavigate();
   const [selectedActivity, setSelectedAct] = useState({})
   const [activity, setActivity] = useState({
     title: '',
@@ -137,6 +137,7 @@ const MySubject = () => {
     <div className='bg-white p-3 rounded-lg shadow-md'>
       <Typography variant='h5' textAlign={'center'}>{subject + ' - ' + grade}</Typography>
       <Button variant='contained' color='warning' onClick={() => setOpen(true)}>Create New Activity</Button>
+      <Button variant='contained' color='secondary' sx={{float:'right'}} onClick={() => navigate(`../subjmarks/${id}/${subject}/${grade}`)}>Publish Marks</Button>
       {
         !isLoading ? <>
           <div>
