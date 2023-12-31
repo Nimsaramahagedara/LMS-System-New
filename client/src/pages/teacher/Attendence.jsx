@@ -32,7 +32,10 @@ const Attendance = () => {
   const [refresh, setRefresh] = useState(false);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [rowDialogOpen, setRowDialogOpen] = useState(Array(attendance.length).fill(false));
 
+  
   const refreshPage = () => {
     setRefresh((prev) => !prev)
   }
@@ -40,12 +43,16 @@ const Attendance = () => {
     setOpen(true);
   };
 
-  const handleClickOpen2 = () => {
-    setOpen2(true);
+  const handleClickOpen2 = (index) => {
+    setRowDialogOpen((prev) => {
+      const newState = [...prev];
+      newState[index] = true; // Set the selected row index to true
+      return newState;
+    });
   };
 
   const handleClose2 = () => {
-    setOpen2(false);
+    setRowDialogOpen(Array(attendance.length).fill(false));
   };
 
   const handleClose = () => {
@@ -85,7 +92,7 @@ const Attendance = () => {
     try {
       const result = await authAxios.post(`${apiUrl}/teacher/submit-attendance`, { selectedStudents });
       if (result) {
-        toast.success('Successfully');
+        toast.success('Attendance Marked Successfully');
         handleClose();
         getAttendance();
       } // Log the response from the backend
@@ -186,13 +193,16 @@ const Attendance = () => {
                 <TableCell>{row.date}</TableCell>
                 <TableCell>{row.attendedStudents.length}</TableCell>
                 <TableCell>
-                  <Button variant="outlined"
+                <Button
+                    variant="outlined"
                     startIcon={<VisibilityIcon />}
                     color="secondary"
-                    onClick={handleClickOpen2}
+                    onClick={() => handleClickOpen2(index)} // Pass the row index to the function
                     sx={{ marginRight: 2 }}
-                  > View </Button>
-                  <Dialog open={open2} onClose={handleClose2}>
+                  >
+                    View
+                  </Button>
+                  <Dialog open={rowDialogOpen[index]} onClose={handleClose2}>
                     <DialogTitle>{row.date}</DialogTitle>
                     <DialogContent>
                       <Box
