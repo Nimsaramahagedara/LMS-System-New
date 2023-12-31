@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogTitle, DialogContent } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -12,22 +11,12 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import EmailIcon from '@mui/icons-material/Email';
-import DraftsIcon from '@mui/icons-material/Drafts';
 import { adminListItems, teacherListItems, studentListItems, supportListItems, secondaryListItems, parentListItems } from '../admin/listItems';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Notifications from '@mui/icons-material/Notifications';
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { useAuth } from './AuthContext';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
@@ -142,20 +131,18 @@ export default function Dashboard() {
   //Handle notifications
   useEffect(() => {
     const getAllNotices = async (userRole) => {
-      
+
       const allNotices = await authAxios.get(`${apiUrl}/notices/${userRole}`);
 
       const designedNotices = allNotices.data.map((el, index) => {
         const createdAt = new Date(el.createdAt);
         const formattedDate = createdAt.toLocaleDateString("en-GB");
         return (
-
-          <div className='flex items-center justify-start py-2 gap-2 cursor-pointer hover:bg-gray-300 px-1 relative rounded-md' key={index}>
-            < ChatBubbleOutlineOutlinedIcon sx={{ color: 'green' }} />
-            <p className='text-xs text-left'>{el.title}</p>
-            <p className='text-xs text-right text-gray-400 absolute bottom-0 right-0'>{formattedDate}</p>
-
-          </div>
+          {
+            id: index,
+            title: el.title,
+            date: formattedDate
+          }
         )
       })
       if (designedNotices) {
@@ -231,39 +218,26 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
 
-
-        {/* Notifications in top */}
-        {/* <Box className={relative}>
-          <div onClick={handleOpen} className="cursor-pointer">
-            
-            <i className="fas fa-bell text-2xl"></i>
-          </div>
-
-          <Dialog sx={{position:'absolute', top:'0', left:'0'}} open={notiOpen} onClose={handleClose}>
-            <DialogTitle>Notifications</DialogTitle>
-            <DialogContent>
-              <List component="nav" className="w-80">
-               
-                <React.Fragment>
-                  {notices}
-                </React.Fragment>
-                <Divider className="my-1" />
-              </List>
-            </DialogContent>
-          </Dialog>
-        </Box> */}
-
         <ClickOutHandler onClickOut={handleClickOut}>
           <Box sx={{ position: 'absolute', boxShadow: '0 10px 10px rgba(0, 0, 0, 0.2)', top: '60px', right: '20px', background: 'white', color: 'black', padding: '20px', borderRadius: '10px' }} visibility={notiOpen ? 'visible' : 'hidden'}>
             <List component="nav" sx={{ width: '300px' }}>
-              {/* Notification Object goes here */}
               <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                 <Typography variant='subtitle1'>Notification</Typography>
                 <SettingsOutlinedIcon />
               </Box>
-              <React.Fragment>
-                {notices}
-              </React.Fragment>
+
+              {
+                notices.map((el, index) => (
+
+                  <div className='flex items-center justify-start py-2 gap-2 cursor-pointer hover:bg-gray-300 px-1 relative rounded-md' key={index}>
+                    < ChatBubbleOutlineOutlinedIcon sx={{ color: 'green' }} />
+                    <p className='text-xs text-left'>{el.title}</p>
+                    <p className='text-xs text-right text-gray-400 absolute bottom-0 right-0'>{el.formattedDate}</p>
+
+                  </div>
+                ))
+              }
+
               <Divider sx={{ my: 1 }} />
             </List>
           </Box>
