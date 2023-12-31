@@ -1,5 +1,5 @@
-import MarksModel from "../models/MarksModel";
-import SubjectModel from "../models/SubjectModel";
+import MarksModel from "../models/MarksModel.js";
+import SubjectModel from "../models/SubjectModel.js";
 
 export const getMarksTable = async(req,res)=>{
     const {classId, term} = req.params;
@@ -22,6 +22,25 @@ export const getMarksTable = async(req,res)=>{
     }
 }
 
-export const addStudentsMark = async(req,res)=>{
 
+//For Subject
+export const addSubjectMakrs = async(req,res)=>{
+    const {subid} = req.params;
+    const payLoad = req.body;
+    try {
+        if(!payLoad?.term || !subid){
+            throw Error('All Fields are required')
+        }
+        const markData = {
+            subId: subid,
+            term : payLoad.term,
+            marks: payLoad.marks
+        }
+        const data = await MarksModel.create(markData)
+        if(data)
+        res.status(200).json(data);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({message:error.message})
+    }
 }
