@@ -40,6 +40,7 @@ import TeacherProfile from './pages/teacher/Tprofile'
 import SupportProfile from './pages/support/SProfile'
 import Subject from './pages/teacher/Subject'
 import MySubject from './pages/teacher/MySubject'
+import PublishSubjectMarks from './pages/teacher/PublishSubjectMarks'
 // import SubjectMNG from './pages/admin/SubjectMNG'
 
 
@@ -72,7 +73,7 @@ function App() {
             <Route path='tprofile' element={<TeacherProfile />} />
             <Route path='myclass' element={<MyClass />} />
             <Route path='mysub/:id/:subject/:grade' element={<MySubject />} />
-            
+            <Route path='subjmarks/:id/:subject/:grade' element={<PublishSubjectMarks />} />            
 
             {/* Support Team Routes */}
             <Route path='supoverview' element={<SpOverview />} />

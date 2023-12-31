@@ -1,4 +1,5 @@
 import ClassModel from "../models/ClassModel.js"
+import SubjectModel from "../models/SubjectModel.js";
 import UserModel from "../models/UserModel.js";
 
 
@@ -136,6 +137,36 @@ export const getOneClassByTeacherId = async (req, res) => {
         res.status(200).json(isClassExist);
 
     } catch (error) {
+        res.status(500).json({
+            message: error.mesasge
+        })
+    }
+}
+
+export const getStudentsInSubject = async (req, res) => {
+    //Subject id
+    const { subid } = req.params;
+
+    try {
+        const subject = await SubjectModel.findById(subid);
+        if(!subject){
+            throw Error('No Subject in that ID')
+        }
+        const classIn = await ClassModel.findById(subject.classId);
+
+        if(!classIn){
+            throw Error('No Class For that Subject')
+        }
+
+        const allStudents = await UserModel.find({ role: 'student', classId: classIn._id });
+        if (!allStudents) {
+            throw Error('No Students Or Other Error');
+
+        }
+        res.status(200).json(allStudents);
+
+    } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: error.mesasge
         })

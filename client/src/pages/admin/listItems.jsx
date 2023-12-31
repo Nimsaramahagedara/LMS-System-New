@@ -39,7 +39,7 @@ export const teacherListItems = (
         <GradingIcon />
       </ListItemIcon>
       <Link to={'/dashboard/attendance'}>
-      <ListItemText primary="Attendance" />
+        <ListItemText primary="Attendance" />
       </Link>
 
     </ListItemButton>
@@ -49,7 +49,7 @@ export const teacherListItems = (
         <TaskIcon />
       </ListItemIcon>
       <Link to={'/dashboard/markings'}>
-      <ListItemText primary="Markings" />
+        <ListItemText primary="Markings" />
       </Link>
 
     </ListItemButton>
@@ -59,7 +59,7 @@ export const teacherListItems = (
         <NoteIcon />
       </ListItemIcon>
       <Link to={'/dashboard/notices'}>
-      <ListItemText primary="Notices" />
+        <ListItemText primary="Notices" />
       </Link>
 
     </ListItemButton>
@@ -69,7 +69,7 @@ export const teacherListItems = (
         <ContactsIcon />
       </ListItemIcon>
       <Link to={'/dashboard/subject'}>
-      <ListItemText primary="Subject" />
+        <ListItemText primary="Subject" />
       </Link>
 
     </ListItemButton>
@@ -79,21 +79,21 @@ export const teacherListItems = (
         <AlternateEmailIcon />
       </ListItemIcon>
       <Link to={'/dashboard/email'}>
-      <ListItemText primary="Contact Parents" />
+        <ListItemText primary="Contact Parents" />
       </Link>
 
     </ListItemButton>
 
     <ListItemButton>
       <ListItemIcon>
-      <AccountCircleIcon />
+        <AccountCircleIcon />
       </ListItemIcon>
       <Link to={'/dashboard/tprofile'}>
         <ListItemText primary="My Profile" />
       </Link>
 
     </ListItemButton>
-    
+
   </React.Fragment>
 );
 
@@ -101,64 +101,64 @@ export const teacherListItems = (
 export const adminListItems = (
   <React.Fragment>
 
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard'}>
+
+
+    <Link to={'/dashboard'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
         <ListItemText primary="Dashboard" />
-      </Link>
-      
-    </ListItemButton>
+      </ListItemButton>
+    </Link>
 
-    <ListItemButton>
-      <ListItemIcon>
-        <DirectionsWalkIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/support'}>
-      <ListItemText primary="Support" />
-      </Link>
 
-    </ListItemButton>
+    <Link to={'/dashboard/support'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <DirectionsWalkIcon />
+        </ListItemIcon>
+        <ListItemText primary="Support" />
+      </ListItemButton>
+    </Link>
 
-    <ListItemButton>
-      <ListItemIcon>
-        <ManageAccountsIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/students'}>
-      <ListItemText primary="Students" />
-      </Link>
+    <Link to={'/dashboard/students'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <ManageAccountsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Students" />
+      </ListItemButton>
+    </Link>
 
-    </ListItemButton>
 
-    <ListItemButton>
-      <ListItemIcon>
-        <AccountBalanceIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/classes'}>
-      <ListItemText primary="Classes" />
-      </Link>
+    <Link to={'/dashboard/classes'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <AccountBalanceIcon />
+        </ListItemIcon>
+        <ListItemText primary="Classes" />
+      </ListItemButton>
+    </Link>
 
-    </ListItemButton>
+    <Link to={'/dashboard/teachers'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Teachers" />
+      </ListItemButton>
+    </Link>
 
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/teachers'}>
-      <ListItemText primary="Teachers" />
-      </Link>
-    </ListItemButton>
+    <Link to={'/dashboard/publishNotice'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <NoteIcon />
+        </ListItemIcon>
+        <ListItemText primary="Publish Notices" />
+      </ListItemButton>
+    </Link>
 
-    <ListItemButton>
-      <ListItemIcon>
-        <NoteIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/publishNotice'}>
-      <ListItemText primary="Publish Notices" />
-      </Link>
-
-    </ListItemButton>
 
   </React.Fragment>
 );
@@ -179,7 +179,7 @@ export const studentListItems = (
         <ShoppingCartIcon />
       </ListItemIcon>
       <Link to={'/dashboard/modules'}>
-      <ListItemText primary="Modules" />
+        <ListItemText primary="Modules" />
       </Link>
 
     </ListItemButton>
@@ -188,7 +188,7 @@ export const studentListItems = (
         <PeopleIcon />
       </ListItemIcon>
       <Link to={'/dashboard/module'}>
-      <ListItemText primary="ModulePage" />
+        <ListItemText primary="ModulePage" />
       </Link>
 
     </ListItemButton>
@@ -197,7 +197,7 @@ export const studentListItems = (
         <PeopleIcon />
       </ListItemIcon>
       <Link to={'/dashboard/marks'}>
-      <ListItemText primary="Marks" />
+        <ListItemText primary="Marks" />
       </Link>
 
     </ListItemButton>
@@ -206,71 +206,68 @@ export const studentListItems = (
 
 export const supportListItems = (
   <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/supoverview'}>
+    <Link to={'/dashboard/supoverview'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
         <ListItemText primary="Dashboard" />
-      </Link>
+      </ListItemButton>
+    </Link>
 
-    </ListItemButton>
+    <Link to={'/dashboard/createstudents'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <PersonAddIcon />
+        </ListItemIcon>
+        <ListItemText primary="Student Accounts" />
+      </ListItemButton>
+    </Link>
 
-    <ListItemButton>
-      <ListItemIcon>
-        <PersonAddIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/createstudents'}>
-      <ListItemText primary="Student Accounts" />
-      </Link>
+    <Link to={'/dashboard/createteachers'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <PersonAddIcon />
+        </ListItemIcon>
+        <ListItemText primary="Teacher Accounts" />
+      </ListItemButton>
+    </Link>
 
-    </ListItemButton>
+    <Link to={'/dashboard/classes'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <AccountBalanceIcon />
+        </ListItemIcon>
+        <ListItemText primary="Classes" />
+      </ListItemButton>
+    </Link>
 
-    <ListItemButton>
-      <ListItemIcon>
-        <PersonAddIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/createteachers'}>
-      <ListItemText primary="Teacher Accounts" />
-      </Link>
-    </ListItemButton>
+    {/* <Link to={'/dashboard/manageSubj'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <ManageAccountsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Manage Subjects" />
+      </ListItemButton>
+    </Link> */}
 
-    <ListItemButton>
-      <ListItemIcon>
-        <AccountBalanceIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/classes'}>
-      <ListItemText primary="Classes" />
-      </Link>
+    <Link to={'/dashboard/publishnotices'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <NoteIcon />
+        </ListItemIcon>
+        <ListItemText primary="Publish Notice" />
+      </ListItemButton>
+    </Link>
 
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <ManageAccountsIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/manageSubj'}>
-      <ListItemText primary="Manage Subjects" />
-      </Link>
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <NoteIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/publishnotices'}>
-      <ListItemText primary="Publish Notice" />
-      </Link>
-
-    </ListItemButton>
-
-    <ListItemButton>
-      <AccountCircleIcon />
-       <Link to={'/dashboard/sprofile'}>
-      <ListItemText primary="My Profile" />
-      </Link>
-
-    </ListItemButton>
+    <Link to={'/dashboard/sprofile'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <AccountCircleIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Profile" />
+      </ListItemButton>
+    </Link>
 
   </React.Fragment>
 );
@@ -318,7 +315,7 @@ export const parentListItems = (
         <DirectionsWalkIcon />
       </ListItemIcon>
       <Link to={'/dashboard/childmarks'}>
-      <ListItemText primary="Child Marks" />
+        <ListItemText primary="Child Marks" />
       </Link>
     </ListItemButton>
 
@@ -327,7 +324,7 @@ export const parentListItems = (
         <AssignmentIcon />
       </ListItemIcon>
       <Link to={'/dashboard/facilityfee'}>
-      <ListItemText primary="Facility Fee" />
+        <ListItemText primary="Facility Fee" />
       </Link>
     </ListItemButton>
 
