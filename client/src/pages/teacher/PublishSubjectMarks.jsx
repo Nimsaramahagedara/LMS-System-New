@@ -128,7 +128,7 @@ const PublishSubjectMarks = () => {
                                     <div className='flex items-center justify-between w-full'>
                                         <Typography>{student.firstName + ' ' + student.lastName}</Typography>
                                         <TextField type='number'
-                                            value={marks[index].mark}
+                                            value={marks[index]?.mark || 0}
                                             onChange={(e) => handleChange(e, student._id)}
                                             inputProps={{
                                                 min: 0,
