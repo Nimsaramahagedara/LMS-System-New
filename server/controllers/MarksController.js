@@ -44,3 +44,36 @@ export const addSubjectMakrs = async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
+
+
+export const getMarks = async (req, res) => {
+    const loggedInId = req.loggedInId;
+    console.log(loggedInId);
+
+    try {
+        // Find the subject for the logged-in teacher
+        const subj = await SubjectModel.findOne({ teachBy: loggedInId });
+
+        if (!subj) {
+            return res.status(404).json({ message: 'Subject not found for the logged-in teacher' });
+        }
+
+        // Fetch marks data with populated student details based on the subject ID
+        const marksData = await MarksModel.find({ subId: subj._id })
+            .populate({
+                path: 'marks.studentId',
+                model: 'users'  // The model referenced in the MarksModel schema
+                // You can add more options here based on your requirements
+            })
+            .populate({
+                path: 'subId',
+                model: 'subjects'  // The model referenced in the MarksModel schema
+                // You can add more options here based on your requirements
+            });
+
+        res.status(200).json({ marksData });
+    } catch (error) {
+        console.error('Error fetching marks data:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
