@@ -1,5 +1,6 @@
 import MarksModel from "../models/MarksModel.js";
 import SubjectModel from "../models/SubjectModel.js";
+import mongoose from "mongoose";
 
 export const getMarksTable = async(req,res)=>{
     const {classId, term} = req.params;
@@ -80,5 +81,42 @@ export const getMarks = async (req, res) => {
     } catch (error) {
         console.error('Error fetching marks data:', error);
         res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+export const getMarksByStudentId = async (req, res) => {
+    try {
+        const studentId = req.params;
+
+        // Ensure studentId is provided
+        if (!studentId) {
+            return res.status(400).json({ error: 'Missing studentId in the request body' });
+        }
+
+        // Find marks for the specified studentId
+        const marks = await MarksModel.find({
+            'marks.studentId': new mongoose.Types.ObjectId(studentId)
+        }, { subId: 1, term: 1, 'marks.$': 1 });
+
+        // If no marks found, return an empty array
+        if (!marks || marks.length === 0) {
+            return res.status(404).json({ message: 'No marks found for the specified studentId' });
+        }
+
+        // Extract the relevant data from the results
+        const extractedData = marks.map(({ subId, term, marks }) => {
+            return {
+                subId,
+                term,
+                studentId: marks[0].studentId,
+                mark: marks[0].mark
+            };
+        });
+
+        // Return the results
+        res.json(extractedData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
