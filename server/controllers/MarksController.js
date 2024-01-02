@@ -28,10 +28,11 @@ export const addSubjectMakrs = async(req,res)=>{
     const {subid} = req.params;
     const payLoad = req.body;
     try {
-        // const isExist = MarksModel.findOne({term: payLoad.term, subId:subid});
-        // if(isExist){
-        //     throw Error('Marks For that Term Already Exist')
-        // }
+        const isExist =await MarksModel.findOne({term: payLoad.term, subId:subid});
+        console.log(isExist);
+        if(isExist){
+            throw Error('Marks For that Term Already Exist')
+        }
         if(!payLoad?.term || !subid){
             throw Error('All Fields are required')
         }
