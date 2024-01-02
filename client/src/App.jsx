@@ -101,14 +101,6 @@ function App() {
             <Route path='profile' element={<StProfile />} />
 
           </Route>
-          {/* 
-        <Route path='/' element={}></Route>
-        <Route path='/' element={}></Route>
-        <Route path='/' element={}></Route>
-        <Route path='/' element={}></Route>
-        <Route path='/' element={}></Route>
-        <Route path='/' element={}></Route>
-        <Route path='/' element={}></Route> */}
         </Routes>
       </AuthProvider>
     </BrowserRouter>

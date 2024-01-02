@@ -7,7 +7,7 @@ import Notifications from '@mui/icons-material/Notifications';
 import BarsDataset from '../../components/AdminBarChart';
 import { Container } from '@mui/material';
 import ContainerStudent from '../../components/StudentDashboard/ContainerStudent';
-import { getTerm } from '../../utils/usefulFunctions';
+import { countAcademicDays, getTerm } from '../../utils/usefulFunctions';
 const StOverview = () => {
   return (
     <ContainerStudent>
@@ -17,7 +17,7 @@ const StOverview = () => {
       <div className='flex flex-wrap items-center md:justify-between justify-around md:gap-0 gap-2 '>
         <ColorCard bgColor={'#eafce8'} name={'Current Term'} count={`${getTerm()}/3`} icon={<SignalCellularAltIcon/>}/>
         <ColorCard bgColor={'#f5f5dc'} name={'Your Class'} count={'11/A'} icon={<AddHomeWorkIcon/>}/>
-        <ColorCard bgColor={'#ffdab9'} name={'Progress'} count={'105%'} icon={<StackedLineChartIcon/>}/>
+        <ColorCard bgColor={'#ffdab9'} name={'Academic Day'} count={countAcademicDays()} icon={<StackedLineChartIcon/>}/>
         <ColorCard bgColor={'#87ceeb'} name={'Notifications'} count={'10'} icon={<Notifications/>}/>
       </div>
       <div className='px-2 overflow-auto'>

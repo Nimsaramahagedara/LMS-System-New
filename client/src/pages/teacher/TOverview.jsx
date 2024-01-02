@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
 import Loader from '../../components/Loader/Loader';
+import { countAcademicDays } from '../../utils/usefulFunctions';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -31,6 +32,8 @@ const TOverview = () => {
   const date = new Date();
   const [overview, setOverview] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [academicDays, setDays] = useState('');
+
   const getOverview = async()=>{
     try {
       const data = await authAxios.get(`${apiUrl}/teacher/get-overview`);
@@ -44,6 +47,7 @@ const TOverview = () => {
 
   useEffect(()=>{
     getOverview();
+    setDays(countAcademicDays())
   },[])
 
   return (
@@ -68,7 +72,7 @@ const TOverview = () => {
         </Grid>
         <Grid item xs={4}>
           <Item sx={{height:'20vh'}}>
-            <NextClassTeacher/>
+            <NextClassTeacher count={academicDays}/>
           </Item>
           <br></br>
           <Item sx={{height:'16vh'}}>

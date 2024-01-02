@@ -6,19 +6,19 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function NextClassTeacher() {
+export default function NextClassTeacher({count = 0}) {
   return (
     <>
-      <h5>Next Class</h5>
+      <h5>Academic Day</h5>
       <Typography component="p" variant="h4">
-        10.45 A.M
+        {count}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        11 - D
+
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>
-          View details
+          count again
         </Link>
       </div>
     </>
