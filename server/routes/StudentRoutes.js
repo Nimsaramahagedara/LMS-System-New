@@ -2,6 +2,7 @@ import express from 'express';
 import { CreateStudentAccount, getStudentDetails, getAllStudents , getStudentsByClassId, updateStudentById, deleteStudentById, getAllSubjectsInClassUsingStId, getClassMatesUsingStId } from '../controllers/StudentController.js';
 import { LoginValidator } from '../middlewares/LoggedIn.js';
 import { getSubjectTeacher } from '../controllers/SubjectController.js';
+import { getMarksByStudentId } from '../controllers/MarksController.js';
 
 const studentRouter = express.Router();
 
@@ -15,5 +16,6 @@ studentRouter.get('/:classId', getStudentsByClassId);
 studentRouter.get('/students', getAllStudents);
 studentRouter.put('/update-student/:id', updateStudentById); 
 studentRouter.delete('/delete-student/:id', deleteStudentById); 
+studentRouter.get('/get-marks-by-student/:id', getMarksByStudentId)
 
 export default studentRouter;
