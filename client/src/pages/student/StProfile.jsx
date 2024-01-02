@@ -33,7 +33,7 @@ const StProfile = () => {
     // Handle saving the updated profile (e.g., send to the server).
     console.log('Updated Profile:', updatedProfile);
     try {
-      const isUpdated = authAxios.put(`${apiUrl}/update-student/${updatedProfile._id}`, updatedProfile);
+      const isUpdated = authAxios.put(`${apiUrl}/student/update-student/${updatedProfile._id}`, updatedProfile);
       if(isUpdated){
         toast.success('Profile Updated');
         setRefresh((prev)=> !prev);
