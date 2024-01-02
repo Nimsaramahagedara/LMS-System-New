@@ -56,8 +56,7 @@ const StudentMarks = () => {
   const getMarks = async () => {
     try {
       const user = await authAxios.get(`${apiUrl}/get-user`);
-      const id = "658a8cddf00e429147987698"
-      // user.data._id;
+      const id = user.data._id;
       const result = await authAxios.get(`${apiUrl}/student/get-marks-by-student/${id}`);
   
       if (result) {
