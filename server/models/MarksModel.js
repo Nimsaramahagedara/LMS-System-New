@@ -6,7 +6,7 @@ const MarksSchema = new mongoose.Schema({
     //     ref:'users'
     // },
     subId: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'subjects'
     },
     marks: [

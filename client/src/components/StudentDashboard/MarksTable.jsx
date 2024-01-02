@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { toast } from 'react-toastify';
+import authAxios from '../../utils/authAxios';
+import { apiUrl } from '../../utils/Constants';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,20 +31,48 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData(0,'Science', 'SC001', 60, 2.4, 4.0),
-  createData(1,'Mathematics', 'SC001', 60, 2.4, 4.0),
-  createData(2,'History', 'SC001', 60, 2.4, 4.0),
-  createData(3,'Art', 'SC001', 60, 2.4, 4.0),
-  createData(4,'Commerce', 'SC001', 60, 2.4, 4.0),
-  createData(5,'Geography', 'SC001', 60, 2.4, 4.0),
-];
 
 export default function MarksTable() {
+
+const [term1Marks, setTerm1Marks] = useState([]);
+const [term2Marks, setTerm2Marks] = useState([]);
+const [term3Marks, setTerm3Marks] = useState([]);
+
+const getMarks = async () => {
+  try {
+    const user = await authAxios.get(`${apiUrl}/get-user`);
+    const id = user.data._id;
+    const result = await authAxios.get(`${apiUrl}/student/get-marks-by-student/658a8cddf00e429147987698`);
+    // const result = await authAxios.get(`${apiUrl}/student/get-marks-by-student/${id}`);
+    
+    if (result) {
+      const { data } = result;
+
+      // Separate data into different terms
+      const term1Data = data.filter(mark => mark.term === 1);
+      const term2Data = data.filter(mark => mark.term === 2);
+      const term3Data = data.filter(mark => mark.term === 3);
+
+      setTerm1Marks(term1Data);
+      setTerm2Marks(term2Data);
+      setTerm3Marks(term3Data);
+
+      console.log('Term 1 Marks:', term1Marks);
+      console.log('Term 2 Marks:', term2Marks);
+      console.log('Term 3 Marks:', term3Marks);
+    } else {
+      toast.error('Data Not Available');
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+  }
+};
+
+useEffect(() => {
+  getMarks();
+}, []);
+
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table" size='small'>
@@ -55,15 +86,15 @@ export default function MarksTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {term3Marks.map((row) => (
+            <StyledTableRow key={row.subId.subName}>
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
+              <StyledTableCell align="right">{row.subId.subName}</StyledTableCell>
               <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">{row.mark}</StyledTableCell>
+              <StyledTableCell align="right">`${row.mark} / ${term1Marks.length}`</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

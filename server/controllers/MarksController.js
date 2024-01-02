@@ -96,7 +96,8 @@ export const getMarksByStudentId = async (req, res) => {
         // Find marks for the specified studentId
         const marks = await MarksModel.find({
             'marks.studentId': new mongoose.Types.ObjectId(studentId)
-        }, { subId: 1, term: 1, 'marks.$': 1 });
+        }, { subId: 1, term: 1, 'marks.$': 1 })
+        .populate('subId');
 
         // If no marks found, return an empty array
         if (!marks || marks.length === 0) {
