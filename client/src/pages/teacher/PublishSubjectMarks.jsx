@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
 import Loader from '../../components/Loader/Loader';
+import Markings from './Markings';
 
 const style = {
     position: 'absolute',
@@ -88,7 +89,8 @@ const PublishSubjectMarks = () => {
             }
             <Typography variant='h5' textAlign={'center'}>{subject + ' - ' + grade}</Typography>
             <Button onClick={handleOpen} variant='contained'>Publish Marks</Button>
-
+            
+            <Markings/>
 
             {/* Modal for publish the marks */}
             <Modal
