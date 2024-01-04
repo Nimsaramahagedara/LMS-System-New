@@ -11,7 +11,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { adminListItems, teacherListItems, studentListItems, supportListItems, secondaryListItems, parentListItems } from '../admin/listItems';
@@ -228,13 +228,13 @@ export default function Dashboard() {
 
               {
                 notices.map((el, index) => (
-
+<Link to={'/dashboard/notifications'}>
                   <div className='flex items-center justify-start py-2 gap-2 cursor-pointer hover:bg-gray-300 px-1 relative rounded-md' key={index}>
                     < ChatBubbleOutlineOutlinedIcon sx={{ color: 'green' }} />
                     <p className='text-xs text-left'>{el.title}</p>
                     <p className='text-xs text-right text-gray-400 absolute bottom-0 right-0'>{el.formattedDate}</p>
 
-                  </div>
+                  </div></Link>
                 ))
               }
 
