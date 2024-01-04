@@ -69,3 +69,23 @@ export const getParentId = async (email, regNo) => {
             })
         }
     }
+
+    //get all students with parent
+    export const getStudentsUsingParentId = async (req, res) => {
+      
+        const parentId = '657c50bfebd0a4039d7fa7c5';
+        console.log(req.loggedInId);
+        try {
+            // Find the subject for the logged-in teacher
+            const students = await UserModel.find({ parentId: parentId, role: "student" })
+            .populate('classId');
+    
+            if (!students) {
+                return res.status(404).json({ message: 'Student not found for the logged-in parent' });
+            }
+            res.status(200).json({ students });
+        } catch (error) {
+            console.error('Error fetching marks data:', error);
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    };
