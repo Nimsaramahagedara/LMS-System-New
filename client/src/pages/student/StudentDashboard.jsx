@@ -16,8 +16,8 @@ const StudentDashboard = () => {
         <>
             <Header isLoggedIn={isLoggedIn}/>
             <TopNav/>
-            <Outlet />
-            <Footer />
+            <Outlet/>
+            <Footer/>
         </>
     )
 }
