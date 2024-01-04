@@ -42,6 +42,7 @@ import Subject from './pages/teacher/Subject'
 import MySubject from './pages/teacher/MySubject'
 import PublishSubjectMarks from './pages/teacher/PublishSubjectMarks'
 // import SubjectMNG from './pages/admin/SubjectMNG'
+import Notifications from './pages/common/Notifications'
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
             <Route path='support' element={<SupportTeam />} />
             <Route path='classes' element={<ClassMNG />} />
             <Route path='publishNotice' element={<AdminPublishNotices />} />
+            <Route path='notifications' element={<Notifications />} />
 
             {/* Teacher Routes */}
             <Route path='attendance' element={<Attendence />} />
