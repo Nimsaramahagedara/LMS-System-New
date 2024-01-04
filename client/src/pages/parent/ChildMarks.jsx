@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
 import ParentWelcomeCard from '../../components/ParentWelcomeCard';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import authAxios from '../../utils/authAxios';
 import { toast } from 'react-toastify';
 import { apiUrl } from '../../utils/Constants';
+import React, { useEffect, useState } from 'react';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
 import TaskIcon from '@mui/icons-material/Task';
 import {
+  Collapse,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -28,7 +26,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  FormControlLabel,
 } from '@mui/material';
 
 
@@ -164,6 +161,7 @@ export default function ChildMarks() {
                       <ListItemText primary="Term 01" />
                       {open ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
+                    {term1Marks.length > 0 && (
                     <Collapse in={open} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         <TableContainer component={Paper} style={{ marginBottom: '20px' }}>
@@ -190,6 +188,7 @@ export default function ChildMarks() {
                         </TableContainer>
                       </List>
                     </Collapse>
+                    )}
 
                     {/* //term 2 */}
 
@@ -200,6 +199,7 @@ export default function ChildMarks() {
                       <ListItemText primary="Term 02" />
                       {open2 ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
+                    {term2Marks.length > 0 && (
                     <Collapse in={open2} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         <TableContainer component={Paper} style={{ marginBottom: '20px' }}>
@@ -226,9 +226,9 @@ export default function ChildMarks() {
                         </TableContainer>
                       </List>
                     </Collapse>
+                    )}
 
                     {/* //term 3 */}
-
                     <ListItemButton onClick={handleClick3}>
                       <ListItemIcon>
                         <TaskIcon />
@@ -236,6 +236,7 @@ export default function ChildMarks() {
                       <ListItemText primary="Term 03" />
                       {open3 ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
+                    {term3Marks.length > 0 && (
                     <Collapse in={open3} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         <TableContainer component={Paper}>
@@ -262,6 +263,7 @@ export default function ChildMarks() {
                         </TableContainer>
                       </List>
                     </Collapse>
+                    )}
 
                   </List>
                 </Box>
