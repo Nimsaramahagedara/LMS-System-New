@@ -39,9 +39,9 @@ export default function ChildMarks() {
   const [term2Marks, setTerm2Marks] = useState([]);
   const [term3Marks, setTerm3Marks] = useState([]);
   const [rowDialogOpen, setRowDialogOpen] = useState(Array(students.length).fill(false));
-  const [open, setOpen] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -81,7 +81,8 @@ export default function ChildMarks() {
   useEffect(() => {
     const getStudents = async () => {
       try {
-        const result = await authAxios.get(`${apiUrl}/parent/get-students-using-parent-id`);
+        const id = await authAxios.get(`${apiUrl}/get-user`);
+        const result = await authAxios.get(`${apiUrl}/parent/get-students-using-parent-id/${id.data._id}`);
         if (result) {
           setStudents(result.data.students);
         } else {
@@ -93,8 +94,6 @@ export default function ChildMarks() {
     };
     getStudents();
   }, []);
-  console.log(students);
-
 
   const getMarks = async (id) => {
     try {

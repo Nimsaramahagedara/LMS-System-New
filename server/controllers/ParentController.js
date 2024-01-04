@@ -73,8 +73,8 @@ export const getParentId = async (email, regNo) => {
     //get all students with parent
     export const getStudentsUsingParentId = async (req, res) => {
       
-        const parentId = '657c50bfebd0a4039d7fa7c5';
-        console.log(req.loggedInId);
+        const { id: parentId } = req.params;
+
         try {
             // Find the subject for the logged-in teacher
             const students = await UserModel.find({ parentId: parentId, role: "student" })
