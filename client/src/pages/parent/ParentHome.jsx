@@ -29,10 +29,10 @@ const ButtonContainer = styled(Box)(({ theme }) => ({
 
 const ParentHome = () => {
   // Add an onClick handler for the Button
-  const handleViewChildDetails = () => {
-    // Implement the logic to view child details
-    console.log('View My Child Details');
-  };
+  // const handleViewChildDetails = () => {
+  //   // Implement the logic to view child details
+  //   console.log('View My Child Details');
+  // };
 
   return (
     <Container maxWidth={'800px'} position="relative">
@@ -48,11 +48,11 @@ const ParentHome = () => {
       </Grid>
 
       {/* Button to view my Child details as a dialog box*/}
-      <ButtonContainer>
+      {/* <ButtonContainer>
         <Button variant="contained" onClick={handleViewChildDetails}>
           View My Child
         </Button>
-      </ButtonContainer>
+      </ButtonContainer> */}
     </Container>
 
     
