@@ -45,6 +45,24 @@ export default function Notifications() {
   }, []);
 
   return (
-    <div>Notifications</div>
-  )
+    <ContainerStudent>
+      {isLoading ? <Loader /> : null}
+      <div className='flex items-start mt-5 justify-between'>
+        <div className='md:w-5/6 w-full'>
+          <div className='px-5 py-2 bg-cyan-200 mb-4'>
+            <h1>Notifications</h1>
+          </div>
+          <div className='p-5 bg-white'>
+            {notices.map((notice) => (
+              <div key={notice.id} className='bg-amber-200 p-5 mb-2'>
+                <p className='mb-1 text-md'>{notice.title}</p>
+                <p className='mb-1 text-sm text-gray-500'>{notice.description}</p>
+                <p className='w-full text-right text-xs text-gray-500'>{notice.createdAt}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </ContainerStudent>
+  );
 }
