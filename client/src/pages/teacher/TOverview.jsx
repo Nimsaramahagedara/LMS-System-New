@@ -31,13 +31,17 @@ const Item = styled(Paper)(({ theme }) => ({
 const TOverview = () => {
   const date = new Date();
   const [overview, setOverview] = useState({});
+  const [balance, setBalance] = useState(0);
+  const [attendance, setAttendance] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [academicDays, setDays] = useState('');
 
   const getOverview = async()=>{
     try {
       const data = await authAxios.get(`${apiUrl}/teacher/get-overview`);
+      const res = await authAxios.get(`${apiUrl}/pay/balance`);
       setOverview(data.data);
+      setBalance(res.data);
       setIsLoading(false)
     } catch (error) {
       console.log(error);
@@ -47,9 +51,29 @@ const TOverview = () => {
 
   useEffect(()=>{
     getOverview();
+    getAttendance();
     setDays(countAcademicDays())
   },[])
 
+  const getAttendance = async () => {
+    try {
+      const result = await authAxios.get(`${apiUrl}/teacher/attendance`);
+      if (result && result.data.attendanceData.length > 0) {
+        // Get the latest dataset
+        const latestData = result.data.attendanceData[result.data.attendanceData.length - 1];
+  
+        // Get the length of attendedStudents array in the latest dataset
+        const attendedStudentsLength = latestData.attendedStudents.length;
+
+        setAttendance(attendedStudentsLength);
+      } else {
+        toast.error('Data Not Available');
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+  
   return (
     <Container maxWidth={'800px'} >
       {
@@ -57,9 +81,9 @@ const TOverview = () => {
       }
       <WelcomeCardTeacher/>
       <Box component={'div'} className='flex justify-between items-center'>
-        <SimpleCard name={'Attendance'} to={''} count={30} icon={<GradingIcon color='primary' fontSize='large'/>}/>
+        <SimpleCard name={'Attendance'} to={'attendance'} count={attendance} icon={<GradingIcon color='primary' fontSize='large'/>}/>
         <SimpleCard name={'Subjects'} to={'manageacc'} count={9} icon={<ContactsIcon color='error' fontSize='large'/>}/>
-        <SimpleCard name={'Fasility Fee'} to={'manageacc'} count={25} icon={<AccountBalanceWalletIcon color='secondary' fontSize='large'/>}/>
+        <SimpleCard name={'Fasility Fee'} to={'manageacc'} count={balance.balance} icon={<AccountBalanceWalletIcon color='secondary' fontSize='large'/>}/>
         <SimpleCard name={'Owned Class'} to={'manageacc'} count={overview.className || 'Loading'} icon={<MeetingRoomIcon color='warning' fontSize='large'/>}/>
       </Box>
 
