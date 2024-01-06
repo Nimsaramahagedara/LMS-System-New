@@ -2,9 +2,6 @@ import authAxios from '../utils/authAxios';
 import { toast } from 'react-toastify';
 import { apiUrl } from '../utils/Constants';
 import React, { useEffect, useState } from 'react';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import TaskIcon from '@mui/icons-material/Task';
 import {
   Collapse,
   Box,

@@ -17,7 +17,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import {
   Button,
-  Checkbox,
+  Divider,
   Dialog,
   DialogActions,
   DialogContent,
@@ -77,11 +77,11 @@ const Markings = () => {
 
   function generatePDF(subject) {
     const pdf = new jsPDF();
-    
+
     // Function to calculate the center position for text
     const getCenterPosition = (text, fontSize, pageWidth) => {
-        const textWidth = pdf.getTextWidth(text);
-        return (pageWidth - textWidth) / 2;
+      const textWidth = pdf.getTextWidth(text);
+      return (pageWidth - textWidth) / 2;
     };
 
     // Center the subject name
@@ -95,22 +95,22 @@ const Markings = () => {
     const header = [["No", "Reg No", "Name", "Marks"]];
 
     const data = subject.marks.map((student, index) => [
-        index + 1,
-        student.studentId.regNo,
-        `${student.studentId.firstName} ${student.studentId.lastName}`,
-        student.mark
+      index + 1,
+      student.studentId.regNo,
+      `${student.studentId.firstName} ${student.studentId.lastName}`,
+      student.mark
     ]);
 
     // Add table to pdfument
     pdf.autoTable({
-        startY: 30,
-        head: header,
-        body: data
+      startY: 30,
+      head: header,
+      body: data
     });
 
     // Download the PDF pdfument
     pdf.save(`${subject.subId.subName} Term${subject.term}.pdf`);
-}
+  }
 
 
   return (
@@ -132,70 +132,72 @@ const Markings = () => {
           <Demo>
             <List>
               {Array.isArray(subjects) && subjects.map((subject, index) => (
-                <ListItem
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete"
-                      onClick={() => handleClickOpen2(index)}>
-                      <VisibilityIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FolderIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={subject.subId.subName}
-                  />
-                  <ListItemText
-                    primary={'Term : ' + subject.term}
-                  />
-                  <Dialog open={rowDialogOpen[index]} onClose={handleClose2}>
-                    <DialogTitle>{subject.subId.subName} Term: {subject.term}</DialogTitle>
-                    <DialogContent>
-                      <Box
-                        component="form"
-                        sx={{
-                          '& .MuiTextField-root': {
-                            m: 1,
-                            width: 500,
-                            maxWidth: '100%',
-                          },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                      >
-                        <TableContainer component={Paper} style={{ marginTop: '20px' }}>
-                          <Table sx={{ minWidth: 500 }} aria-label="simple table">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Reg No</TableCell>
-                                <TableCell>Name</TableCell>
-                                <TableCell>Marks</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              {(subject.marks).map((student, index) => (
-                                <TableRow key={index}>
-                                  <TableCell>{student.studentId.regNo}</TableCell>
-                                  <TableCell>{student.studentId.firstName} {student.studentId.lastName}</TableCell>
-                                  <TableCell>{student.mark}</TableCell>
+                <>
+                  <ListItem
+                    secondaryAction={
+                      <IconButton edge="end" aria-label="delete"
+                        onClick={() => handleClickOpen2(index)}>
+                        <VisibilityIcon />
+                      </IconButton>
+                    }
+                  >
+                    <ListItemAvatar>
+                      <Avatar>
+                        <FolderIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={subject.subId.subName}
+                    />
+                    <ListItemText
+                      primary={'Term : ' + subject.term}
+                    />
+                    <Dialog open={rowDialogOpen[index]} onClose={handleClose2}>
+                      <DialogTitle>{subject.subId.subName} Term: {subject.term}</DialogTitle>
+                      <DialogContent>
+                        <Box
+                          component="form"
+                          sx={{
+                            '& .MuiTextField-root': {
+                              m: 1,
+                              width: 500,
+                              maxWidth: '100%',
+                            },
+                          }}
+                          noValidate
+                          autoComplete="off"
+                        >
+                          <TableContainer component={Paper} style={{ marginTop: '20px' }}>
+                            <Table sx={{ minWidth: 500 }} aria-label="simple table">
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell>Reg No</TableCell>
+                                  <TableCell>Name</TableCell>
+                                  <TableCell>Marks</TableCell>
                                 </TableRow>
-                              ))}
+                              </TableHead>
+                              <TableBody>
+                                {(subject.marks).map((student, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell>{student.studentId.regNo}</TableCell>
+                                    <TableCell>{student.studentId.firstName} {student.studentId.lastName}</TableCell>
+                                    <TableCell>{student.mark}</TableCell>
+                                  </TableRow>
+                                ))}
 
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      </Box>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={() => generatePDF(subject)} variant='outlined'>Report</Button>
-                      <Button onClick={handleClose2} variant='outlined'>Cancel</Button>
-                    </DialogActions>
-                  </Dialog>
-                </ListItem>
-
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </Box>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={() => generatePDF(subject)} variant='outlined'>Report</Button>
+                        <Button onClick={handleClose2} variant='outlined'>Cancel</Button>
+                      </DialogActions>
+                    </Dialog>
+                  </ListItem>
+                  <Divider />
+                </>
               ))}
             </List>
           </Demo>
