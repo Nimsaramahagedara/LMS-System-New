@@ -36,8 +36,7 @@ import FacilityFee from './pages/parent/FacilityFee';
 import ClassMNG from './pages/admin/ClassMNG'
 import MyClass from './pages/teacher/MyClass'
 import SubjectMNG from './pages/admin/SubjectMNG'
-import TeacherProfile from './pages/teacher/Tprofile'
-import SupportProfile from './pages/support/SProfile'
+import Profile from './pages/teacher/Profile'
 import Subject from './pages/teacher/Subject'
 import MySubject from './pages/teacher/MySubject'
 import PublishSubjectMarks from './pages/teacher/PublishSubjectMarks'
@@ -74,7 +73,7 @@ function App() {
             <Route path='subject' element={<SubjCreate />} />
             <Route path='overview' element={<TOverview />} />
             <Route path='email' element={<ContactParent />} />
-            <Route path='tprofile' element={<TeacherProfile />} />
+            <Route path='profile' element={<Profile />} />
             <Route path='myclass' element={<MyClass />} />
             <Route path='mysub/:id/:subject/:grade' element={<MySubject />} />
             <Route path='subjmarks/:id/:subject/:grade' element={<PublishSubjectMarks />} />            
@@ -85,7 +84,6 @@ function App() {
             <Route path='createteachers' element={<TeacherMNG />} />
             <Route path='manageacc' element={<ManageAccounts />} />
             <Route path='publishnotices' element={<PublishNotices />} />
-            <Route path='sprofile' element={<SupportProfile />} />
 
 
             {/* Parent Routes */}
