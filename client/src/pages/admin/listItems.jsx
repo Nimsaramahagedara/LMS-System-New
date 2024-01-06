@@ -75,7 +75,7 @@ export const teacherListItems = (
         <ListItemText primary="Contact Parents" />
       </ListItemButton>
     </Link>
-    <Link to={'/dashboard/tprofile'}>
+    <Link to={'/dashboard/profile'}>
       <ListItemButton>
         <ListItemIcon>
           <AccountCircleIcon />
@@ -245,7 +245,7 @@ export const supportListItems = (
       </ListItemButton>
     </Link>
 
-    <Link to={'/dashboard/sprofile'}>
+    <Link to={'/dashboard/profile'}>
       <ListItemButton>
         <ListItemIcon>
           <AccountCircleIcon />
