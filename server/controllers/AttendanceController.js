@@ -56,3 +56,19 @@ export const deleteAttendance = async (req, res) => {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   };
+
+
+  export const getAttendanceByStudentId = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find attendance data for the given attendedStudents ID
+        const attendanceData = await AttendanceModel.find({
+            attendedStudents: { $in: [id] }
+        }).populate('classId').exec();
+
+        res.status(200).json({ attendanceData });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};

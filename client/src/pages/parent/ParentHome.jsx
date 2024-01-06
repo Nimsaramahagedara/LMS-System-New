@@ -42,7 +42,7 @@ const ParentHome = () => {
       <Grid container spacing={0} marginTop={1}>
         <Grid item xs={8}>
           <Item>
-            <Typography variant='h6'>Progress Of My Child for Last 2 Years</Typography>
+            <Typography variant='h6'>Attendance of Students</Typography>
             <BarChart />
           </Item>
         </Grid>
