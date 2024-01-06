@@ -13,6 +13,7 @@ import TeacherRouter from './routes/TeacherRoutes.js';
 import ActivityRouter from './routes/ActivityRoutes.js';
 import parentRoutes from './routes/ParentRoutes.js';
 import MarkRouter from './routes/MarkRoutes.js';
+import FeesRouter from './routes/FeesRoutes.js';
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -27,7 +28,7 @@ app.get('/', async (req,res)=>{
 })
 
 //Put other routes here
-
+app.use('/pay', FeesRouter);
 //Common Routes
 app.use('/',userRouter);
 app.use('/class', classRoutes);
