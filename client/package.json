@@ -26,6 +26,7 @@
     "react": "^18.2.0",
     "react-clickout-ts": "^2023.6.1",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.12.0",
     "react-material-ui-carousel": "^3.4.2",
     "react-router-dom": "^6.20.1",
     "react-toastify": "^9.1.3",
