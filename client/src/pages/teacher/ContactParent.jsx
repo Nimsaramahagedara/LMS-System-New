@@ -119,7 +119,7 @@ const sendToParent = async () => {
         }}
       />
 
-      <Paper elevation={3} style={{ margin: '20px' }}>
+      <Paper elevation={3}>
         <Table>
           <TableHead>
             <TableRow>
