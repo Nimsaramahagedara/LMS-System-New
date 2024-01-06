@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Box, Typography, TextField, Select, MenuItem } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const FacilityFee = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -9,7 +9,7 @@ const FacilityFee = () => {
     name: "John Doe",
     id: "123456",
     amount: "",
-    term: "Term1" // Default term, change as needed
+    term: "Term1"
   });
 
   const handleOpenModal = () => {
@@ -25,10 +25,15 @@ const FacilityFee = () => {
     setStudentData({ ...studentData, [name]: value });
   };
 
+  const navigate = useNavigate();
+
   const handlePayNow = () => {
-    // Add logic to handle payment (e.g., send payment request to the server)
-    toast.success("Payment successful!");
-    handleCloseModal();
+    
+    setTimeout(() => {
+      
+      handleCloseModal();
+      navigate('/dashboard/payment-api'); 
+    }, 2000);
   };
 
   return (
@@ -71,7 +76,6 @@ const FacilityFee = () => {
               margin="normal"
             />
             <TextField
-        
               label="Amount"
               type="number"
               name="amount"
@@ -110,14 +114,3 @@ const FacilityFee = () => {
 };
 
 export default FacilityFee;
-
-
-{/*
-    Udinma Page title eka
-    payNow button eka
-    paynow button eka press karama form ekak enna ona modal ekak widiyata (Student Name (disabled field), id (disabled field), amount , term)
-    ee form eka fill krala submit krama paymentAPI page ekata
-
-    paynow button ekata yatin table ekak thiyenwa
-    eke payment history eka
-*/}
