@@ -35,13 +35,16 @@ const TOverview = () => {
   const [attendance, setAttendance] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [academicDays, setDays] = useState('');
+  const [subjects, setSubjects] = useState(0);
 
   const getOverview = async()=>{
     try {
       const data = await authAxios.get(`${apiUrl}/teacher/get-overview`);
       const res = await authAxios.get(`${apiUrl}/pay/balance`);
+      const sub = await authAxios.get(`${apiUrl}/teacher/my-subjects`);
       setOverview(data.data);
       setBalance(res.data);
+      setSubjects(sub.data.length);
       setIsLoading(false)
     } catch (error) {
       console.log(error);
@@ -82,9 +85,9 @@ const TOverview = () => {
       <WelcomeCardTeacher/>
       <Box component={'div'} className='flex justify-between items-center'>
         <SimpleCard name={'Attendance'} to={'attendance'} count={attendance} icon={<GradingIcon color='primary' fontSize='large'/>}/>
-        <SimpleCard name={'Subjects'} to={'manageacc'} count={9} icon={<ContactsIcon color='error' fontSize='large'/>}/>
-        <SimpleCard name={'Fasility Fee'} to={'manageacc'} count={balance.balance} icon={<AccountBalanceWalletIcon color='secondary' fontSize='large'/>}/>
-        <SimpleCard name={'Owned Class'} to={'manageacc'} count={overview.className || 'Loading'} icon={<MeetingRoomIcon color='warning' fontSize='large'/>}/>
+        <SimpleCard name={'Subjects'} to={'subject'} count={subjects} icon={<ContactsIcon color='error' fontSize='large'/>}/>
+        <SimpleCard name={'Fasility Fee'} to={'overview'} count={balance.balance} icon={<AccountBalanceWalletIcon color='secondary' fontSize='large'/>}/>
+        <SimpleCard name={'Owned Class'} to={'overview'} count={overview.className || 'Loading'} icon={<MeetingRoomIcon color='warning' fontSize='large'/>}/>
       </Box>
 
       <Grid container spacing={2} marginTop={1}>
