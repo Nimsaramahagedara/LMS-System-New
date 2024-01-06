@@ -43,6 +43,8 @@ import MySubject from './pages/teacher/MySubject'
 import PublishSubjectMarks from './pages/teacher/PublishSubjectMarks'
 // import SubjectMNG from './pages/admin/SubjectMNG'
 import Notifications from './pages/common/Notifications'
+import PaymentAPI from './pages/parent/PaymentAPI'
+import PaymentSuccess from './pages/parent/PaymentSuccess'
 
 
 function App() {
@@ -90,6 +92,8 @@ function App() {
             <Route path='paroverview' element={<ParentHome />} />
             <Route path='childmarks' element={<ChildMarks />} />
             <Route path='facilityfee' element={<FacilityFee />} />
+            <Route path='payment-api' element={<PaymentAPI />} />
+            <Route path='pay-success' element={<PaymentSuccess />} />
           </Route>
 
           <Route path='/portal' element={<StudentDashboard/>}>
