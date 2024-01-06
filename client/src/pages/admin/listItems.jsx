@@ -24,86 +24,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const teacherListItems = (
   <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/overview'}>
-        <ListItemText primary="Dashboard" />
-      </Link>
-
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <GradingIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/attendance'}>
-        <ListItemText primary="Attendance" />
-      </Link>
-
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <TaskIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/markings'}>
-        <ListItemText primary="Markings" />
-      </Link>
-
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <NoteIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/notices'}>
-        <ListItemText primary="Notices" />
-      </Link>
-
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <ContactsIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/subject'}>
-        <ListItemText primary="Subject" />
-      </Link>
-
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <AlternateEmailIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/email'}>
-        <ListItemText primary="Contact Parents" />
-      </Link>
-
-    </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <AccountCircleIcon />
-      </ListItemIcon>
-      <Link to={'/dashboard/tprofile'}>
-        <ListItemText primary="My Profile" />
-      </Link>
-
-    </ListItemButton>
-
-  </React.Fragment>
-);
-
-
-export const adminListItems = (
-  <React.Fragment>
-
-
-
-    <Link to={'/dashboard'}>
+    <Link to={'/dashboard/overview'}>
       <ListItemButton>
         <ListItemIcon>
           <DashboardIcon />
@@ -112,6 +33,71 @@ export const adminListItems = (
       </ListItemButton>
     </Link>
 
+    <Link to={'/dashboard/attendance'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <GradingIcon />
+        </ListItemIcon>
+        <ListItemText primary="Attendance" />
+      </ListItemButton>
+    </Link>
+    <Link to={'/dashboard/markings'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <TaskIcon />
+        </ListItemIcon>
+        <ListItemText primary="Markings" />
+      </ListItemButton>
+    </Link>
+
+    <Link to={'/dashboard/notices'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <NoteIcon />
+        </ListItemIcon>
+        <ListItemText primary="Notices" />
+      </ListItemButton>
+    </Link>
+    <Link to={'/dashboard/subject'}>
+
+      <ListItemButton>
+        <ListItemIcon>
+          <ContactsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Subject" />
+      </ListItemButton>
+    </Link>
+    <Link to={'/dashboard/email'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <AlternateEmailIcon />
+        </ListItemIcon>
+        <ListItemText primary="Contact Parents" />
+      </ListItemButton>
+    </Link>
+    <Link to={'/dashboard/tprofile'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <AccountCircleIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Profile" />
+      </ListItemButton>
+    </Link>
+
+  </React.Fragment>
+);
+
+
+export const adminListItems = (
+  <React.Fragment>
+    <Link to={'/dashboard'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItemButton>
+    </Link>
 
     <Link to={'/dashboard/support'}>
       <ListItemButton>
@@ -130,7 +116,6 @@ export const adminListItems = (
         <ListItemText primary="Students" />
       </ListItemButton>
     </Link>
-
 
     <Link to={'/dashboard/classes'}>
       <ListItemButton>
@@ -300,33 +285,30 @@ export const secondaryListItems = (
 
 export const parentListItems = (
   <React.Fragment>
-
+      <Link to={'/dashboard/paroverview'}>
     <ListItemButton>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/paroverview'}>
         <ListItemText primary="Dashboard" />
-      </Link>
     </ListItemButton>
-
+    </Link>
+    <Link to={'/dashboard/childmarks'}>
     <ListItemButton>
       <ListItemIcon>
         <DirectionsWalkIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/childmarks'}>
         <ListItemText primary="Child Marks" />
-      </Link>
     </ListItemButton>
-
+    </Link>
+    <Link to={'/dashboard/facilityfee'}>
     <ListItemButton>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <Link to={'/dashboard/facilityfee'}>
         <ListItemText primary="Facility Fee" />
-      </Link>
     </ListItemButton>
+    </Link>
 
     {/* <ListItemButton>
       <ListItemIcon>
