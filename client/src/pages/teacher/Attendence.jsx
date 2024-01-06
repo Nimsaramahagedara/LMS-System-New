@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TeacherAttendanceDateCard from '../../components/TeacherAttendanceDateCard';
 import {
   Button,
@@ -22,6 +23,8 @@ import {
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 
 const Attendance = () => {
@@ -35,7 +38,7 @@ const Attendance = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [rowDialogOpen, setRowDialogOpen] = useState(Array(attendance.length).fill(false));
 
-  
+
   const refreshPage = () => {
     setRefresh((prev) => !prev)
   }
@@ -106,7 +109,7 @@ const Attendance = () => {
       const result = await authAxios.get(`${apiUrl}/teacher/attendance`);
       if (result) {
         setAttendance(result.data.attendanceData);
-        console.log(result.data.attendanceData);
+        console.log(attendance);
       } else {
         toast.error('Data Not Available');
       }
@@ -131,6 +134,45 @@ const Attendance = () => {
   useEffect(() => {
     getAttendance();
   }, [refresh]);
+
+
+  function generatePDF(subject) {
+    console.log(subject);
+    const pdf = new jsPDF();
+
+    // Function to calculate the center position for text
+    const getCenterPosition = (text, fontSize, pageWidth) => {
+      const textWidth = pdf.getTextWidth(text);
+      return (pageWidth - textWidth) / 2;
+    };
+
+    // Center the subject name
+    const subNameCenterX = getCenterPosition(`${subject.classId.grade} ${subject.classId.subClass}`, 12, pdf.internal.pageSize.width);
+    pdf.text(`${subject.classId.grade} ${subject.classId.subClass}`, subNameCenterX, 10);
+
+    // Center the term text
+    const termTextCenterX = getCenterPosition('Term : ' + subject.date, 12, pdf.internal.pageSize.width);
+    pdf.text('Date : ' + subject.date, termTextCenterX, 20);
+
+    const header = [["No", "Reg No", "Name"]];
+
+    const data = subject.attendedStudents.map((student, index) => [
+      index + 1,
+      student.regNo,
+      `${student.firstName} ${student.lastName}`
+    ]);
+
+    // Add table to pdfument
+    pdf.autoTable({
+      startY: 30,
+      head: header,
+      body: data
+    });
+
+    // Download the PDF pdfument
+    pdf.save(`${subject.classId.grade} ${subject.classId.subClass} Date${subject.date}.pdf`);
+  }
+
 
   return (
     <div>
@@ -193,7 +235,7 @@ const Attendance = () => {
                 <TableCell>{row.date}</TableCell>
                 <TableCell>{row.attendedStudents.length}</TableCell>
                 <TableCell>
-                <Button
+                  <Button
                     variant="outlined"
                     startIcon={<VisibilityIcon />}
                     color="secondary"
@@ -204,6 +246,7 @@ const Attendance = () => {
                   </Button>
                   <Dialog open={rowDialogOpen[index]} onClose={handleClose2}>
                     <DialogTitle>{row.date}</DialogTitle>
+
                     <DialogContent>
                       <Box
                         component="form"
@@ -238,17 +281,24 @@ const Attendance = () => {
                       </Box>
                     </DialogContent>
                     <DialogActions>
+                      <Button
+                        startIcon={<PictureAsPdfIcon />}
+                        onClick={() => generatePDF(row)} 
+                        variant='outlined'>
+                          Report
+                      </Button>
                       <Button onClick={handleClose2} variant='outlined'>Cancel</Button>
                     </DialogActions>
                   </Dialog>
 
-                  <Button 
+                  <Button
                     // size="small"
                     startIcon={<DeleteIcon />}
                     variant="outlined"
                     color="error"
                     onClick={() => deleteAttendance(row._id)}
-                    >
+                    sx={{ marginRight: 2 }}
+                  >
                     Remove
                   </Button>
                 </TableCell>

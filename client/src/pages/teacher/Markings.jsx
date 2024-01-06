@@ -13,6 +13,8 @@ import { Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import {
   Button,
   Checkbox,
@@ -72,6 +74,43 @@ const Markings = () => {
 
     getSubjectList();
   }, [refresh]);
+
+  function generatePDF(subject) {
+    const pdf = new jsPDF();
+    
+    // Function to calculate the center position for text
+    const getCenterPosition = (text, fontSize, pageWidth) => {
+        const textWidth = pdf.getTextWidth(text);
+        return (pageWidth - textWidth) / 2;
+    };
+
+    // Center the subject name
+    const subNameCenterX = getCenterPosition(`${subject.subId.subName}`, 12, pdf.internal.pageSize.width);
+    pdf.text(`${subject.subId.subName}`, subNameCenterX, 10);
+
+    // Center the term text
+    const termTextCenterX = getCenterPosition('Term : ' + subject.term, 12, pdf.internal.pageSize.width);
+    pdf.text('Term : ' + subject.term, termTextCenterX, 20);
+
+    const header = [["No", "Reg No", "Name", "Marks"]];
+
+    const data = subject.marks.map((student, index) => [
+        index + 1,
+        student.studentId.regNo,
+        `${student.studentId.firstName} ${student.studentId.lastName}`,
+        student.mark
+    ]);
+
+    // Add table to pdfument
+    pdf.autoTable({
+        startY: 30,
+        head: header,
+        body: data
+    });
+
+    // Download the PDF pdfument
+    pdf.save(`${subject.subId.subName} Term${subject.term}.pdf`);
+}
 
 
   return (
@@ -151,6 +190,7 @@ const Markings = () => {
                       </Box>
                     </DialogContent>
                     <DialogActions>
+                      <Button onClick={() => generatePDF(subject)} variant='outlined'>Report</Button>
                       <Button onClick={handleClose2} variant='outlined'>Cancel</Button>
                     </DialogActions>
                   </Dialog>
