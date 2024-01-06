@@ -21,6 +21,8 @@
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "js-cookie": "^3.0.5",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.1",
     "react": "^18.2.0",
     "react-clickout-ts": "^2023.6.1",
     "react-dom": "^18.2.0",
