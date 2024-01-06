@@ -71,6 +71,7 @@ const FacilityFee = () => {
               margin="normal"
             />
             <TextField
+        
               label="Amount"
               type="number"
               name="amount"
