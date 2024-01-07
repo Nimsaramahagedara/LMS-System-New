@@ -4,13 +4,13 @@ import FeesModel from "../models/FeesModel.js";
 export const DoPayment = async (req, res) => {
     const data = req.body;
     try {
-        if (!data.stdId || !data.term || !data.amount || !data.year) {
+        if (!data.stdId || !data.amount || !data.year) {
             throw Error('All the fields are required')
         }
-        const isExist = await FeesModel.findOne({ stdId: data.stdId, term: data.term, year: data.year });
+        const isExist = await FeesModel.findOne({ stdId: data.stdId, year: data.year });
 
         if (isExist) {
-            throw Error('Already Payed for that Term for that student');
+            throw Error('Already Payed for that Year for that student');
         }
         const donePayment = await FeesModel.create(data);
         //Add Money To Bank

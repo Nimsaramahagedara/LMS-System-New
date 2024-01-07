@@ -10,11 +10,15 @@ import {
   Grid,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import authAxios from '../../utils/authAxios';
+import { apiUrl } from '../../utils/Constants';
 
 const PaymentAPI = () => {
+  const location = useLocation();
+  const { selectedStudent } = location.state || {};
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -24,26 +28,35 @@ const PaymentAPI = () => {
   const [expiryMonth, setExpiryMonth] = useState("");
   const [expiryYear, setExpiryYear] = useState("");
 
-  const handlePaySuccess = () => {
+  const handlePaySuccess = async () => {
     // Validate input fields
     if (!validateCardNumber() || !validateCVV() || !validateExpiryDate()) {
       return;
     }
+    const paymentDetails = {
+      stdId: selectedStudent._id,
+      year: selectedStudent.year,
+      amount: selectedStudent.amount
+    }
+    try {
+      const payment = await authAxios.post(`${apiUrl}/pay`, paymentDetails)
 
-    // Continue with payment success logic
-    setTimeout(() => {
-      toast.success("Payment successful!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-      });
-
+      if (payment)
+        toast.success("Payment successful!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+        })
       navigate('/dashboard/pay-success');
-    }, 2000);
-  };
+
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
+
 
   const validateCardNumber = () => {
     const cardNumberRegex = /^\d{16}$/;
@@ -86,9 +99,16 @@ const PaymentAPI = () => {
 
       <Card variant="outlined" sx={{ mt: 2 }}>
         <CardContent>
+          <Box>
+            <Typography>Payment Details</Typography>
+            <p>student id : {selectedStudent._id}</p>
+            <p>student Name: {selectedStudent.firstName + ' ' + selectedStudent.lastName}</p>
+            <p>Amount : {selectedStudent.amount}</p>
+            <p>Year : {selectedStudent.year}</p>
+          </Box>
           <Box component="form">
             <TextField
-              label="Name"
+              label="Name On Card"
               variant="outlined"
               fullWidth
               margin="normal"
@@ -97,16 +117,7 @@ const PaymentAPI = () => {
             />
 
             <TextField
-              label="Address"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-
-            <TextField
-              label="Credit Card Number"
+              label="Card Number"
               variant="outlined"
               fullWidth
               margin="normal"
