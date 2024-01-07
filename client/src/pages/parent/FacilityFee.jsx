@@ -9,8 +9,10 @@ import authAxios from '../../utils/authAxios';
 const FacilityFee = () => {
   const [openModal, setOpenModal] = useState(false);
   const [students, setStudents] = useState([]);
-  const [selectedStudent, setSelectedStudent]=useState({
-    year:2024
+  const [studentIds, setStudentIds] = useState([]);
+  const [payHistory, setHistory] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState({
+    year: 2024
   });
 
   const getStudents = async () => {
@@ -19,6 +21,8 @@ const FacilityFee = () => {
       const result = await authAxios.get(`${apiUrl}/parent/get-students-using-parent-id/${id.data._id}`);
       if (result) {
         setStudents(result.data.students);
+        const studentIds = result.data.students.map(student => student._id);
+        setStudentIds(studentIds);
       } else {
         toast.error('Class Data Not Available');
       }
@@ -26,6 +30,16 @@ const FacilityFee = () => {
       toast.error(error.response.data.message);
     }
   };
+
+  const getPaymentHistory = async () => {
+    try {
+      console.log(studentIds);
+      const history = await authAxios.post(`${apiUrl}/pay/get`, { studentIds: studentIds });
+      setHistory(history.data.payments);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleOpenModal = (row) => {
     setSelectedStudent(row)
@@ -44,13 +58,16 @@ const FacilityFee = () => {
   const navigate = useNavigate();
 
   const handlePayNow = () => {
-      handleCloseModal();
-      navigate(`/dashboard/payment-api/${selectedStudent._id}`,{ state: { selectedStudent } }); 
+    handleCloseModal();
+    navigate(`/dashboard/payment-api/${selectedStudent._id}`, { state: { selectedStudent } });
   };
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     getStudents();
-  },[])
+  }, [])
+  useEffect(() => {
+    getPaymentHistory()
+  }, [studentIds])
 
 
   return (
@@ -61,9 +78,9 @@ const FacilityFee = () => {
       <Box sx={{ width: '100%', maxWidth: 500, bgcolor: 'background.paper' }}>
         {students.map((row, index) => (
           <nav aria-label="main mailbox folders" className='w-full'>
-          <List fullWidth>
-              <ListItem fullWidth>
-                <ListItemButton fullWidth>
+            <List >
+              <ListItem >
+                <ListItemButton >
                   <ListItemIcon>
                     {index + 1}
                   </ListItemIcon>
@@ -72,11 +89,52 @@ const FacilityFee = () => {
                     <ListItemText primary={`${row.classId.grade} ${row.classId.subClass}`} />
                   </ListItemIcon>
                 </ListItemButton>
-                <Button variant='contained' onClick={()=>handleOpenModal(row)}>Pay Now</Button>
+                <Button variant='contained' onClick={() => handleOpenModal(row)}>Pay Now</Button>
               </ListItem>
             </List>
           </nav>
         ))}
+      </Box>
+      <Typography variant='h6'>Payment History</Typography>
+      <Box>
+        <div className='flex items-center justify-between text-center bg-blue-950 text-white'>
+          <div className='w-1/5'>
+            PayId
+          </div>
+          <div className='w-1/5'>
+            StudentId
+          </div>
+          <div className='w-1/5'>
+            Amount
+          </div>
+          <div className='w-1/5'>
+            Year
+          </div>
+          <div className='w-1/5'>
+            Date
+          </div>
+        </div>
+        {
+          payHistory?.map((el) => (
+            <div className='flex items-center justify-between text-center bg-white border-b border-2 border-black'>
+              <div className='w-1/5'>
+                {el._id}
+              </div>
+              <div className='w-1/5'>
+                {el.stdId}
+              </div>
+              <div className='w-1/5'>
+                {el.amount}
+              </div>
+              <div className='w-1/5'>
+                {el.year}
+              </div>
+              <div className='w-1/5'>
+                {el.createdAt}
+              </div>
+            </div>
+          ))
+        }
       </Box>
       <Modal
         open={openModal}

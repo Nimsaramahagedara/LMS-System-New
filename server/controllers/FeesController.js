@@ -31,6 +31,7 @@ export const DoPayment = async (req, res) => {
 export const getPaymetnHistory = async (req, res) => {
     //Student id array
     const { studentIds } = req.body;
+    console.log(studentIds);
     try {
         if (studentIds.length < 0) {
             throw Error('Please Provide Student ID list')
