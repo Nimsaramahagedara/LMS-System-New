@@ -3,7 +3,7 @@ import { DoPayment, getBankBalance, getPaymetnHistory } from '../controllers/Fee
 
 const FeesRouter = express.Router();
 
-FeesRouter.get('/', getPaymetnHistory);
+FeesRouter.post('/get', getPaymetnHistory);
 FeesRouter.get('/balance', getBankBalance);
 FeesRouter.post('/', DoPayment);
 
