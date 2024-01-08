@@ -17,7 +17,7 @@ const PaymentSuccess = () => {
         return;
       }
       setSeconds((prev) => prev - 1);
-    }, 1000); 
+    }, 1000);
 
     // Clear the interval when the component is unmounted
     return () => clearInterval(intervalId);

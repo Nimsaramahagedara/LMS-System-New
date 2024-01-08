@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Loader from "../../components/Loader/Loader";
+import WelcomeCardTeacher from "../../components/WelcomeCardTeacher";
 import {
   Table,
   TableBody,
@@ -38,18 +40,21 @@ const MessageTeacher = () => {
       firstName: 'John',
       lastName: 'Peter',
       email: 'email@gmail.com',
-      message: 'This is a Sample message',
+      title: 'This is a Sample title',
+      message: 'This is a Sample message'
     },
     {
       firstName: 'John',
       lastName: 'Peter',
       email: 'email@gmail.com',
-      message: 'This is a Sample message',
+      title: 'This is a Sample title',
+      message: 'This is a Sample message'
     },
   ];
 
   return (
     <>
+   
       <div className="text-center font-bold">
         <h2 className="text-3xl">Request Advice From Teacher</h2>
       </div>
@@ -72,6 +77,11 @@ const MessageTeacher = () => {
               </TableCell>
               <TableCell>
                 <Typography variant="subtitle1">
+                  <strong>Title</strong>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1">
                   <strong>Message</strong>
                 </Typography>
               </TableCell>
@@ -82,6 +92,7 @@ const MessageTeacher = () => {
               <TableRow key={index}>
                 <TableCell>{`${item.firstName} ${item.lastName}`}</TableCell>
                 <TableCell>{item.email}</TableCell>
+                <TableCell>{`${item.title}`}</TableCell>
                 <TableCell>{item.message}</TableCell>
               </TableRow>
             ))}
@@ -126,12 +137,14 @@ const MessageTeacher = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" onClick={handleCloseModal} color="error">
-            Cancel
-          </Button>
-          <Button variant="contained" onClick={handleNewRequest} color="primary">
-            Submit
-          </Button>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <Button variant="contained" onClick={handleCloseModal} color="error" style={{ marginRight: '10px' }}>
+              Cancel
+            </Button>
+            <Button variant="contained" onClick={handleNewRequest} color="primary">
+              Submit
+            </Button>
+          </div>
         </DialogActions>
       </Dialog>
     </>
