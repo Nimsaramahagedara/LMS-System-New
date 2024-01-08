@@ -194,6 +194,15 @@ export const studentListItems = (
         <ListItemText primary="Marks" />
       </Link>
 
+      </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <ChatIcon />
+      </ListItemIcon>
+      <Link to={'/dashboard/message'}>
+        <ListItemText primary="Request Advice" />
+      </Link>
+
     </ListItemButton>
   </React.Fragment>
 );
