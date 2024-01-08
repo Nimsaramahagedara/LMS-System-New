@@ -24,7 +24,7 @@ import ContactParent from './pages/teacher/ContactParent'
 import LandingPage from './pages/common/LandingPage'
 import StudentDashboard from './pages/student/StudentDashboard'
 import ClassPage from './pages/student/ClassPage'
-import Notices2  from './pages/student/Notices';
+import Notices2 from './pages/student/Notices';
 import NotFound from './pages/common/NotFound'
 import StProfile from './pages/student/StProfile'
 import { ToastContainer } from 'react-toastify';
@@ -52,12 +52,12 @@ function App() {
 
   return (
     <BrowserRouter>
-    <ToastContainer autoClose={1000}/>
+      <ToastContainer autoClose={1000} />
       <AuthProvider>
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path='/login' element={<Login />} />
-          <Route path='*' element={<NotFound/>} />
+          <Route path='*' element={<NotFound />} />
           <Route path='/dashboard' element={<Dashboard />}>
             {/* Admin Routes */}
             <Route path='' element={<AdminHome />} />
@@ -78,8 +78,8 @@ function App() {
             <Route path='profile' element={<Profile />} />
             <Route path='myclass' element={<MyClass />} />
             <Route path='mysub/:id/:subject/:grade' element={<MySubject />} />
-            <Route path='subjmarks/:id/:subject/:grade' element={<PublishSubjectMarks />} />    
-            <Route path='chat' element={<Chat/>} />        
+            <Route path='subjmarks/:id/:subject/:grade' element={<PublishSubjectMarks />} />
+            <Route path='chat' element={<Chat />} />
 
             {/* Support Team Routes */}
             <Route path='supoverview' element={<SpOverview />} />
@@ -97,16 +97,16 @@ function App() {
             <Route path='pay-success' element={<PaymentSuccess />} />
           </Route>
 
-          <Route path='/portal' element={<StudentDashboard/>}>
+          <Route path='/portal' element={<StudentDashboard />}>
             <Route path='' element={<StOverview />} />
-            <Route path='class' element={<ClassPage/>} />
+            <Route path='class' element={<ClassPage />} />
             <Route path='subjects' element={<SingleModuleViewPage />} />
             <Route path='subject/:id' element={<SingleModuleViewPage />} />
             <Route path='subject' element={<ModulePage />} />
             <Route path='marks' element={<StudentMarks />} />
             <Route path='notices' element={<Notices2 />} />
             <Route path='profile' element={<StProfile />} />
-            <Route path='message' element={<MessageTeacher/>} />
+            <Route path='message' element={<MessageTeacher />} />
 
 
           </Route>

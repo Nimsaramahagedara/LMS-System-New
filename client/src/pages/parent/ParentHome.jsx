@@ -33,7 +33,7 @@ const ParentHome = () => {
   //   // Implement the logic to view child details
   //   console.log('View My Child Details');
   // };
-  
+
 
   return (
     <Container maxWidth={'800px'} position="relative">
@@ -56,7 +56,7 @@ const ParentHome = () => {
       </ButtonContainer> */}
     </Container>
 
-    
+
   );
 };
 
