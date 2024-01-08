@@ -44,6 +44,7 @@ import PublishSubjectMarks from './pages/teacher/PublishSubjectMarks'
 import Notifications from './pages/common/Notifications'
 import PaymentAPI from './pages/parent/PaymentAPI'
 import PaymentSuccess from './pages/parent/PaymentSuccess'
+import Chat from './pages/teacher/Chat'
 
 
 function App() {
@@ -76,7 +77,8 @@ function App() {
             <Route path='profile' element={<Profile />} />
             <Route path='myclass' element={<MyClass />} />
             <Route path='mysub/:id/:subject/:grade' element={<MySubject />} />
-            <Route path='subjmarks/:id/:subject/:grade' element={<PublishSubjectMarks />} />            
+            <Route path='subjmarks/:id/:subject/:grade' element={<PublishSubjectMarks />} />    
+            <Route path='chat' element={<Chat/>} />        
 
             {/* Support Team Routes */}
             <Route path='supoverview' element={<SpOverview />} />

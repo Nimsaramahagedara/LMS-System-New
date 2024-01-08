@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ChatIcon from '@mui/icons-material/Chat';
 
 
 export const teacherListItems = (
@@ -81,6 +82,14 @@ export const teacherListItems = (
           <AccountCircleIcon />
         </ListItemIcon>
         <ListItemText primary="My Profile" />
+      </ListItemButton>
+    </Link>
+    <Link to={'/dashboard/chat'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <ChatIcon />
+        </ListItemIcon>
+        <ListItemText primary="Chat" />
       </ListItemButton>
     </Link>
 
