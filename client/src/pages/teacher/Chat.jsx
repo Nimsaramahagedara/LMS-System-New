@@ -24,7 +24,11 @@ const Chat = () => {
   ];
 
   return (
-    
+    <>
+    <div className="text-center font-bold">
+        <h2 className="text-3xl">Messages From Students</h2>
+    </div>
+    <br></br>
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -51,6 +55,7 @@ const Chat = () => {
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 };
 

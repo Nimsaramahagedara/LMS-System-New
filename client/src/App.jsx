@@ -44,7 +44,8 @@ import PublishSubjectMarks from './pages/teacher/PublishSubjectMarks'
 import Notifications from './pages/common/Notifications'
 import PaymentAPI from './pages/parent/PaymentAPI'
 import PaymentSuccess from './pages/parent/PaymentSuccess'
-import Chat from './pages/teacher/Chat'
+import Chat from './pages/teacher/Chat';
+import MessageTeacher from './pages/student/Message';
 
 
 function App() {
@@ -105,6 +106,8 @@ function App() {
             <Route path='marks' element={<StudentMarks />} />
             <Route path='notices' element={<Notices2 />} />
             <Route path='profile' element={<StProfile />} />
+            <Route path='message' element={<MessageTeacher/>} />
+
 
           </Route>
         </Routes>
