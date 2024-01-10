@@ -1,15 +1,11 @@
-import React, { useState } from "react";
-import Loader from "../../components/Loader/Loader";
-import WelcomeCardTeacher from "../../components/WelcomeCardTeacher";
+import React, { useEffect, useState } from 'react';
+import PageTitle from '../../components/StudentDashboard/PageTitle';
+import ContainerStudent from '../../components/StudentDashboard/ContainerStudent';
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import { apiUrl } from '../../utils/Constants';
+import { toast } from 'react-toastify';
+import authAxios from '../../utils/authAxios';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
   Button,
   Dialog,
   DialogTitle,
@@ -19,7 +15,16 @@ import {
 } from "@mui/material";
 
 const MessageTeacher = () => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [message, setMessage] = useState({
+    subject: "",
+    content: "",
+  });
+
+  const handleCreateChange = (field, value) => {
+    setMessage((prevData) => ({ ...prevData, [field]: value }));
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -29,86 +34,39 @@ const MessageTeacher = () => {
     setIsModalOpen(false);
   };
 
-  const handleNewRequest = () => {
-    // Add logic to handle new request
-    // You can fetch the values from the form fields here
-    handleCloseModal();
+  const handleSubmit = async () => {
+    try {
+      const result = await authAxios.post(`${apiUrl}/student/send-message`, message);
+      if (result) {
+        toast.success('Message Send Successfully');
+        handleCloseModal();
+        setMessage({});
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
-
-  const data = [
-    {
-      firstName: 'John',
-      lastName: 'Peter',
-      email: 'email@gmail.com',
-      title: 'This is a Sample title',
-      message: 'This is a Sample message'
-    },
-    {
-      firstName: 'John',
-      lastName: 'Peter',
-      email: 'email@gmail.com',
-      title: 'This is a Sample title',
-      message: 'This is a Sample message'
-    },
-  ];
 
   return (
     <>
-   
-      <div className="text-center font-bold">
-        <h2 className="text-3xl">Request Advice From Teacher</h2>
-      </div>
-      <TableContainer component={Paper}>
-        <div className="text-2xl">
-          <h3>My Past Requests</h3>
+      <ContainerStudent>
+        <PageTitle title={'Request Advice From Teacher'} icon={<FeedbackIcon fontSize='large' />} bgColor='bg-purple-800' />
+        <div className='flex items-start mt-5 justify-between'>
+          <div className='md:w-5/6 w-full'>
+            <div className='px-5 py-2 mt-5'>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="large"
+                style={{ margin: '5px' }}
+                onClick={handleOpenModal}
+              >
+                New Request
+              </Button>
+            </div>
+          </div>
         </div>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <Typography variant="subtitle1">
-                  <strong>Request Sent To</strong>
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1">
-                  <strong>Teacher's Email</strong>
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1">
-                  <strong>Title</strong>
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1">
-                  <strong>Message</strong>
-                </Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{`${item.firstName} ${item.lastName}`}</TableCell>
-                <TableCell>{item.email}</TableCell>
-                <TableCell>{`${item.title}`}</TableCell>
-                <TableCell>{item.message}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <br />
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        style={{ marginLeft: '20px' }}
-        onClick={handleOpenModal}
-      >
-        New Request
-      </Button>
+      </ContainerStudent>
 
       {/* Modal for New Request Form */}
       <Dialog className="text-center font-bold" open={isModalOpen} onClose={handleCloseModal}>
@@ -116,16 +74,12 @@ const MessageTeacher = () => {
         <DialogContent>
           {/* Form Fields */}
           <TextField
-            label="Teacher's Email"
+            label="Subject"
             variant="outlined"
             fullWidth
             margin="normal"
-          />
-          <TextField
-            label="Title"
-            variant="outlined"
-            fullWidth
-            margin="normal"
+            value={message.subject}
+            onChange={e => handleCreateChange('subject', e.target.value)}
           />
           <TextField
             label="Message"
@@ -134,17 +88,17 @@ const MessageTeacher = () => {
             multiline
             rows={4}
             margin="normal"
+            value={message.content}
+            onChange={e => handleCreateChange('content', e.target.value)}
           />
         </DialogContent>
         <DialogActions>
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
-            <Button variant="contained" onClick={handleCloseModal} color="error" style={{ marginRight: '10px' }}>
+            <Button variant="contained" onClick={handleSubmit} color="primary">
+              Send
+            </Button>
+            <Button variant="contained" onClick={handleCloseModal} color="error">
               Cancel
             </Button>
-            <Button variant="contained" onClick={handleNewRequest} color="primary">
-              Submit
-            </Button>
-          </div>
         </DialogActions>
       </Dialog>
     </>

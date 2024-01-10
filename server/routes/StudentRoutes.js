@@ -3,6 +3,7 @@ import { CreateStudentAccount, getStudentDetails, getAllStudents , getStudentsBy
 import { LoginValidator } from '../middlewares/LoggedIn.js';
 import { getSubjectTeacher } from '../controllers/SubjectController.js';
 import { getMarksByStudentId } from '../controllers/MarksController.js';
+import { createMessage } from '../controllers/MessageController.js';
 
 const studentRouter = express.Router();
 
@@ -17,6 +18,7 @@ studentRouter.get('/:classId', getStudentsByClassId);
 studentRouter.get('/students', getAllStudents);
 studentRouter.put('/update-student/:id', updateStudentById); 
 studentRouter.delete('/delete-student/:id', deleteStudentById); 
-studentRouter.get('/get-marks-by-student/:id', getMarksByStudentId)
+studentRouter.get('/get-marks-by-student/:id', getMarksByStudentId);
+studentRouter.post('/send-message', LoginValidator, createMessage);
 
 export default studentRouter;
