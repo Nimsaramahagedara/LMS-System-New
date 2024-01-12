@@ -25,6 +25,8 @@ import { apiUrl } from '../../utils/Constants';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { ClickOutHandler } from 'react-clickout-ts';
+import ChatIcon from '@mui/icons-material/Chat';
+
 
 
 function Copyright(props) {
@@ -94,6 +96,7 @@ const Drawer = styled(MuiDrawer, {
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
   const [notiOpen, setNotiOpen] = useState(false);
+  const [isPvtTeacher, setIsPvtTeacher] = useState(false);
   const { logout, userRole } = useAuth();
   const navigate = useNavigate();
   const [selectedNotification, setSelectedNotification] = useState(null);
@@ -126,31 +129,33 @@ export default function Dashboard() {
   /*DEPEND ON LOGGED IN USER, WE CAN CHANGE THE NAVIGATION BAR LINKS */
 
 
+  const getAllNotices = async (userRole) => {
 
+    const allNotices = await authAxios.get(`${apiUrl}/notices/${userRole}`);
+
+    const designedNotices = allNotices.data.map((el, index) => {
+      const createdAt = new Date(el.createdAt);
+      const formattedDate = createdAt.toLocaleDateString("en-GB");
+      return (
+        {
+          id: index,
+          title: el.title,
+          date: formattedDate
+        }
+      )
+    })
+    if (designedNotices) {
+      setNotices(designedNotices);
+    }
+  };
 
   //Handle notifications
   useEffect(() => {
-    const getAllNotices = async (userRole) => {
-
-      const allNotices = await authAxios.get(`${apiUrl}/notices/${userRole}`);
-
-      const designedNotices = allNotices.data.map((el, index) => {
-        const createdAt = new Date(el.createdAt);
-        const formattedDate = createdAt.toLocaleDateString("en-GB");
-        return (
-          {
-            id: index,
-            title: el.title,
-            date: formattedDate
-          }
-        )
-      })
-      if (designedNotices) {
-        setNotices(designedNotices);
-      }
-    };
-
     getAllNotices(Cookies.get('userRole'));
+    const pvt = Cookies.get('pvt')
+    if (pvt == 'true') {
+      setIsPvtTeacher(true);
+    }
   }, [])
 
 
@@ -228,13 +233,13 @@ export default function Dashboard() {
 
               {
                 notices.map((el, index) => (
-<Link to={'/dashboard/notifications'}>
-                  <div className='flex items-center justify-start py-2 gap-2 cursor-pointer hover:bg-gray-300 px-1 relative rounded-md' key={index}>
-                    < ChatBubbleOutlineOutlinedIcon sx={{ color: 'green' }} />
-                    <p className='text-xs text-left'>{el.title}</p>
-                    <p className='text-xs text-right text-gray-400 absolute bottom-0 right-0'>{el.formattedDate}</p>
+                  <Link to={'/dashboard/notifications'}>
+                    <div className='flex items-center justify-start py-2 gap-2 cursor-pointer hover:bg-gray-300 px-1 relative rounded-md' key={index}>
+                      < ChatBubbleOutlineOutlinedIcon sx={{ color: 'green' }} />
+                      <p className='text-xs text-left'>{el.title}</p>
+                      <p className='text-xs text-right text-gray-400 absolute bottom-0 right-0'>{el.formattedDate}</p>
 
-                  </div></Link>
+                    </div></Link>
                 ))
               }
 
@@ -280,9 +285,15 @@ export default function Dashboard() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} className='relative'>
           {/* PAGES INCLUDED INTO HERE */}
           <Outlet />
+          {
+           isPvtTeacher && <Link to={'/dashboard/chat'} className='fixed bottom-2 flex items-center justify-center gap-2 hover:bg-amber-200 right-5 rounded-full px-3 py-1 text-3xl bg-amber-400'>
+              <ChatIcon />
+              <span className='text-xs'>Private Messages</span>
+            </Link>
+          }
           <Copyright sx={{ pt: 4 }} />
         </Container>
       </Box>

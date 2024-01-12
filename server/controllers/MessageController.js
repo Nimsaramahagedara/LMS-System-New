@@ -16,3 +16,25 @@ export const createMessage = async (req, res) => {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+export const getAllMessages = async (req,res)=>{
+    try {
+        const messages= await MessageModel.find().populate('stdId')
+        res.status(200).json(messages);
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+export const updateMessageStatus = async (req,res)=>{
+    const {id} = req.params;
+    try {
+        if(!id){
+            throw Error('Message ID Required')
+        }
+        const messages= await MessageModel.findByIdAndUpdate(id,{status:1},{new:true}).populate('stdId')
+        res.status(200).json(messages);
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}

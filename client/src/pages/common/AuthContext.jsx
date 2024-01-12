@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
     // Remove the user role from cookies
     Cookies.remove('userRole', { path: '/' });
     Cookies.remove('token', { path: '/' });
+    Cookies.remove('pvt', { path: '/' });
     toast.warning('Logout Success!')
     navigate('/')
   };

@@ -4,6 +4,7 @@ import { getMySubjects, getStudentsInClass, teacherOverview } from '../controlle
 import { submitAttendance, getAttendanceByOwnerId, deleteAttendance } from '../controllers/AttendanceController.js';
 
 import { getMarks } from '../controllers/MarksController.js';
+import { getAllMessages, updateMessageStatus } from '../controllers/MessageController.js';
 const TeacherRouter = express.Router();
 
 TeacherRouter.use(LoginValidator);
@@ -14,6 +15,10 @@ TeacherRouter.post('/submit-attendance', submitAttendance)
 TeacherRouter.get('/attendance', getAttendanceByOwnerId);
 TeacherRouter.delete('/delete-attendance/:id', deleteAttendance);
 TeacherRouter.get('/marks', getMarks);
+
+// PRIVATE MESSAGE ROUTE
+TeacherRouter.get('/messages',LoginValidator,getAllMessages);
+TeacherRouter.put('/messages/:id',LoginValidator,updateMessageStatus);
 
 
 
