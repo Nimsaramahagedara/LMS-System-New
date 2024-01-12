@@ -70,7 +70,7 @@ const TOverview = () => {
 
         setAttendance(attendedStudentsLength);
       } else {
-        toast.error('Data Not Available');
+        toast.error('Attendance Data Not Available');
       }
     } catch (error) {
       console.log(error.response.data.message);
