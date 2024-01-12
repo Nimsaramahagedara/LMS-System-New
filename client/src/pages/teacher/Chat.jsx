@@ -15,6 +15,7 @@ const Chat = () => {
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
   const [selectedMessage, setSelectedMessage] = useState({});
+  const [refresh, setRefresh] = useState(false);
 
   const getAllMessages = async () => {
     try {
@@ -62,34 +63,12 @@ const Chat = () => {
     setOpen(true);
   }
 
-  const data = [
-    {
-      firstName: 'John',
-      lastName: 'Peter',
-      email: 'email@gmail.com',
-      title: 'This is a Sample title',
-      message: 'This is a Sample message'
-    },
-    {
-      firstName: 'John',
-      lastName: 'Peter',
-      email: 'email@gmail.com',
-      title: 'This is a Sample title'
-    },
-    {
-      firstName: 'John',
-      lastName: 'Peter',
-      email: 'email@gmail.com',
-      title: 'This is a Sample title'
-    }
-  ];
-
   useEffect(() => {
     // Simulate loading delay
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-  }, []);
+  }, [refresh]);
 
   const sendEmail = async () => {
     const data = {
@@ -101,9 +80,11 @@ const Chat = () => {
       const isSent = await authAxios.post(`${apiUrl}/send-email`, data);
       if (isSent) {
         toast.success('Email has sent successfully!...')
-        const deletedMessage = await authAxios.delete(`${apiUrl}/message/${selectedMessage._id}`);
-        if(deletedMessage)
+        const deletedMessage = await authAxios.delete(`${apiUrl}/teacher/messages/${selectedMessage._id}`);
+        if(deletedMessage){
         toast.success('Message deleted successfully!...')
+        setRefresh((prev)=>!prev)
+        }
       }
       handleClose();
 
@@ -149,7 +130,7 @@ const Chat = () => {
                 <TableCell>{`${item.stdId.firstName} ${item.stdId.lastName}`}</TableCell>
                 <TableCell>{item.stdId.email}</TableCell>
                 <TableCell>{item.subject}</TableCell>
-                <TableCell>{item.content || '-'}</TableCell>
+                <TableCell>{'*******'}</TableCell>
                 <TableCell><Button onClick={() => handleOpen(item)}>{item.status == 1 ? <DraftsIcon /> : <EmailIcon />}</Button></TableCell>
               </TableRow>
             ))}
@@ -168,7 +149,14 @@ const Chat = () => {
               Contact Stuent immediately
             </Typography>
 
-            <Typography className="text-center">
+            <Typography id="modal-modal-title" variant="subtitle2" color={"GrayText"} component="h2">
+               Stuent's Message
+            </Typography>
+            <div className="text-xs font-bold bg-amber-300 rounded-xl w-full p-2 capitalize ">
+              {selectedMessage.content }
+            </div>
+
+            <Typography className="text-center" variant="subtitle2">
               Send to: {selectedMessage?.stdId?.email} <br /> or <br /> Call Now : {selectedMessage?.stdId?.contactNo}
             </Typography>
             <TextField onChange={(e) => setSubject(e.target.value)} value={subject} type='text' variant='outlined' label='subject' fullWidth>
