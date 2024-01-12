@@ -84,15 +84,6 @@ export const teacherListItems = (
         <ListItemText primary="My Profile" />
       </ListItemButton>
     </Link>
-    <Link to={'/dashboard/chat'}>
-      <ListItemButton>
-        <ListItemIcon>
-          <ChatIcon />
-        </ListItemIcon>
-        <ListItemText primary="Chat" />
-      </ListItemButton>
-    </Link>
-
   </React.Fragment>
 );
 
