@@ -38,3 +38,16 @@ export const updateMessageStatus = async (req,res)=>{
         res.status(500).json(error)
     }
 }
+
+export const deleteMessage = async (req,res)=>{
+    const {id} = req.params;
+    try {
+        if(!id){
+            throw Error('Message ID Required')
+        }
+        const messages= await MessageModel.findByIdAndDelete(id,{new:true}).populate('stdId')
+        res.status(200).json(messages);
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}

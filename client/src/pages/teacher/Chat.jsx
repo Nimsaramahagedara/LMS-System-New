@@ -101,6 +101,9 @@ const Chat = () => {
       const isSent = await authAxios.post(`${apiUrl}/send-email`, data);
       if (isSent) {
         toast.success('Email has sent successfully!...')
+        const deletedMessage = await authAxios.delete(`${apiUrl}/message/${selectedMessage._id}`);
+        if(deletedMessage)
+        toast.success('Message deleted successfully!...')
       }
       handleClose();
 
@@ -174,7 +177,7 @@ const Chat = () => {
             <TextField onChange={(e) => setDescription(e.target.value)} value={description} type='text' variant='outlined' label='description' fullWidth multiline rows={5}>
             </TextField>
 
-            <Button onClick={sendEmail} variant='contained'>Send</Button>
+            <Button onClick={sendEmail} variant='contained'>Send Email and Delete Message</Button>
           </div>
         </Box>
       </Modal>

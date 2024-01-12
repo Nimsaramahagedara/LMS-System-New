@@ -47,7 +47,7 @@ export default function Login() {
         Cookies.set('firstName', isLoggedin.data.firstName);
 
         // This is only for the PRIVATE MSG SHOW
-        if(isLoggedin.data._id == '658d1b6ce6feec00253fccfc'){
+        if(isLoggedin.data.pvt == true){
           Cookies.set('pvt', 'true');
         }
         login(isLoggedin.data.userRole, isLoggedin.data.token)

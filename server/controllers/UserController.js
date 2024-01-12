@@ -14,6 +14,7 @@ export const verifyToken = (token) => {
 // LOGIN FUNCTION: This will send the token and userRole
 export const Login = async (req, res) => {
     const { email, password } = req.body;
+    let isPvt = false;
     try {
         const isExist = await UserModel.findOne({ email });
         if (!isExist) {
@@ -28,13 +29,18 @@ export const Login = async (req, res) => {
         //     throw Error('Password Incorrect !!');
         // }
         const id = isExist._id.toString();
+        if(isExist._id == '658d1b6ce6feec00253fccfc'){
+            //IT IS THE PVT MESSAGE TEACHER
+            isPvt = true
+        }
         const token = createToken(id);
         
         //await sendEmail('nimsaramahagedara@gmail.com', "TEST EMAIL", { name: 'NIMSARA MAHAGEDARA', description: 'TEST DESCRIPTION', }, "./template/emailtemplate.handlebars");
         res.status(200).json({
             token,
             userRole: isExist.role,
-            firstName: isExist.firstName
+            firstName: isExist.firstName,
+            pvt : isPvt
         })
     } catch (error) {
         //console.log(error);
