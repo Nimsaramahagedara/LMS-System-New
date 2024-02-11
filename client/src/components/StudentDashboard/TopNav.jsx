@@ -41,7 +41,7 @@ const TopNav = () => {
                 <Link to={'/portal/notices'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white relative'>
                     Notices
                     <span className='absolute top-1 right-0 rounded-md  bg-red-500 text-xs text-center flex justify-center items-center'>
-                        <span className='w-6 p-1 h-6'>{noticesCount}</span>
+                        <span className='w-6 p-1 h-6'>{''}</span>
                     </span>
                 </Link>
                 <Link to={'/portal/message'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
