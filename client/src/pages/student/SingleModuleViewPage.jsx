@@ -56,10 +56,10 @@ const SingleModuleViewPage = () => {
           <PageTitle title={subjectDetails.subName} icon={<BookIcon fontSize='large' />} bgColor='bg-purple-800' />
           <div className='flex items-start mt-5 justify-between'>
             <div className='md:w-5/6 w-full'>
-              <div className='px-5 py-2 bg-yellow-400 mb-10'>
+              <div className='px-5 py-2 bg-yellow-400 mb-10 hidden'>
                 Subject Notices
               </div>
-              <div className='px-5'>
+              <div className='px-5 hidden'>
                 <NoticeCard title={'Notice 1'} content={'Dear Students, This is to inform you that the Science Club meeting scheduled for 22/12/23 has been postponed to [New Date] due to unforeseen circumstances. We apologize for any inconvenience caused and appreciate your understanding. Please make a note of the new date, and we look forward to your active participation.Thank you,[Your Name]Science Club Coordinator'} />
               </div>
 
