@@ -18,6 +18,8 @@ const ClassMNG = () => {
   const [refresh, changeRefresh] = useState(false);
   const [allTeachers, setAllTeachers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [gradeUP, setGradeUp] = useState(false);
+  const [gradeupPwd, setGradeUpPwd] = useState('')
   //UPDATE SUPPORT FORM DATA
   const [createClassData, setCreateClassData] = useState({
     grade: '',
@@ -112,6 +114,23 @@ const ClassMNG = () => {
       toast.error(error.response.data.message)
     }
   }
+
+  const gradeUp = async () => {
+    try {
+      alert('You are about to grade up all classes')
+      const allT = await authAxios.get(`${apiUrl}/admin/grade-up`);
+      console.log(allT);
+      toast.success(allT.data.message);
+      setIsLoading(false);
+      changeRefresh((prev)=>!prev)
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
+
+  const showGradeUp = () => {
+    setGradeUp(prev => !prev);
+  }
   useEffect(() => {
     getAllClasses();
     getAllTeachers();
@@ -119,8 +138,10 @@ const ClassMNG = () => {
 
 
   return (
-    <div>
-
+    <div className='relative'>
+      <div className='w-full flex items-end justify-end'>
+        <Button variant='contained' color='error' onClick={() => showGradeUp()}> Grade Up </Button>
+      </div>
       <AdminWelcomeCard />
       <div style={{ textAlign: 'center' }}>
         <h1 style={{ fontSize: '2em' }}>Manage Students Classes</h1>
@@ -201,34 +222,34 @@ const ClassMNG = () => {
           </TableHead>
           {
             !isLoading ? <TableBody>
-            {AllClasses.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.grade}</TableCell>
-                <TableCell>{row.subClass}</TableCell>
-                <TableCell>{row.ownedBy ? (row.ownedBy.firstName + ' ' + row.ownedBy.lastName) : 'Not Assigned'}</TableCell>
-                <TableCell>{row.studentCount}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleView(row)}
-                  >
-                    View
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody> : <Loader/>
-}
+              {AllClasses.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>{row.grade}</TableCell>
+                  <TableCell>{row.subClass}</TableCell>
+                  <TableCell>{row.ownedBy ? (row.ownedBy.firstName + ' ' + row.ownedBy.lastName) : 'Not Assigned'}</TableCell>
+                  <TableCell>{row.studentCount}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleView(row)}
+                    >
+                      View
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody> : <Loader />
+          }
         </Table>
       </TableContainer>
       {/* Students and class Table Ends Here... */}
 
       {/* SECOND SECTION */}
       {
-        AllClasses && <SubjectMNG ClassList={AllClasses}/>
+        AllClasses && <SubjectMNG ClassList={AllClasses} />
       }
-      
+
 
       {/* View Class Details Dialog Table Starts here.. */}
       <Dialog open={viewOpen} onClose={handleViewClose} maxWidth="xl">
@@ -298,7 +319,21 @@ const ClassMNG = () => {
           <Button onClick={handleViewClose}>Close</Button>
         </DialogActions>
       </Dialog>
+      {
+        gradeUP && <div className='flex flex-col items-center justify-center absolute space-y-5 top-20 left-1/2 bg-gray-300 rounded-2xl shadow-xl p-10 -translate-x-1/2'>
+          <h2>Are your sure to grade up ?</h2>
+          <p>Enter the password</p>
+          <p>Hint : 1234</p>
+          <div className='w-full flex-col flex items-center justify-center space-y-5'>
+            <TextField value={gradeupPwd} onChange={(e)=> setGradeUpPwd(e.target.value)} />
+            {
+              gradeupPwd == '1234' &&             <Button variant='contained' color='error' onClick={() => gradeUp()}> Grade Up </Button>
+            }
 
+          </div>
+          <Button variant='contained' color='primary' onClick={() => showGradeUp()}> Close </Button>
+        </div>
+      }
     </div>
   );
 };

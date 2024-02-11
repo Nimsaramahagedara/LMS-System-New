@@ -68,6 +68,11 @@ export const createClass = async (req, res) => {
             subjects: Array()
         }
 
+        const isClassExist = await ClassModel.findOne({grade:data.grade,subClass:data.subClass});
+        if(isClassExist){
+            throw Error('Class Is Already Exist!')
+        }
+
         const isSaved = await ClassModel.create(classData);
 
         res.status(200).json({ message: 'Class Created Successfully' })
@@ -170,5 +175,15 @@ export const getStudentsInSubject = async (req, res) => {
         res.status(500).json({
             message: error.mesasge
         })
+    }
+}
+
+export const gradeUp = async (req, res) => {
+    try {
+        const upgrade = await ClassModel.updateMany({}, { $inc: { grade: 1 } });
+        res.status(200).json({message:'All Grades are incremented by one'});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
     }
 }
