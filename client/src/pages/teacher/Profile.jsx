@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../common/AuthContext';
 import Loader from '../../components/Loader/Loader';
 import CardActions from '@mui/material/CardActions';
+import { getProfileImageSrc } from '../../utils/usefulFunctions';
 
 
 const Profile = () => {
@@ -48,7 +49,8 @@ const Profile = () => {
       {isLoading ? <Loader /> : <></>}
       <Card sx={{ maxWidth: 345, minWidth: 345, width: 'fit-content', margin: '10px auto' }}>
           <Avatar sx={{ width: 100, height: 100, margin: '20px auto' }}>
-            <AccountCircleIcon sx={{ width: '100%', height: '100%' }} />
+            {/* <AccountCircleIcon sx={{ width: '100%', height: '100%' }} /> */}
+            <img src={getProfileImageSrc(user.gender)}  />
           </Avatar>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

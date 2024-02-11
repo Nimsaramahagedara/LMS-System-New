@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
 import Loader from '../../components/Loader/Loader';
+import { getProfileImageSrc } from '../../utils/usefulFunctions';
 
 const StProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -73,7 +74,8 @@ const StProfile = () => {
               <>
                 {/* Use AccountCircleIcon instead of Avatar */}
                 <Avatar sx={{ width: 100, height: 100, margin: '20px auto' }}>
-                  <AccountCircleIcon sx={{ width: '100%', height: '100%' }} />
+                  {/* <AccountCircleIcon sx={{ width: '100%', height: '100%' }} /> */}
+                  <img src={getProfileImageSrc(student.gender)} />
                 </Avatar>
                 <Typography variant="h5" gutterBottom>
                   {`${student.firstName} ${student.lastName}`}

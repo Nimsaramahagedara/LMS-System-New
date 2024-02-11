@@ -269,7 +269,7 @@ export default function Dashboard() {
         <List component="nav">
           {navLinks}
           <Divider sx={{ my: 1 }} />
-          {secondaryListItems}
+          {/* {secondaryListItems} */}
         </List>
       </Drawer>
       <Box

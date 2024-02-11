@@ -9,19 +9,19 @@ const MiddleBarOnCarasoul = () => {
         </button>
         <button className='p-14 bg-white text-blue-950 hover:bg-gray-100'>
             <ComputerIcon sx={{fontSize:'32px'}} /><br/>
-            Contact Support
+            Prototype
         </button>
         <button className='p-14 bg-white text-blue-950 hover:bg-gray-100'>
             <ComputerIcon sx={{fontSize:'32px'}} /><br/>
-            Contact Support
+            Development
         </button>
         <button className='p-14 bg-white text-blue-950 hover:bg-gray-100'>
             <ComputerIcon sx={{fontSize:'32px'}} /><br/>
-            Contact Support
+            Coming Soon
         </button>
         <button className='p-14 bg-white text-blue-950 hover:bg-gray-100'>
             <ComputerIcon sx={{fontSize:'32px'}} /><br/>
-            Contact Support
+            Coming Soon
         </button>
     </div>
   )
