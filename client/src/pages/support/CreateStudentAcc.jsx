@@ -64,6 +64,13 @@ const refreshPage = ()=>{
 
 const handleSubmit = async () => {
   try {
+    const currentDate = new Date();
+    const Dob = new Date(createStudentData.dob)
+    const differenceInYears = currentDate.getFullYear() - Dob.getFullYear();
+    alert(differenceInYears)
+    if( differenceInYears <6 ){
+      throw Error('Student Age Must Be More Than 6 Years')
+    }
     const result = await authAxios.post(`${apiUrl}/student/create-student`, createStudentData);
     if (result) {
       toast.success('Account Created Successfully');

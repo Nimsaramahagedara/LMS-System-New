@@ -46,8 +46,8 @@ const SpOverview = () => {
         <SimpleCard name={'Subjects'} to={'manageacc'} count={overview.subjectCount} icon={<AutoStoriesIcon color='warning' fontSize='large'/>}/>
       </Box>
 
-      <Grid container spacing={2} marginTop={1}>
-      <Grid item xs={8}>
+      <Grid container spacing={2} marginTop={1} >
+      <Grid item xs={8} display={'none'}>
           <Item sx={{height:'50vh', overflowY:'scroll'}}>
             <Typography variant='h6'>Avtivities</Typography>
             <SimpleTable/>

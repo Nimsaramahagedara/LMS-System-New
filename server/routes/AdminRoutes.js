@@ -2,6 +2,7 @@ import express from 'express';
 import { CreateSupportAccount, deleteSupportMember, getAllSupportMembers, getSupportMember, updateSupportMember } from '../controllers/SupportController.js';
 import { CreateTeacherAccount, deleteTeacher, getAllTeachers, getTeacher, updateTeacher } from '../controllers/TeacherContraller.js';
 import { getOverview } from '../controllers/AdminControlller.js';
+import { gradeUp } from '../controllers/ClassController.js';
 
 
 const adminRouter = express.Router();
@@ -18,6 +19,7 @@ adminRouter.get('/get-teacher/:email',getTeacher);
 adminRouter.put('/update-teacher/:email',updateTeacher);
 adminRouter.delete('/delete-teacher/:email', deleteTeacher);
 adminRouter.post('/create-teacher', CreateTeacherAccount);
+adminRouter.get('/grade-up', gradeUp);
 
 
 export default adminRouter;

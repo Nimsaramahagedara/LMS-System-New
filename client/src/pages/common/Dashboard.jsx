@@ -217,7 +217,7 @@ export default function Dashboard() {
             {userRole == 'admin' ? 'Admin' : userRole == 'support' ? 'Support' : userRole == 'parent' ? 'parent' : 'Teacher'} Dashboard
           </Typography>
           <IconButton color="inherit" onClick={toggleNotification}>
-            <Badge badgeContent={notices.length} color="secondary">
+            <Badge badgeContent={''} color="secondary">
               <Notifications />
             </Badge>
           </IconButton>
@@ -269,7 +269,7 @@ export default function Dashboard() {
         <List component="nav">
           {navLinks}
           <Divider sx={{ my: 1 }} />
-          {secondaryListItems}
+          {/* {secondaryListItems} */}
         </List>
       </Drawer>
       <Box
