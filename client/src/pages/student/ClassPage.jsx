@@ -43,9 +43,9 @@ const ClassPage = () => {
           <div className='px-5 py-2 bg-cyan-200 mb-10'>
             Class Notices
           </div>
-          <div className='px-5'>
+          {/* <div className='px-5'>
            <NoticeCard title={'Attention All Students of Class 11/B !!'} content={'Lorem ipsum Lajsks sajjds jj'}/>
-          </div>
+          </div> */}
           <div className='px-5 py-2 bg-yellow-400 my-10'>
             Your Subjects
           </div>
