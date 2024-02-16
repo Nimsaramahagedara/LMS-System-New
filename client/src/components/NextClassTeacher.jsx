@@ -13,9 +13,10 @@ export default function NextClassTeacher({count = 0}) {
       <Typography component="p" variant="h4">
         {count}
       </Typography>
+      
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-
       </Typography>
+
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>
           count again
