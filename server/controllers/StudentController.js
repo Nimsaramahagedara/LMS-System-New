@@ -16,7 +16,6 @@ export const CreateStudentAccount = async (req, res) => {
     if (!data.classId || data.classId == null) {
       throw Error('Student Must Enroll For a Class When they Register');
     }
-
     const gotParentId = await getParentId(data.parentEmail, data.regNo)
 
     const studentData = {
@@ -35,7 +34,7 @@ export const CreateStudentAccount = async (req, res) => {
       ownedClass: null
 
     }
-
+    console.log(studentData);
     const result = await UserModel.create(studentData);
 
     await sendEmail(data.email, "Account Created Successfully", { name: `Username : ${data.email}`, description: `Password: ${data.password} \n Account Type: ${data.role}`, }, "./template/emailtemplate.handlebars");
