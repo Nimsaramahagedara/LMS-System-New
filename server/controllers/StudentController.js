@@ -1,6 +1,7 @@
 import ClassModel from "../models/ClassModel.js";
 import SubjectModel from "../models/SubjectModel.js";
 import UserModel from "../models/UserModel.js";
+import { sendEmail } from "../utils/sendEmail.js";
 import { getParentId } from "./ParentController.js";
 
 // Student ACCOUNT CREATION
@@ -15,7 +16,6 @@ export const CreateStudentAccount = async (req, res) => {
     if (!data.classId || data.classId == null) {
       throw Error('Student Must Enroll For a Class When they Register');
     }
-
 
     const gotParentId = await getParentId(data.parentEmail, data.regNo)
 
