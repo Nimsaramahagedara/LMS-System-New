@@ -6,7 +6,7 @@ import authAxios from '../../utils/authAxios';
 import { toast } from 'react-toastify';
 import { apiUrl } from '../../utils/Constants';
 import Loader from '../../components/Loader/Loader';
-
+import  validator  from 'validator';
 
 
 const StudentMNG = () => {
@@ -95,6 +95,9 @@ const StudentMNG = () => {
     try {
       const currentDate = new Date();
       const Dob = new Date(createStudentData.dob)
+      if(!validator.isEmail(createStudentData.email)){
+        throw Error('Email should be valid email')
+      }
       const differenceInYears = currentDate.getFullYear() - Dob.getFullYear();
       alert(differenceInYears)
       if (differenceInYears < 6) {
