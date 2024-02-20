@@ -96,7 +96,6 @@ const StudentMNG = () => {
       const currentDate = new Date();
       const Dob = new Date(createStudentData.dob)
       const differenceInYears = currentDate.getFullYear() - Dob.getFullYear();
-      // alert(differenceInYears)
       if( differenceInYears <6 ){
         throw Error('Student Age Must Be More Than 6 Years')
       }
