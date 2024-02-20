@@ -24,6 +24,7 @@ import { apiUrl } from '../../utils/Constants';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import Loader from '../../components/Loader/Loader';
+import validator from 'validator';
 
 const TeacherMNG = () => {
   const [notices, setNotices] = useState([]);
@@ -112,6 +113,9 @@ const TeacherMNG = () => {
 
   const handleTeacherSubmit = async () => {
     try {
+      if(!validator.isEmail(createTeacherFormData.email)){
+        throw Error('Email should be valid email')
+      }
       const result = await fetch(`${apiUrl}/admin/create-teacher`, {
         method: 'POST',
         headers: {

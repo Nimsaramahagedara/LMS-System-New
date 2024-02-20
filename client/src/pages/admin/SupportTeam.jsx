@@ -9,6 +9,7 @@ import SimpleCard from '../../components/SimpleCard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ColorCard from '../../components/StudentDashboard/ColorCard';
 import Loader from '../../components/Loader/Loader';
+import validator from 'validator';
 const SupportTeam = () => {
     const [open, setOpen] = useState(false);
     const [viewOpen, setViewOpen] = useState(false);
@@ -104,6 +105,9 @@ const SupportTeam = () => {
     const handleSupportSubmit = async () => {
         console.log(createSupportFormData);
         try {
+            if(!validator.isEmail(createSupportFormData.email)){
+                throw Error('Email should be valid email')
+              }
             const result = await authAxios.post(`${apiUrl}/admin/create-support`, createSupportFormData);
             if (result) {
                 toast.success(result.data.message);
