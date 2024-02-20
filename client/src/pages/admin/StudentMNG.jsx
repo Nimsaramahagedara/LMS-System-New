@@ -26,7 +26,7 @@ const StudentMNG = () => {
     firstName: "",
     lastName: "",
     gender: "",
-    contactNo: 0,
+    contactNo: '',
     dob: '',
     parentId: null,
     email: "",
@@ -97,7 +97,7 @@ const StudentMNG = () => {
       const Dob = new Date(createStudentData.dob)
       const differenceInYears = currentDate.getFullYear() - Dob.getFullYear();
       alert(differenceInYears)
-      if( differenceInYears <6 ){
+      if (differenceInYears < 6) {
         throw Error('Student Age Must Be More Than 6 Years')
       }
       const result = await authAxios.post(`${apiUrl}/student/create-student`, createStudentData);
@@ -115,18 +115,18 @@ const StudentMNG = () => {
 
 
   useEffect(() => {
-  const getAllClasses = async () => {
-    try {
-      const allClasses = await authAxios.get(`${apiUrl}/class`);
-      setAllClasses(allClasses.data);
-      setIsLoading(false);
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-  };
+    const getAllClasses = async () => {
+      try {
+        const allClasses = await authAxios.get(`${apiUrl}/class`);
+        setAllClasses(allClasses.data);
+        setIsLoading(false);
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
+    };
 
-  getAllClasses();
-}, [refresh, updateStatus]);
+    getAllClasses();
+  }, [refresh, updateStatus]);
 
 
   const handleDeleteStudent = async (studentId) => {
@@ -149,7 +149,7 @@ const StudentMNG = () => {
   const handleUpdate = async () => {
     try {
       const result = await authAxios.put(`${apiUrl}/student/update-student/${updateFormData._id}`, updateFormData);
-  
+
       if (result) {
         toast.success('Student Updated Successfully');
         handleClose2();
@@ -226,6 +226,19 @@ const StudentMNG = () => {
               id="outlined-required"
               label="Student Email"
               placeholder="e.g., 'deneth@mail.com'"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              value={createStudentData.contactNo}
+              onChange={e => handleCreateChange('contactNo', e.target.value)}
+
+            />
+
+            <TextField
+              required
+              id="outlined-required"
+              label="Student Mobile No"
+              placeholder="e.g., '0712345678'"
               fullWidth
               margin="normal"
               variant="outlined"
@@ -340,26 +353,26 @@ const StudentMNG = () => {
           </TableHead>
           {
             !isLoading ? <TableBody>
-            {AllClasses.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.grade}</TableCell>
-                <TableCell>{row.subClass}</TableCell>
-                <TableCell>{row.ownedBy ? (row.ownedBy.firstName + ' ' + row.ownedBy.lastName) : 'Not Assigned'}</TableCell>
-                <TableCell>{row.studentCount} /40</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleView(row)}
-                  >
-                    View
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          : <Loader/>
-}
+              {AllClasses.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>{row.grade}</TableCell>
+                  <TableCell>{row.subClass}</TableCell>
+                  <TableCell>{row.ownedBy ? (row.ownedBy.firstName + ' ' + row.ownedBy.lastName) : 'Not Assigned'}</TableCell>
+                  <TableCell>{row.studentCount} /40</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleView(row)}
+                    >
+                      View
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+              : <Loader />
+          }
         </Table>
       </TableContainer>
       {/* Students and class Table Ends Here... */}
@@ -493,9 +506,9 @@ const StudentMNG = () => {
                             </Select>
                           </div>
                           <DialogActions style={{ justifyContent: 'center' }}>
-                        <Button size="small" onClick={handleUpdate} variant="contained" color="primary">
-                          Update
-                        </Button>
+                            <Button size="small" onClick={handleUpdate} variant="contained" color="primary">
+                              Update
+                            </Button>
                           </DialogActions>
                         </DialogContent>
                       </Dialog>

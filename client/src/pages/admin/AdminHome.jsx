@@ -54,12 +54,12 @@ const AdminHome = () => {
       </Box>
 
       <Grid container spacing={2} marginTop={1}>
-      <Grid item xs={8}>
+      {/* <Grid item xs={8}>
           <Item sx={{height:'55vh'}}>
             <Typography variant='h8'>Progress Of All Teachers</Typography>
             <BarChart/>
           </Item>
-        </Grid>
+        </Grid> */}
         <Grid item xs={4}>
           <Item>
             <Typography>Student Diversity</Typography>
