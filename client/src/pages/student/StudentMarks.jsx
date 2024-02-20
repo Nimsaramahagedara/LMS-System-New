@@ -53,65 +53,80 @@ const StudentMarks = () => {
   const [termWithHighestSum, setTermWithHighestSum] = useState(null);
   const [sum, setAvg] = useState([0, 0, 0]);
 
-  const getMarks = async () => {
+  const getUserData = async () => {
     try {
       const user = await authAxios.get(`${apiUrl}/get-user`);
-      const id = user.data._id;
-      const result = await authAxios.get(`${apiUrl}/student/get-marks-by-student/${id}`);
-
-      if (result) {
-        const { data } = result;
-
-        // Separate data into different terms
-        const term1Data = data.filter(mark => mark.term === 1);
-        const term2Data = data.filter(mark => mark.term === 2);
-        const term3Data = data.filter(mark => mark.term === 3);
-
-        setTerm1Marks(term1Data);
-        setTerm2Marks(term2Data);
-        setTerm3Marks(term3Data);
-
-        // Find the term with the highest sum of marks
-        const sumOfMarks = (termData) => termData.reduce((sum, mark) => sum + mark.mark, 0);
-        const sumTerm1 = sumOfMarks(term1Data);
-        const sumTerm2 = sumOfMarks(term2Data);
-        const sumTerm3 = sumOfMarks(term3Data);
-        setAvg([(sumTerm1 / term1Data.length), sumTerm2 / term2Data.length, sumTerm3 / term3Data.length]);
-
-        const termWithHighestSum = sumTerm1 > sumTerm2
-          ? (sumTerm1 > sumTerm3 ? 1 : 3)
-          : (sumTerm2 > sumTerm3 ? 2 : 3);
-
-        setTermWithHighestSum(termWithHighestSum);
-
-        // Find subject name for overall highest marks
-        const highestMarksForTerm = (termData) => termData.reduce((max, mark) => (mark.mark > max.mark ? mark : max), { mark: 0 });
-        const highestTerm = highestMarksForTerm(
-          termWithHighestSum === 1 ? term1Data :
-            (termWithHighestSum === 2 ? term2Data : term3Data)
-        );
-
-        const highestMarks = highestTerm.mark;
-        setHighestMarks(highestMarks);
-
-        const subjectNameOfHighestMarksForTerm = highestTerm.subId.subName;
-        setHighestMarksSubject(subjectNameOfHighestMarksForTerm);
-
-        setIsLoading(false)
-        console.log('Term 1 Marks:', term1Marks);
-        console.log('Term 2 Marks:', term2Marks);
-        console.log('Term 3 Marks:', term3Marks);
-        console.log('Term with Highest Sum of Marks:', termWithHighestSum);
-        console.log('Subject of Highest Marks for Term:', subjectNameOfHighestMarksForTerm);
-        console.log('Highest Marks:', highestMarks);
-        console.log('sum:', sum);
-      } else {
-        toast.error('Data Not Available');
-      }
+      return user.data._id;
     } catch (error) {
-      console.log(error.response.data.message);
+      throw error.response.data.message;
     }
   };
+  
+  const getMarksByStudent = async (studentId) => {
+    try {
+      const result = await authAxios.get(`${apiUrl}/student/get-marks-by-student/${studentId}`);
+      return result.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  };
+  
+  const separateMarksByTerm = (marks) => {
+    const term1Data = marks.filter(mark => mark.term === 1);
+    const term2Data = marks.filter(mark => mark.term === 2);
+    const term3Data = marks.filter(mark => mark.term === 3);
+    return [term1Data, term2Data, term3Data];
+  };
+  
+  const calculateAverage = (termData) => {
+    const sumOfMarks = termData.reduce((sum, mark) => sum + mark.mark, 0);
+    return termData.length > 0 ? sumOfMarks / termData.length : 0;
+  };
+  
+  const getHighestMarksForTerm = (termData) => {
+    return termData.reduce((max, mark) => (mark.mark > max.mark ? mark : max), { mark: 0 });
+  };
+  
+  const getMarks = async () => {
+    try {
+      const userId = await getUserData();
+      const marks = await getMarksByStudent(userId);
+  
+      if (marks.length === 0) {
+        setIsLoading(false);
+        return;
+      }
+  
+      const [term1Data, term2Data, term3Data] = separateMarksByTerm(marks);
+  
+      setTerm1Marks(term1Data);
+      setTerm2Marks(term2Data);
+      setTerm3Marks(term3Data);
+  
+      const avgTerm1 = calculateAverage(term1Data);
+      const avgTerm2 = calculateAverage(term2Data);
+      const avgTerm3 = calculateAverage(term3Data);
+  
+      const termWithHighestSum = Math.max(avgTerm1, avgTerm2, avgTerm3);
+  
+      const highestTerm = getHighestMarksForTerm(
+        termWithHighestSum === avgTerm1 ? term1Data :
+          (termWithHighestSum === avgTerm2 ? term2Data : term3Data)
+      );
+  
+      setAvg([avgTerm1, avgTerm2, avgTerm3]);
+      setTermWithHighestSum(highestTerm.term);
+      setHighestMarks(highestTerm.mark);
+      setHighestMarksSubject(highestTerm.subId.subName);
+  
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      toast.error('Marks Not published yet');
+    }
+  };
+  
   useEffect(() => {
     getMarks();
   }, []);

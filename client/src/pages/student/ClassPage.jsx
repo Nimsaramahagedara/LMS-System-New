@@ -17,19 +17,57 @@ const ClassPage = () => {
   const [teacherInCharge, setTeacher] = useState('');
   const [Mates, setMates] = useState([]);
   
-  const getSubjects = async ()=>{
+  const getSubjects = async () => {
+    try {
+      const data = await fetchSubjects();
+      setSubjects(data.subjects);
+      setTeacher(data.ownedBy);
+      setIsLoading(false);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+  
+  const fetchSubjects = async () => {
     try {
       const data = await authAxios.get(`${apiUrl}/student/get-subjects`);
-      const classMates = await authAxios.get(`${apiUrl}/student/get-classmates`);
-      setSubjects(data.data.subjects);
-      setTeacher(data.data.ownedBy);
-      setMates(classMates.data);
-      setIsLoading(false)
+      return data.data;
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      setIsLoading(false);// modify this
+      toast.error("You need to enroll for thr class");
+      // throw error;
     }
-  }
+  };
+  
+  const fetchClassmates = async () => {
+    try {
+      const data = await authAxios.get(`${apiUrl}/student/get-classmates`);
+      return data.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  const handleError = (error) => {
+    console.log(error);
+    toast.error(error.response.data.message);
+  };
+  
+  const getSubjectsAndClassmates = async () => {
+    try {
+      const [subjectsData, classmatesData] = await Promise.all([
+        fetchSubjects(),
+        fetchClassmates(),
+      ]);
+      setSubjects(subjectsData.subjects);
+      setTeacher(subjectsData.ownedBy);
+      setMates(classmatesData);
+      setIsLoading(false);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+  
 
   useEffect(()=>{
     getSubjects()
