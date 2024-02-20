@@ -1,6 +1,7 @@
 import ClassModel from "../models/ClassModel.js";
 import SubjectModel from "../models/SubjectModel.js";
 import UserModel from "../models/UserModel.js";
+import { sendEmail } from "../utils/sendEmail.js";
 import { getParentId } from "./ParentController.js";
 
 // Student ACCOUNT CREATION
@@ -15,8 +16,6 @@ export const CreateStudentAccount = async (req, res) => {
     if (!data.classId || data.classId == null) {
       throw Error('Student Must Enroll For a Class When they Register');
     }
-
-
     const gotParentId = await getParentId(data.parentEmail, data.regNo)
 
     const studentData = {
@@ -35,11 +34,11 @@ export const CreateStudentAccount = async (req, res) => {
       ownedClass: null
 
     }
-
+    console.log(studentData);
     const result = await UserModel.create(studentData);
-    if (process.env.DEVELOPMENT == 'false') {
-      sendEmail(data.email, "Account Created Successfully", { name: `Username : ${data.email}`, description: `Password: ${data.password} \n Account Type: ${data.role}`, }, "./template/emailtemplate.handlebars");
-    }
+
+    await sendEmail(data.email, "Account Created Successfully", { name: `Username : ${data.email}`, description: `Password: ${data.password} \n Account Type: ${data.role}`, }, "./template/emailtemplate.handlebars");
+
 
     res.status(200).json({
       message: 'Account Created Successfully!', result
@@ -170,13 +169,13 @@ export const getClassMatesUsingStId = async (req, res) => {
   }
 }
 
-export const getStudentOverview = async (req,res) => {
+export const getStudentOverview = async (req, res) => {
   try {
     const { loggedInId } = req;
     const Student = await UserModel.findById(loggedInId).populate('classId');
     const classDetails = Student.classId.grade + ' ' + Student.classId.subClass
 
-    res.status(200).json({className:classDetails});
+    res.status(200).json({ className: classDetails });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });

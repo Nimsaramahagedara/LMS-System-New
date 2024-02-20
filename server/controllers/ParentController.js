@@ -1,5 +1,6 @@
 import ClassModel from "../models/ClassModel.js";
 import UserModel from "../models/UserModel.js";
+import { sendEmail } from "../utils/sendEmail.js";
 
 // Parent ACCOUNT CREATION
 //THIS WILL RETURN PARENT ID IF ITS AVAILABLE, IF ITS NOT IT WILL CREATE ACCOUNT AND RETURN ID
@@ -14,9 +15,8 @@ export const getParentId = async (email, regNo) => {
         }
 
         //FLOW IF PARENT EMAIL EXIST
-        if(process.env.DEVELOPMENT == 'false'){
-            sendEmail(data.email, "One Student is Added to your account", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
-        }
+        await sendEmail(data.email, "One Student is Added to your account", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
+
         return isParentExist._id;
 
     }
@@ -37,55 +37,52 @@ export const getParentId = async (email, regNo) => {
     }
     const newParent = await UserModel.create(parent);
     //FLOW IF PARENT EMAIL EXIST
-    if(process.env.DEVELOPMENT == 'false'){
-        sendEmail(data.email, "Parent account is created", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
-    }
+    await sendEmail(email, "Parent account is created", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
     return newParent._id;
 }
 
+//get all students with parent
+export const getStudentsWithParent = async (req, res) => {
 
-    //get all students with parent
-    export const getStudentsWithParent = async (req, res) => {
-      
-        const teacherId = req.loggedInId;
-        try {
-           
-            const allClasses = await ClassModel.find({ ownedBy: teacherId});
-            // Extract the class IDs from the teacher's classes
+    const teacherId = req.loggedInId;
+    try {
+
+        const allClasses = await ClassModel.find({ ownedBy: teacherId });
+        // Extract the class IDs from the teacher's classes
         const classIds = allClasses.map((teacherClass) => teacherClass._id);
 
         // Find all students in the specified class IDs and populate the 'parentId' field
         const allStudents = await UserModel.find({ role: 'student', classId: { $in: classIds } }).populate('parentId');
-            if (!allStudents) {
-                throw Error('No Students Or Other Error');
+        if (!allStudents) {
+            throw Error('No Students Or Other Error');
 
-            }
-            res.status(200).json(allStudents);
-
-        } catch (error) {
-            console.log(error)
-            res.status(500).json({
-                message: error.mesasge
-            })
         }
+        res.status(200).json(allStudents);
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: error.mesasge
+        })
     }
+}
 
-    //get all students with parent
-    export const getStudentsUsingParentId = async (req, res) => {
-      
-        const { id: parentId } = req.params;
+//get all students with parent
+export const getStudentsUsingParentId = async (req, res) => {
 
-        try {
-            // Find the subject for the logged-in teacher
-            const students = await UserModel.find({ parentId: parentId, role: "student" })
+    const { id: parentId } = req.params;
+
+    try {
+        // Find the subject for the logged-in teacher
+        const students = await UserModel.find({ parentId: parentId, role: "student" })
             .populate('classId');
-    
-            if (!students) {
-                return res.status(404).json({ message: 'Student not found for the logged-in parent' });
-            }
-            res.status(200).json({ students });
-        } catch (error) {
-            console.error('Error fetching marks data:', error);
-            res.status(500).json({ message: 'Internal Server Error' });
+
+        if (!students) {
+            return res.status(404).json({ message: 'Student not found for the logged-in parent' });
         }
-    };
+        res.status(200).json({ students });
+    } catch (error) {
+        console.error('Error fetching marks data:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
