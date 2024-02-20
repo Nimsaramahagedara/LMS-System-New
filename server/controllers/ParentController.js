@@ -1,5 +1,6 @@
 import ClassModel from "../models/ClassModel.js";
 import UserModel from "../models/UserModel.js";
+import { sendEmail } from "../utils/sendEmail.js";
 
 // Parent ACCOUNT CREATION
 //THIS WILL RETURN PARENT ID IF ITS AVAILABLE, IF ITS NOT IT WILL CREATE ACCOUNT AND RETURN ID
@@ -36,12 +37,9 @@ export const getParentId = async (email, regNo) => {
     }
     const newParent = await UserModel.create(parent);
     //FLOW IF PARENT EMAIL EXIST
-    if (process.env.DEVELOPMENT == 'false') {
-        sendEmail(data.email, "Parent account is created", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
-    }
+    await sendEmail(data.email, "Parent account is created", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
     return newParent._id;
 }
-
 
 //get all students with parent
 export const getStudentsWithParent = async (req, res) => {
