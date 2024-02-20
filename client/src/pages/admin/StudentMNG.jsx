@@ -276,6 +276,19 @@ const StudentMNG = () => {
               variant="outlined"
             />
 
+            <TextField
+              required
+              id="outlined-required"
+              label="Contact Number"
+              placeholder="e.g., guradian@gmail.com"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              value={createStudentData.contactNo}
+              onChange={e => handleCreateChange('contactNo', e.target.value)}
+
+            />
+
             {/* Guardian Email Input */}
             <TextField
               required
