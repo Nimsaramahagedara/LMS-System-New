@@ -99,7 +99,6 @@ const StudentMNG = () => {
         throw Error('Email should be valid email')
       }
       const differenceInYears = currentDate.getFullYear() - Dob.getFullYear();
-      alert(differenceInYears)
       if (differenceInYears < 6) {
         throw Error('Student Age Must Be More Than 6 Years')
       }
@@ -232,8 +231,9 @@ const StudentMNG = () => {
               fullWidth
               margin="normal"
               variant="outlined"
-              value={createStudentData.contactNo}
-              onChange={e => handleCreateChange('contactNo', e.target.value)}
+              type='email'
+              value={createStudentData.email}
+              onChange={e => handleCreateChange('email', e.target.value)}
 
             />
 
@@ -245,8 +245,8 @@ const StudentMNG = () => {
               fullWidth
               margin="normal"
               variant="outlined"
-              value={createStudentData.email}
-              onChange={e => handleCreateChange('email', e.target.value)}
+              value={createStudentData.contactNo}
+              onChange={e => handleCreateChange('contactNo', e.target.value)}
 
             />
 
