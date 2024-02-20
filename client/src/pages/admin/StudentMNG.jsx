@@ -96,7 +96,7 @@ const StudentMNG = () => {
       const currentDate = new Date();
       const Dob = new Date(createStudentData.dob)
       const differenceInYears = currentDate.getFullYear() - Dob.getFullYear();
-      alert(differenceInYears)
+      // alert(differenceInYears)
       if( differenceInYears <6 ){
         throw Error('Student Age Must Be More Than 6 Years')
       }
@@ -258,6 +258,19 @@ const StudentMNG = () => {
               fullWidth
               margin="normal"
               variant="outlined"
+            />
+
+            <TextField
+              required
+              id="outlined-required"
+              label="Contact Number"
+              placeholder="e.g., guradian@gmail.com"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              value={createStudentData.contactNo}
+              onChange={e => handleCreateChange('contactNo', e.target.value)}
+
             />
 
             {/* Guardian Email Input */}
