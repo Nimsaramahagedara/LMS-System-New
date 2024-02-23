@@ -6,7 +6,8 @@ import authAxios from '../../utils/authAxios';
 import { toast } from 'react-toastify';
 import { apiUrl } from '../../utils/Constants';
 import Loader from '../../components/Loader/Loader';
-import  validator  from 'validator';
+import validator from 'validator';
+import Cookies from 'js-cookie';
 
 
 const StudentMNG = () => {
@@ -19,6 +20,7 @@ const StudentMNG = () => {
   const [refresh, changeRefresh] = useState(false);
   const [updateStatus, setUpdateStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const userRole = Cookies.get('userRole');
 
   //UPDATE SUPPORT FORM DATA
   const [createStudentData, setCreateStudent] = useState({
@@ -95,7 +97,7 @@ const StudentMNG = () => {
     try {
       const currentDate = new Date();
       const Dob = new Date(createStudentData.dob)
-      if(!validator.isEmail(createStudentData.email)){
+      if (!validator.isEmail(createStudentData.email)) {
         throw Error('Email should be valid email')
       }
       const differenceInYears = currentDate.getFullYear() - Dob.getFullYear();
@@ -126,7 +128,7 @@ const StudentMNG = () => {
         toast.error(error.response.data.message);
       }
     };
-
+    console.log(userRole)
     getAllClasses();
   }, [refresh, updateStatus]);
 
@@ -528,9 +530,11 @@ const StudentMNG = () => {
                           </DialogActions>
                         </DialogContent>
                       </Dialog>
-                      <Button variant="contained" color="error" onClick={() => handleDeleteStudent(student._id)}>
-                        Delete
-                      </Button>
+                      {userRole !== 'support' && (
+                        <Button variant="contained" color="error" onClick={() => handleDeleteStudent(student._id)}>
+                          Delete
+                        </Button>
+                      )}
                     </TableCell>
 
                   </TableRow>
