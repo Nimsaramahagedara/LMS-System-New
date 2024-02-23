@@ -25,6 +25,7 @@ import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import Loader from '../../components/Loader/Loader';
 import validator from 'validator';
+import Cookies from 'js-cookie';
 
 const TeacherMNG = () => {
   const [notices, setNotices] = useState([]);
@@ -56,6 +57,8 @@ const TeacherMNG = () => {
 
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const userRole = Cookies.get('userRole');
+
 
   const handleCreateChange = (field, value) => {
     setTeacherFormData((prevData) => ({ ...prevData, [field]: value }));
@@ -113,7 +116,7 @@ const TeacherMNG = () => {
 
   const handleTeacherSubmit = async () => {
     try {
-      if(!validator.isEmail(createTeacherFormData.email)){
+      if (!validator.isEmail(createTeacherFormData.email)) {
         throw Error('Email should be valid email')
       }
       const result = await fetch(`${apiUrl}/admin/create-teacher`, {
@@ -412,9 +415,11 @@ const TeacherMNG = () => {
                     </DialogContent>
                   </Dialog>
 
-                  <Button size="small" variant="contained" color="error" onClick={() => handleDeleteTeacher(row.email)}>
-                    Remove
-                  </Button>
+                  {userRole !== 'support' && (
+                    <Button size="small" variant="contained" color="error" onClick={() => handleDeleteTeacher(row.email)}>
+                      Remove
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
