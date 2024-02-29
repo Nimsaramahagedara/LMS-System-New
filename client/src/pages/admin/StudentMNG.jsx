@@ -21,7 +21,8 @@ const StudentMNG = () => {
   const [updateStatus, setUpdateStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const userRole = Cookies.get('userRole');
-
+  const [passwordError, setPasswordError] = useState(false);
+  const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   //UPDATE SUPPORT FORM DATA
   const [createStudentData, setCreateStudent] = useState({
     regNo: 0,
@@ -104,6 +105,9 @@ const StudentMNG = () => {
       if (differenceInYears < 6) {
         throw Error('Student Age Must Be More Than 6 Years')
       }
+      if (passwordError) {
+        throw Error('Password validation failed')
+      }
       const result = await authAxios.post(`${apiUrl}/student/create-student`, createStudentData);
       if (result) {
         toast.success('Account Created Successfully')
@@ -164,6 +168,16 @@ const StudentMNG = () => {
       toast.error(error.response.data.message);
     }
   };
+
+  const passwordChange = (e) => {
+
+    if(!passwordPattern.test(e.target.value)){
+      setPasswordError(true);
+    }else{
+      setPasswordError(false);
+    }
+    handleCreateChange('password', e.target.value)
+  }
 
   return (
     <div>
@@ -253,6 +267,7 @@ const StudentMNG = () => {
             />
 
             {/* Student Password Input */}
+            <label htmlFor='password' className='text-xs'>Password should contain a letter and a number EX: test1234  </label>
             <TextField
               required
               id="outlined-password-input"
@@ -261,9 +276,10 @@ const StudentMNG = () => {
               placeholder="Enter new password"
               fullWidth
               margin="normal"
+              error={passwordError}
               variant="outlined"
               value={createStudentData.password}
-              onChange={e => handleCreateChange('password', e.target.value)}
+              onChange={passwordChange}
             />
 
             {/* Student Password Re-Enter */}
