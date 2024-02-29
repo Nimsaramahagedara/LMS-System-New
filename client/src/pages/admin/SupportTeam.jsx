@@ -165,7 +165,7 @@ const SupportTeam = () => {
                     </DialogContentText>
 
                     {/* Form Start */}
-                    <div>
+                    <div className='flex flex-col space-y-5'>
                         {/* Show Index Number - Auto Increment */}
                         {/* <TextField
                             id="outlined-read-only-input"
