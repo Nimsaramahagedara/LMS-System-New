@@ -37,7 +37,7 @@ export const Carasoul = (props) => {
                 items.map((item, i) => <img src={item.src} className='w-full h-full object-cover' key={i} />)
             }
         </Carousel>
-        <MiddleBarOnCarasoul/>
+        {/* <MiddleBarOnCarasoul/> */}
         </div>
     )
 }
