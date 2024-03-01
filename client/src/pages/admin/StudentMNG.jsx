@@ -436,9 +436,10 @@ const StudentMNG = () => {
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{index + 1}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.regNo}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.firstName + ' ' + student.lastName}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.dob}</TableCell>
+                    <TableCell style={{ whiteSpace: 'nowrap' }}>{new Date(student.dob).toLocaleDateString()}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.contactNo}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.address}</TableCell>
+    
                     <TableCell style={{ whiteSpace: 'nowrap' }}>
                       <Button variant="contained" color="primary" sx={{ marginRight: 2 }}
                         onClick={() => handleUpdateStudent(student)}>

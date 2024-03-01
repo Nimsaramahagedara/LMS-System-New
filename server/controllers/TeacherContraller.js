@@ -65,7 +65,7 @@ export const getAllTeachers = async (req, res) => {
         const newTeachers = await Promise.all(promises)
 
 
-        console.log(newTeachers);
+        // console.log(newTeachers);
 
         if (newTeachers) {
             res.status(200).json(newTeachers);

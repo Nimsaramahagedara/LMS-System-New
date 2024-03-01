@@ -305,6 +305,7 @@ const TeacherMNG = () => {
               <TableCell>Mobile</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Address</TableCell>
+              <TableCell>Class</TableCell>
               <TableCell>Date Of Birth</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -319,7 +320,8 @@ const TeacherMNG = () => {
                 <TableCell>{row.contactNo}</TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>{row.address}</TableCell>
-                <TableCell>{row.dob}</TableCell>
+                <TableCell>{row.ownedClass ? row.ownedClass?.grade + "/"+row.ownedClass?.subClass : 'Not Assigned' }</TableCell>
+                <TableCell>{new Date(row.dob).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <Button size="small"
                     variant="contained"
