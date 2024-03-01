@@ -18,6 +18,7 @@ const SupportTeam = () => {
     const [allSupport, setAllSupport] = useState([]);
     const [refresh, setRefresh] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     //UPDATE SUPPORT FORM DATA
     const [updateFormData, setUpdateFormData] = useState({
@@ -209,11 +210,13 @@ const SupportTeam = () => {
                         <DateInput label='Date Of Birth' onChange={(newValue) => handleCreateChange('dob', newValue)} />
 
                         {/* Support Password Input */}
+                        <p className='text-xs'>Password should contain a letter with the characters ex: test1234</p>
                         <TextField
                             required
                             id="outlined-password-input"
                             label="Password"
                             type="password"
+                            error={!passwordPattern.test(createSupportFormData.password)}
                             placeholder="Enter new password"
                             fullWidth
                             margin="normal"

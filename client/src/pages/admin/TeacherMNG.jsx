@@ -31,6 +31,7 @@ const TeacherMNG = () => {
   const [notices, setNotices] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   const [createTeacherFormData, setTeacherFormData] = useState({
     regNo: 0,
     firstName: '',
@@ -246,14 +247,16 @@ const TeacherMNG = () => {
               onChange={(e) => handleCreateChange('email', e.target.value)}
               value={createTeacherFormData.email}
             />
-
+            <p className='text-xs'>Password should contain a letter and charracters ex: test1234</p>
             <TextField
+              InputLabelProps={'Password should contain a letter and charracters ex: test1234'}
               required
               id="outlined-password-input"
               label="Password"
               fullWidth
               margin="normal"
               variant="outlined"
+              error={!passwordPattern.test(createTeacherFormData.password)}
               onChange={(e) => handleCreateChange('password', e.target.value)}
               value={createTeacherFormData.password}
             />
