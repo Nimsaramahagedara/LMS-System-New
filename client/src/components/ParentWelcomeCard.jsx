@@ -40,7 +40,7 @@ export default function ParentWelcomeCard() {
       <Card sx={cardStyle} className='mb-3'>
         <CardContent className='text-white'>
           <Typography variant='h5' gutterBottom>
-            Welcome, {firstName}
+            Welcome, {firstName && firstName}
           </Typography>
           <Typography variant="subtitle1" component="div">
               Parent Dashboard
