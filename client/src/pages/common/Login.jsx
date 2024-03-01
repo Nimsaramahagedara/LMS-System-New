@@ -108,12 +108,12 @@ export default function Login() {
         <Typography variant='h5' margin={'10px 0px'}>
           Dharmapala Knowledge Base
         </Typography>
-        <Typography variant='subtitle2'>
+        {/* <Typography variant='subtitle2'>
           Don't have an account?
           <Link href="#" variant="body2">
             {" Contact Support Team"}
           </Link>
-        </Typography>
+        </Typography> */}
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -153,11 +153,11 @@ export default function Login() {
               </Select>
             </FormControl>
           </Box> */}
-          <Box textAlign={'right'}>
+          {/* <Box textAlign={'right'}>
             <Link href="#" variant="body2">
               Forgot password?
             </Link>
-          </Box>
+          </Box> */}
 
           <Button
             type="submit"

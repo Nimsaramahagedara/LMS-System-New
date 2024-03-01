@@ -24,7 +24,7 @@ const Header = ({ isLoggedIn = false }) => {
             </div> : <div className='space-y-3 px-4 mx-12'>
                     <h4>Login Using Your Account</h4>
                     <button className='px-12 py-3 bg-gray-300 hover:bg-gray-400' onClick={() => navigate('/login')}>LMS Login</button><br />
-                    <a href="#" className='text-yellow-500 block'>Forgot Your Password ?</a>
+                    <a href="#" className='text-yellow-500  hidden'>Forgot Your Password ?</a>
                 </div>
             }
 

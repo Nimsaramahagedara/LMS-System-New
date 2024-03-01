@@ -104,6 +104,7 @@ const TeacherMNG = () => {
       try {
         const response = await fetch(`${apiUrl}/admin/get-all-teachers`);
         const data = await response.json();
+        console.log(data);
         setNotices(data);
         setIsLoading(false);
       } catch (error) {
