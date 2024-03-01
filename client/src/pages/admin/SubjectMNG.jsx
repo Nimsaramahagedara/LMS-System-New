@@ -131,9 +131,9 @@ const SubjectMNG = ({ ClassList }) => {
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{subject.teachBy && subject.teachBy.lastName}</TableCell>
 
                     <TableCell style={{ whiteSpace: 'nowrap' }}>
-                      <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
+                      {/* <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
                         Update
-                      </Button>
+                      </Button> */}
                       <Button variant="contained" color="error" onClick={() => handleDelete(subject._id)}>
                         Remove
                       </Button>
