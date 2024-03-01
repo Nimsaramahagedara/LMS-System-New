@@ -343,7 +343,7 @@ const SupportTeam = () => {
                     Support Member Details - {selectedSupport.firstName} {selectedSupport.lastName}
                 </DialogTitle>
                 <DialogContent>
-                    <form>
+                    <form className='flex flex-col space-y-5 pt-5'>
                         <TextField
                             label="Reg No"
                             value={selectedSupport.regNo}
@@ -368,13 +368,13 @@ const SupportTeam = () => {
                             onChange={(e) => handleChange('email', e.target.value)}
                             fullWidth
                         />
-                        <TextField
+                        {/* <TextField
                             label="Password"
                             disabled
                             value={selectedSupport.password}
                             onChange={(e) => handleChange('password', e.target.value)}
                             fullWidth
-                        />
+                        /> */}
                         <Button variant="contained" color="primary" onClick={handleUpdate}>
                             Update
                         </Button>
