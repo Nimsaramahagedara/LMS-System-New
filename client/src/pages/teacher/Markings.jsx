@@ -38,6 +38,8 @@ const Markings = () => {
   const [refresh, setRefresh] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [rowDialogOpen, setRowDialogOpen] = useState(Array(subjects.length).fill(false));
+  const [maxStudent, setMaxStudent] = useState({});
+  const [leastStudent, setLeastStudent] = useState({});
 
   const handleClickOpen2 = (index) => {
     setRowDialogOpen((prev) => {
@@ -60,8 +62,21 @@ const Markings = () => {
     try {
       const result = await authAxios.get(`${apiUrl}/teacher/marks/`);
       if (result) {
+
         setSubjects(result.data.marksData);
-        console.log(subjects);
+        let mark = 0;
+        setLeastStudent( result.data.marksData[0].marks[0]);
+        result.data.marksData[0].marks.forEach((std) => {
+          if (mark < std.mark) {
+            mark = std.mark
+            setMaxStudent(std)
+          }
+          if(leastStudent.mark > std.mark){
+            setLeastStudent(std);
+          }
+        })
+        console.log('Max mark ', mark);
+        //  console.log(subjects);
       } else {
         toast.error('Data Not Available');
       }
@@ -167,6 +182,11 @@ const Markings = () => {
                           noValidate
                           autoComplete="off"
                         >
+                          <p>Max Mark : {maxStudent.mark}</p>
+                          <h4>Max Marks got by : {maxStudent.studentId.firstName + ' ' + maxStudent.studentId.lastName}</h4>
+                          <h4>Least Marks got by : {leastStudent.mark}</h4>
+                          <h4>Less Marks got by : {leastStudent.studentId.firstName + ' ' + leastStudent.studentId.lastName}</h4>
+
                           <TableContainer component={Paper} style={{ marginTop: '20px' }}>
                             <Table sx={{ minWidth: 500 }} aria-label="simple table">
                               <TableHead>
