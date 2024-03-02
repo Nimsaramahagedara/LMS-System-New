@@ -309,6 +309,7 @@ const TeacherMNG = () => {
               <TableCell>Email</TableCell>
               <TableCell>Address</TableCell>
               <TableCell>Class</TableCell>
+              <TableCell>Subjects</TableCell>
               <TableCell>Date Of Birth</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -324,6 +325,10 @@ const TeacherMNG = () => {
                 <TableCell>{row.email}</TableCell>
                 <TableCell>{row.address}</TableCell>
                 <TableCell>{row.ownedClass ? row.ownedClass?.grade + "/"+row.ownedClass?.subClass : 'Not Assigned' }</TableCell>
+                <TableCell>{row.ownedSubjects ? row.ownedSubjects.map((sub)=>(
+                  <h5>{sub.subName}</h5>
+                )) : 'N/A' }</TableCell>
+
                 <TableCell>{new Date(row.dob).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <Button size="small"
