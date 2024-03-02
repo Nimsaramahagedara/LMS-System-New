@@ -29,16 +29,16 @@ const TopNav = () => {
                 <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                     Home
                 </Link>
-                <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white' onClick={()=>scrollToSection('vision')}>
                     Vision
                 </Link>
-                <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white' onClick={()=>scrollToSection('mission')}>
                     Mission
                 </Link>
-                <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white' onClick={()=>scrollToSection('support')}>
                     Support
                 </Link>
-                <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white' onClick={()=>scrollToSection('notices')}>
                     Notices
                 </Link>
 
@@ -52,13 +52,13 @@ const TopNav = () => {
                     <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
                         Vision
                     </Link>
-                    <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white' onClick={()=>scrollToSection('mission')}>
                         Mission
                     </Link>
-                    <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white' onClick={()=>scrollToSection('support')}>
                         Support
                     </Link>
-                    <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white'>
+                    <Link to={'/'} className='text-white bg-gray-400 text-lg hover:bg-gray-500 p-5 focus:bg-blue-950 focus:text-white' onClick={()=>scrollToSection('notices')}>
                         Notices
                     </Link>
 
