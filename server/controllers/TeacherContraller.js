@@ -59,22 +59,24 @@ export const getAllTeachers = async (req, res) => {
                     ownedClass: hisClass
                 }
             } else {
-                return teacher
+                return { ...teacher._doc }
             }
         })
         const newTeachers = await Promise.all(promises)
 
         const promises2 = newTeachers.map(async (teacher) => {
-            const hisSubjects = await SubjectModel.find({teachBy:teacher._id});
-            
-            if (hisSubjects) {
+            const hisSubjects = await SubjectModel.find({ teachBy: teacher._id });
+            if (hisSubjects.length > 0) {
+
                 return {
                     ...teacher,
                     ownedSubjects: hisSubjects
                 }
             } else {
-                return teacher
+                return { ...teacher }
+
             }
+
         })
 
         const newTeachers2 = await Promise.all(promises2)
@@ -84,7 +86,7 @@ export const getAllTeachers = async (req, res) => {
 
         // console.log(newTeachers);
 
-        if (newTeachers) {
+        if (newTeachers2) {
             res.status(200).json(newTeachers2);
         }
     } catch (error) {
