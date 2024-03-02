@@ -27,7 +27,7 @@ export default function SimpleCard({name, to, count, icon}) {
         
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={()=> navigate(`/dashboard/${to}`)} >Manage </Button>
+        {/* <Button size="small" onClick={()=> navigate(`/dashboard/${to}`)} >Manage </Button> */}
       </CardActions>
     </Card>
   );

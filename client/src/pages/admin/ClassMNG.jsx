@@ -270,6 +270,8 @@ const ClassMNG = () => {
         </Select>
         <Button variant='contained' color='warning' onClick={() => updateClassTeacher()}>Update Class Teacher</Button>
         <DialogContent>
+        <p>To update the acocunts, please go to account management section</p>
+
           <TableContainer style={{ marginTop: '20px' }} sx={{ maxWidth: '100%' }}>
             <Table sx={{ maxWidth: '100%' }}>
               <TableHead>
@@ -289,13 +291,13 @@ const ClassMNG = () => {
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{index}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.regNo}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.firstName}</TableCell>
-                    <TableCell style={{ whiteSpace: 'nowrap' }}>{student.dob}</TableCell>
+                    <TableCell style={{ whiteSpace: 'nowrap' }}>{new Date(student.dob).toLocaleDateString()}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.contactNo}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{student.address}</TableCell>
                     <TableCell style={{ whiteSpace: 'nowrap' }}>
-                      <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
+                      {/* <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
                         Update
-                      </Button>
+                      </Button> */}
                       <Button variant="contained" color="error">
                         Remove
                       </Button>

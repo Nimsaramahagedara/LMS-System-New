@@ -4,7 +4,7 @@ import BasicDateCalendar from './BasicDateCalendar'
 
 const Footer = () => {
     return (
-        <div className='bg-gray-500 border-t-8 border-blue-950 flex md:flex-row flex-col items-center justify-between px-10'>
+        <div className='bg-gray-500 border-t-8 border-blue-950 flex md:flex-row flex-col items-center justify-between px-10' id='support'>
             <div className='text-white'>
                 <h5 className='md:mt-20' style={{ marginTop: '20px' }}>DO YOU NEED ANY<br />SUPPORT ?</h5>
                 <a href="/">lms.darmapala.lk</a><br/>

@@ -50,8 +50,25 @@ export const getAllTeachers = async (req, res) => {
     try {
         const result = await UserModel.find({ role: 'teacher' });
 
-        if (result) {
-            res.status(200).json(result);
+        const promises = result.map(async (teacher) => {
+            const hisClass = await ClassModel.findOne({ ownedBy: teacher._id })
+            if (hisClass) {
+                return {
+                    ...teacher._doc,
+                    ownedClass: hisClass
+                }
+            } else {
+                return teacher
+            }
+        })
+
+        const newTeachers = await Promise.all(promises)
+
+
+        // console.log(newTeachers);
+
+        if (newTeachers) {
+            res.status(200).json(newTeachers);
         }
     } catch (error) {
         res.status(500).json({
@@ -149,14 +166,14 @@ export const getMySubjects = async (req, res) => {
     }
     try {
         console.log(loggedInId);
-        const classes = await SubjectModel.find({teachBy:loggedInId}).populate('classId');
+        const classes = await SubjectModel.find({ teachBy: loggedInId }).populate('classId');
         res.status(200).json(classes);
     } catch (error) {
         res.status(500).json(error.message);
     }
 }
 
-export const getStudentsInClass = async(req,res)=>{
+export const getStudentsInClass = async (req, res) => {
     const id = req.loggedInId
     try {
         const isClassExist = await ClassModel.findOne({ ownedBy: id });
@@ -165,10 +182,10 @@ export const getStudentsInClass = async(req,res)=>{
                 const allStudents = await UserModel.find({ role: 'student', classId: isClassExist._id });
                 if (!allStudents) {
                     throw Error('No Students Or Other Error');
-        
+
                 }
                 res.status(200).json(allStudents);
-        
+
             } catch (error) {
                 res.status(500).json({
                     message: error.mesasge
@@ -178,26 +195,26 @@ export const getStudentsInClass = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({message:error.message});
+        res.status(500).json({ message: error.message });
     }
 }
 
-export const teacherOverview = async(req,res)=>{
+export const teacherOverview = async (req, res) => {
     try {
         const id = req.loggedInId
         const teacherAcc = await UserModel.findById(id);
-        
-        const ownedClass = await ClassModel.findOne({ownedBy:teacherAcc._id});
+
+        const ownedClass = await ClassModel.findOne({ ownedBy: teacherAcc._id });
 
         //TODO: ADD MORE DATA TO TEACHER OVERVIEW
-        if(ownedClass){
-            res.status(200).json({className:ownedClass.grade + ' ' + ownedClass.subClass})
-        }else{
-            res.status(200).json({className:'Not Assigned'})
+        if (ownedClass) {
+            res.status(200).json({ className: ownedClass.grade + ' ' + ownedClass.subClass })
+        } else {
+            res.status(200).json({ className: 'Not Assigned' })
         }
 
-        
+
     } catch (error) {
-        res.status(500).json({message:error.mesasge});
+        res.status(500).json({ message: error.mesasge });
     }
 }
