@@ -30,7 +30,7 @@ export const getParentId = async (email, regNo) => {
         "dob": "08-08-2000",
         "parentId": null,
         "email": email,
-        "password": '1234',
+        "password": 'test2024',
         "role": "parent",
         "classId": null,
         "ownedClass": null
