@@ -4,10 +4,22 @@ import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
 import { apiUrl } from '../../utils/Constants';
 import AddSubjectModal from '../../components/AddSubjectModal';
+import axios from 'axios';
+import { Box, Input, Modal } from '@mui/material';
+
 
 const SubjectMNG = ({ ClassList }) => {
   const [viewOpen, setViewOpen] = useState(false);
   const [allTeachers, setAllTeachers] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState({
+    _id : '',
+    subName : '',
+    teachBy: '',
+    classId: '',
+  });
+  const [subjectModal, setSubjectModal] = useState(false);
+  const [updatedSelectedSubject, setUpdatedSelectedSubject] = useState({});
+
   const [selectedClass, setSelectedClass] = useState({
     grade: '',
     subClass: 'A',
@@ -35,7 +47,25 @@ const SubjectMNG = ({ ClassList }) => {
 
   const handleViewClose = () => {
     setViewOpen(false);
+    setSubjectModal(false);
   };
+
+  const handleUpdateModal = async (id) => {
+
+    axios.get(`${apiUrl}/student/get-subject/${id}`).then((res) => {
+      const newObj =    {
+        _id: res.data?._id,
+        subName:res.data?.subName,
+        classId:res.data?.classId,
+        teachBy:res.data?.teachBy._id
+      }
+      setSelectedSubject(newObj);
+      setSubjectModal(true)
+    }).catch((err) => {
+      console.log(err);
+    })
+
+  }
 
   const getSubjectsInClass = async (id) => {
     const subjectsinClass = await authAxios.get(`${apiUrl}/subject/${id}`);
@@ -61,6 +91,20 @@ const SubjectMNG = ({ ClassList }) => {
     }
   }
 
+  const changeSelectedSubjectTeacher = (id)=>{
+    setSelectedSubject(prev=>({...prev,
+    teachBy:id
+    }))
+  }
+
+  const handleUpdateTeacher = async()=>{
+    try {
+      const res =await authAxios.put(`${apiUrl}/subject/${selectedSubject._id}`,selectedSubject)
+      toast.success('Teacher Updated')
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div>
       <div style={{ textAlign: 'center' }}>
@@ -131,9 +175,9 @@ const SubjectMNG = ({ ClassList }) => {
                     <TableCell style={{ whiteSpace: 'nowrap' }}>{subject.teachBy && subject.teachBy.lastName}</TableCell>
 
                     <TableCell style={{ whiteSpace: 'nowrap' }}>
-                      {/* <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
+                      <Button variant="contained" color="primary" sx={{ marginRight: 2 }} onClick={() => handleUpdateModal(subject._id)}>
                         Update
-                      </Button> */}
+                      </Button>
                       <Button variant="contained" color="error" onClick={() => handleDelete(subject._id)}>
                         Remove
                       </Button>
@@ -152,6 +196,45 @@ const SubjectMNG = ({ ClassList }) => {
               </TableBody>
             </Table>
           </TableContainer>
+        </DialogContent>
+        <DialogActions style={{ justifyContent: 'center' }}>
+          <Button onClick={handleViewClose} variant='outlined'>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+
+      <Dialog open={subjectModal} onClose={handleViewClose} maxWidth="xl">
+        <DialogTitle sx={{ textAlign: 'center' }}>
+          Subject Name - {selectedSubject.subName}
+        </DialogTitle>
+        {/* <Typography className='text-center' variant='subtitle2'>Class Teacher : {selectedClass.ownedBy !== null ? (selectedClass.ownedBy.firstName + ' ' + selectedClass.ownedBy.lastName) : 'Not Assined'}</Typography> */}
+        <DialogContent>
+          <Box sx={{ lineHeight: '80px' }}>
+            <Typography>Update Subject</Typography>
+            <br />
+            <TextField
+              type='text'
+              value={selectedSubject.subName}
+              fullWidth
+              label='Subject Name'
+              required={true}
+            />
+            <br />
+            <Typography variant='subtitle2'>Teach By</Typography>
+            <Select
+              fullWidth
+              value={selectedSubject.teachBy}
+              onChange={e=>changeSelectedSubjectTeacher(e.target.value)}
+            >
+              {allTeachers && allTeachers.map((teacher, index) => (
+                <MenuItem value={teacher._id} key={index}>{teacher.firstName + ' ' + teacher.lastName}</MenuItem>
+              ))}
+
+            </Select>
+            <br />
+            <Button variant='contained' onClick={handleUpdateTeacher}>Update Subject</Button>
+            <Button sx={{ marginLeft: '20px' }}>Close</Button>
+          </Box>
         </DialogContent>
         <DialogActions style={{ justifyContent: 'center' }}>
           <Button onClick={handleViewClose} variant='outlined'>Close</Button>
