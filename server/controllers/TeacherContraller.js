@@ -121,6 +121,7 @@ export const deleteTeacher = async (req, res) => {
             console.log('Account not exist');
             throw Error('Account Not Exist')
         }
+        const deleteSubjects = await SubjectModel.deleteMany({teachBy:isExist._id})
         const isDeleted = await UserModel.findOneAndDelete({ email });
 
         if (isDeleted) {
