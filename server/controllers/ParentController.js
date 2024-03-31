@@ -30,14 +30,14 @@ export const getParentId = async (email, regNo) => {
         "dob": "08-08-2000",
         "parentId": null,
         "email": email,
-        "password": '1234',
+        "password": 'test2024',
         "role": "parent",
         "classId": null,
         "ownedClass": null
     }
     const newParent = await UserModel.create(parent);
     //FLOW IF PARENT EMAIL EXIST
-    await sendEmail(email, "Parent account is created", { name: `Username : ${email}`, description: `Password: 1234`, }, "./template/emailtemplate.handlebars");
+    await sendEmail(email, "Parent account is created", { name: `Username : ${email}`, description: `Password: test2024`, }, "./template/emailtemplate.handlebars");
     return newParent._id;
 }
 

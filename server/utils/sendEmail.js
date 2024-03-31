@@ -1,3 +1,4 @@
+//packagers
 import nodemailer from 'nodemailer';
 import handlebars from 'handlebars';
 import fs from 'fs';
@@ -14,6 +15,7 @@ const __dirname = path.dirname(__filename);
 USAGE EXAMPLE:
 await sendEmail(isExsit.email, "Title", { name: isExsit.name, description: description, }, "./template/emailtemplate.handlebars");
 */
+//send email function in login 
 export const sendEmail = async (email, subject, payload, template) => {
     //console.log(__filename);
     //console.log(__dirname);
@@ -40,12 +42,12 @@ export const sendEmail = async (email, subject, payload, template) => {
             };
         };
 
-        // Send email
+        // Send email 
         transporter.sendMail(options(), (error, info) => {
             if (error) {
                 return error;
             } else {
-                console.log('EMAIL SENT :');
+                console.log('EMAIL SENT :' , email );
                 return res.status(200).json({
                     success: true,
                 });
