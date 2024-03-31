@@ -14,11 +14,12 @@ import ActivityRouter from './routes/ActivityRoutes.js';
 import parentRoutes from './routes/ParentRoutes.js';
 import MarkRouter from './routes/MarkRoutes.js';
 import FeesRouter from './routes/FeesRoutes.js';
+dotenv.config();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 80 ;
 const app = express();
 app.use(express.json());
-dotenv.config();
+
 
 
 app.use(morgan('dev'));
