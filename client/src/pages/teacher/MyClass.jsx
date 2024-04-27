@@ -8,6 +8,7 @@ import { calculateGrade, getTerm } from '../../utils/usefulFunctions';
 import Loader from '../../components/Loader/Loader';
 import { usePDF } from 'react-to-pdf';
 import { Button } from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
 
 const MyClass = () => {
   const [myClassDetails, setMyClassDetails] = useState({});
@@ -152,7 +153,6 @@ const MyClass = () => {
 
   }
 
-
   return (
     <div >
       {
@@ -168,6 +168,17 @@ const MyClass = () => {
       <br />
       <Button type='button' variant='contained' onClick={() => toPDF()} className='mt-10'>Download PDF</Button>
       <div className='w-full bg-white p-3 mt-5' ref={targetRef}>
+
+        {
+          firstTermMarksDist.length > 0 && <BarChart
+            width={firstTermMarksDist.length * 120} 
+            height={300}
+            series={[
+              { data: firstTermMarksDist?.map((st) => (st.totalMarks)), label: 'StudentId', id: 'uvId' },
+            ]}
+            xAxis={[{ data: firstTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band' }]}
+          />
+        }
         <h2 className='mt-5'>First Term</h2>
         <span> 1st Place : {firstTermMarksDist?.length > 0 && getTheStudentWithMax(firstTermMarksDist)}</span>
         <br />
@@ -175,6 +186,7 @@ const MyClass = () => {
           <thead>
             <tr className=' bg-slate-300'>
               <th className='p-3'>Student ID</th>
+              <th className='p-3'>Student Name</th>
               {
                 myClassDetails?.classModules?.map((subj) => (
                   <th className='p-3'>{subj.subName}</th>
@@ -187,6 +199,7 @@ const MyClass = () => {
           <tbody>
             {myClassDetails?.allStudents?.map((student) => (
               <tr key={student._id}>
+                <td className='p-3'>{student?._id}</td>
                 <td className='p-3'>{student?.firstName + ' ' + student.lastName}</td>
                 {myClassDetails.classModules.map((subj, index) => (
                   <td key={index} className='p-3'>
@@ -195,7 +208,7 @@ const MyClass = () => {
                     ))[0]?.marks?.filter((mk) => (
                       mk.studentId === student._id
                     ))[0]?.mark || 'N/A'}
--
+                    -
                     {allMarksWithTerm.firstTerm.filter((sub) => (
                       sub.subId === subj._id
                     ))[0]?.marks?.filter((mk) => (
@@ -230,13 +243,25 @@ const MyClass = () => {
                         .filter((mk) => mk.studentId === student._id)[0]?.mark || 0;
                       return total + marks;
 
-                    }, 0)/myClassDetails?.classModules.length  :''
+                    }, 0) / myClassDetails?.classModules.length : ''
                   }
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+
+        {
+          secondTermMarksDist.length > 0 && <BarChart
+            width={secondTermMarksDist.length * 120} 
+            height={300}
+            series={[
+              { data: secondTermMarksDist?.map((st) => (st.totalMarks)), label: 'StudentId', id: 'uvId' },
+            ]}
+            xAxis={[{ data: secondTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band' }]}
+          />
+        }
 
         <h2 className='mt-5'>Second Term</h2>
         <span> 1st Place : {secondTermMarksDist?.length > 0 && getTheStudentWithMax(secondTermMarksDist)}</span>
@@ -245,6 +270,7 @@ const MyClass = () => {
           <thead>
             <tr className=' bg-slate-300'>
               <th className='p-3'>Student ID</th>
+              <th className='p-3'>Student Name</th>
               {
                 myClassDetails?.classModules?.map((subj) => (
                   <th className='p-3'>{subj.subName}</th>
@@ -257,6 +283,7 @@ const MyClass = () => {
           <tbody>
             {myClassDetails?.allStudents?.map((student) => (
               <tr key={student._id}>
+                <td className='p-3'>{student?._id}</td>
                 <td className='p-3'>{student?.firstName + ' ' + student.lastName}</td>
                 {myClassDetails.classModules.map((subj, index) => (
                   <td key={index} className='p-3'>
@@ -301,7 +328,7 @@ const MyClass = () => {
                         .filter((mk) => mk.studentId === student._id)[0]?.mark || 0;
                       return total + marks;
 
-                    }, 0)/myClassDetails?.classModules.length  :''
+                    }, 0) / myClassDetails?.classModules.length : ''
                   }
                 </td>
               </tr>
@@ -309,7 +336,16 @@ const MyClass = () => {
           </tbody>
         </table>
 
-
+        {
+          thirdTermMarksDist.length > 0 && <BarChart
+            width={thirdTermMarksDist.length * 120} 
+            height={300}
+            series={[
+              { data: thirdTermMarksDist?.map((st) => (st.totalMarks)), label: 'StudentId', id: 'uvId' },
+            ]}
+            xAxis={[{ data: thirdTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band' }]}
+          />
+        }
 
         <h2 className='mt-5'>Third Term</h2>
         <span> 1st Place : {thirdTermMarksDist?.length > 0 && getTheStudentWithMax(thirdTermMarksDist)}</span>
@@ -318,6 +354,7 @@ const MyClass = () => {
           <thead>
             <tr className=' bg-slate-300'>
               <th className='p-3'>Student ID</th>
+              <th className='p-3'>Student Name</th>
               {
                 myClassDetails?.classModules?.map((subj) => (
                   <th className='p-3'>{subj.subName}</th>
@@ -330,6 +367,7 @@ const MyClass = () => {
           <tbody>
             {myClassDetails?.allStudents?.map((student) => (
               <tr key={student._id}>
+                <td className='p-3'>{student?._id}</td>
                 <td className='p-3'>{student?.firstName + ' ' + student.lastName}</td>
                 {myClassDetails.classModules.map((subj, index) => (
                   <td key={index} className='p-3'>
@@ -338,7 +376,7 @@ const MyClass = () => {
                     ))[0]?.marks?.filter((mk) => (
                       mk.studentId === student._id
                     ))[0]?.mark || 'N/A'}
--
+                    -
 
                     {allMarksWithTerm.thirdTerm.filter((sub) => (
                       sub.subId === subj._id
@@ -373,7 +411,7 @@ const MyClass = () => {
                         .filter((mk) => mk.studentId === student._id)[0]?.mark || 0;
                       return total + marks;
 
-                    }, 0)/myClassDetails?.classModules.length  :''
+                    }, 0) / myClassDetails?.classModules.length : ''
                   }
                 </td>
               </tr>
