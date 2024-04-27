@@ -266,7 +266,7 @@ const MyClass = () => {
             series={[
               { data: firstTermMarksDist?.map((st) => (st.totalMarks)), label: 'Student', id: 'uvId' },
             ]}
-            xAxis={[{ data: firstTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band', label: 'Student Id' }]}
+            xAxis={[{ data: firstTermMarksDist?.map((st) => (getStudentNameById(st.studentId))), scaleType: 'band', label: 'Student Id' }]}
           />
         }
         <div className='flex items-center justify-start gap-5'>
@@ -356,7 +356,7 @@ const MyClass = () => {
             series={[
               { data: secondTermMarksDist?.map((st) => (st.totalMarks)), label: 'StudentId', id: 'uvId' },
             ]}
-            xAxis={[{ data: secondTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band', label: 'Student Id' }]}
+            xAxis={[{ data: secondTermMarksDist?.map((st) => (getStudentNameById(st.studentId))), scaleType: 'band', label: 'Student Id' }]}
           />
         }
 
@@ -446,7 +446,7 @@ const MyClass = () => {
             series={[
               { data: thirdTermMarksDist?.map((st) => (st.totalMarks)), label: 'StudentId', id: 'uvId' },
             ]}
-            xAxis={[{ data: thirdTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band', label: 'Student Id' }]}
+            xAxis={[{ data: thirdTermMarksDist?.map((st) => (getStudentNameById(st.studentId))), scaleType: 'band', label: 'Student Id' }]}
           />
         }
         <div className='flex items-center justify-start gap-5'>

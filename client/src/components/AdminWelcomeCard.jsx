@@ -43,7 +43,7 @@ const cardStyle = {
           Welcome, {firstName}
         </Typography>
         <Typography variant="subtitle1" component="div">
-            Admin Dashboard
+            Dashboard
         </Typography>
 
         {currentTime.toUTCString()}

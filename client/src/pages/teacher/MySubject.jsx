@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormControlLabel, FormLabel, Modal, Radio, RadioGroup, TextField, Typography } from '@mui/material'
+import { Box, Button, FormControl, FormControlLabel, FormLabel, Input, Modal, Radio, RadioGroup, TextField, Typography } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -24,6 +24,8 @@ const MySubject = () => {
   const [selectedActivity, setSelectedAct] = useState({})
   const [subjectMarks, setSubMarks] = useState([]);
   const [data, setData] = useState([])
+  const [max, setMax] = useState(100);
+  const [min, setMin] = useState(0)
   const [activity, setActivity] = useState({
     title: '',
     desc: '',
@@ -272,8 +274,10 @@ const MySubject = () => {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-
-
+              MIN
+              <Input value={min} onChange={(e) => setMin(e.target.value)}  placeholder='Min' className='px-2'/>
+              Max
+              <Input value={max} onChange={(e) => setMax(e.target.value)} placeholder='Max' className='px-2'/>
               <table className='w-full'>
                 <tr>
                   <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Student Id</th>
@@ -283,7 +287,7 @@ const MySubject = () => {
                 </tr>
 
                 {
-                  subjectMarks[0]?.marks?.map((st, index) => (
+                  subjectMarks[0]?.marks?.filter((st) => (st.mark < max && st.mark > min)).map((st, index) => (
                     <tr key={index}>
                       <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?._id}</td>
                       <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?.firstName + ' ' + st?.studentId?.lastName}</td>
