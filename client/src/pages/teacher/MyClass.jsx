@@ -157,12 +157,29 @@ const MyClass = () => {
 
   }
   const handleFilterStudentOnMark = (term) => {
-    const filter = allMarksWithTerm.firstTerm.flatMap((sub) => (
-      sub.marks.filter((mark) => mark.mark < filterMark)
-        .map((filteredMark) => ({ ...filteredMark, studentName: getStudentNameById(filteredMark.studentId), subjId: sub.subId, subName: getSubjectNameById(sub.subId) }))
-    ));
-    setFilteredData(filter)
-    console.log(filter);
+    if (term == 1) {
+      const filter = allMarksWithTerm.firstTerm.flatMap((sub) => (
+        sub.marks.filter((mark) => mark.mark < filterMark)
+          .map((filteredMark) => ({ ...filteredMark, studentName: getStudentNameById(filteredMark.studentId), subjId: sub.subId, subName: getSubjectNameById(sub.subId) }))
+      ));
+      setFilteredData(filter)
+      console.log(filter);
+    } else if (term == 2) {
+      const filter = allMarksWithTerm.secondTerm.flatMap((sub) => (
+        sub.marks.filter((mark) => mark.mark < filterMark)
+          .map((filteredMark) => ({ ...filteredMark, studentName: getStudentNameById(filteredMark.studentId), subjId: sub.subId, subName: getSubjectNameById(sub.subId) }))
+      ));
+      setFilteredData(filter)
+      console.log(filter);
+    } else {
+      const filter = allMarksWithTerm.thirdTerm.flatMap((sub) => (
+        sub.marks.filter((mark) => mark.mark < filterMark)
+          .map((filteredMark) => ({ ...filteredMark, studentName: getStudentNameById(filteredMark.studentId), subjId: sub.subId, subName: getSubjectNameById(sub.subId) }))
+      ));
+      setFilteredData(filter)
+      console.log(filter);
+    }
+
     setModal(true)
   }
 
@@ -340,6 +357,12 @@ const MyClass = () => {
           />
         }
 
+        <div className='flex items-center justify-start gap-5'>
+          <h2>Filter Student on marks</h2>
+          <Input placeholder='Marks' value={filterMark} onChange={e => setFilterMark(e.target.value)} />
+          <Button variant='outlined' onClick={() => handleFilterStudentOnMark(2)}>Filter</Button>
+        </div>
+
         <h2 className='mt-5'>Second Term</h2>
         <span> 1st Place : {secondTermMarksDist?.length > 0 && getTheStudentWithMax(secondTermMarksDist)}</span>
         <br />
@@ -423,6 +446,11 @@ const MyClass = () => {
             xAxis={[{ data: thirdTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band', label: 'Student Id' }]}
           />
         }
+        <div className='flex items-center justify-start gap-5'>
+          <h2>Filter Student on marks</h2>
+          <Input placeholder='Marks' value={filterMark} onChange={e => setFilterMark(e.target.value)} />
+          <Button variant='outlined' onClick={() => handleFilterStudentOnMark(3)}>Filter</Button>
+        </div>
 
         <h2 className='mt-5'>Third Term</h2>
         <span> 1st Place : {thirdTermMarksDist?.length > 0 && getTheStudentWithMax(thirdTermMarksDist)}</span>
