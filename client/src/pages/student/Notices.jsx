@@ -42,9 +42,9 @@ const Notices = () => {
           <div className='p-5 bg-white'>
             {notices.map((notice, index) => (
               <div key={index} className='bg-amber-200 p-5 mb-2'>
-                <p className='mb-0 text-md'>{notice.title}</p>
-                <p className='text-sm text-gray-500'>{notice.discription}</p>
-                <p className='w-full text-right text-xs text-gray-500'>{notice.createdAt}</p>
+                <p className='mb-0 text-md lowercase'>{notice?.title}</p>
+                <p className='text-sm text-gray-500 lowercase'>{notice?.description}</p>
+                <p className='w-full text-right text-xs text-gray-500'>{new Date(notice.createdAt).toDateString()}</p>
               </div>
             ))}
           </div>

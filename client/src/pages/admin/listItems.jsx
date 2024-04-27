@@ -76,6 +76,14 @@ export const teacherListItems = (
         <ListItemText primary="Contact Parents" />
       </ListItemButton>
     </Link>
+    <Link to={'/dashboard/myclass'}>
+      <ListItemButton>
+        <ListItemIcon>
+          <AccountCircleIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Class" />
+      </ListItemButton>
+    </Link>
     <Link to={'/dashboard/profile'}>
       <ListItemButton>
         <ListItemIcon>

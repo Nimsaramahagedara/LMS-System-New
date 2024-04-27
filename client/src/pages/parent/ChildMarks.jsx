@@ -175,11 +175,11 @@ export default function ChildMarks() {
                             </TableHead>
                             <TableBody>
                               {term1Marks.map((row, index) => (
-                                <TableRow key={row.subId.subName}>
+                                <TableRow key={row?.subId?.subName}>
                                   <TableCell component="th" scope="row">
                                     {index + 1}
                                   </TableCell>
-                                  <TableCell>{row.subId.subName}</TableCell>
+                                  <TableCell>{row?.subId?.subName || 'Subject Deleted'}</TableCell>
                                   <TableCell>{row.mark}</TableCell>
                                 </TableRow>
                               ))}
@@ -213,11 +213,11 @@ export default function ChildMarks() {
                             </TableHead>
                             <TableBody>
                               {term2Marks.map((row, index) => (
-                                <TableRow key={row.subId.subName}>
+                                <TableRow key={index}>
                                   <TableCell component="th" scope="row">
                                     {index + 1}
                                   </TableCell>
-                                  <TableCell>{row.subId.subName}</TableCell>
+                                  <TableCell>{row?.subId?.subName || 'Subject Deleted'}</TableCell>
                                   <TableCell>{row.mark}</TableCell>
                                 </TableRow>
                               ))}
@@ -250,11 +250,11 @@ export default function ChildMarks() {
                             </TableHead>
                             <TableBody>
                               {term3Marks.map((row, index) => (
-                                <TableRow key={row.subId.subName}>
+                                <TableRow key={row?.subId?.subName}>
                                   <TableCell component="th" scope="row">
                                     {index + 1}
                                   </TableCell>
-                                  <TableCell>{row.subId.subName}</TableCell>
+                                  <TableCell>{row?.subId?.subName || 'Subject Deleted'}</TableCell>
                                   <TableCell>{row.mark}</TableCell>
                                 </TableRow>
                               ))}

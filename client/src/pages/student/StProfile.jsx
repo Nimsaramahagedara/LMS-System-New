@@ -80,12 +80,12 @@ const StProfile = () => {
                 <Typography variant="h5" gutterBottom>
                   {`${student.firstName} ${student.lastName}`}
                 </Typography>
-                <Typography>Email: {student.email}</Typography>
-                <Typography>Mobile: {student.contactNo}</Typography>
-                <Typography>Address: {student.address}</Typography>
-                <Typography>Gender: {student.gender}</Typography>
-                <Typography>Grade: {student.classId.grade}</Typography>
-                <Typography>Class: {student.classId.subClass}</Typography>
+                <Typography>Email: {student?.email}</Typography>
+                <Typography>Mobile: {student?.contactNo}</Typography>
+                <Typography>Address: {student?.address}</Typography>
+                <Typography>Gender: {student?.gender}</Typography>
+                <Typography>Grade: {student?.classId?.grade}</Typography>
+                <Typography>Class: {student?.classId?.subClass}</Typography>
                 <Button variant="contained" onClick={handleEditClick} sx={{ marginTop: 2 }}>
                   Edit Profile
                 </Button>

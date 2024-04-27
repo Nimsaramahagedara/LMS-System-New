@@ -71,3 +71,18 @@ export const getProfileImageSrc = (gender = 'male') => {
 
 
 }
+
+
+export function calculateGrade(marks) {
+  if (marks >= 75) {
+      return 'A';
+  } else if (marks >= 65 && marks < 75) {
+      return 'B';
+  } else if (marks >= 45 && marks < 65) {
+      return 'C';
+  } else if (marks >= 35 && marks < 45) {
+      return 'S';
+  } else {
+      return 'W';
+  }
+}

@@ -55,12 +55,11 @@ const ClassPage = () => {
   
   const getSubjectsAndClassmates = async () => {
     try {
-      const [subjectsData, classmatesData] = await Promise.all([
-        fetchSubjects(),
+      const [ classmatesData] = await Promise.all([
         fetchClassmates(),
       ]);
-      setSubjects(subjectsData.subjects);
-      setTeacher(subjectsData.ownedBy);
+      // setSubjects(subjectsData.subjects);
+      // setTeacher(subjectsData.ownedBy);
       setMates(classmatesData);
       setIsLoading(false);
     } catch (error) {
@@ -71,6 +70,7 @@ const ClassPage = () => {
 
   useEffect(()=>{
     getSubjects()
+    getSubjectsAndClassmates()
   },[])
   return (
 
@@ -109,8 +109,8 @@ const ClassPage = () => {
           <Typography variant='h6' color={colors.yellow[900]}>Classmates</Typography>
           <hr />
           {
-            Mates.map((student) => (
-              <Link ><Typography variant='subtitle2' color={colors.grey[500]}>{student.firstName}</Typography></Link>
+            Mates?.map((student) => (
+              <Link ><Typography variant='subtitle2' color={colors.grey[500]}>{student?.firstName}</Typography></Link>
             )
             )
           }

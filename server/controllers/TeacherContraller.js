@@ -1,4 +1,5 @@
 import ClassModel from "../models/ClassModel.js";
+import MarksModel from "../models/MarksModel.js";
 import SubjectModel from "../models/SubjectModel.js";
 import UserModel from "../models/UserModel.js";
 import { sendEmail } from "../utils/sendEmail.js";
@@ -236,5 +237,31 @@ export const teacherOverview = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ message: error.mesasge });
+    }
+}
+
+
+export const getMyClassDetails = async(req,res)=>{
+    try {
+        const { loggedInId } = req;
+        const myClass = await ClassModel.findOne({ownedBy:loggedInId});
+        const allStudents = await UserModel.find({classId:myClass._id});
+        const classModules = await SubjectModel.find({classId:myClass._id}).populate("teachBy")
+
+        const marksPromises = classModules.map(async(sub,index)=>{
+            const subject = await MarksModel.find({subId:sub?._id})
+            return subject;
+        })
+        const allMarks = await Promise.all(marksPromises);
+
+        res.status(200).json({
+            myClass,
+            classModules,
+            allMarks,
+            allStudents
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({mesasge:error.message})
     }
 }
