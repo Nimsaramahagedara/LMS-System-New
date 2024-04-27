@@ -1,3 +1,4 @@
+import MarksModel from "../models/MarksModel.js";
 import SubjectModel from "../models/SubjectModel.js";
 
 export const createSubject = async (req, res) => {
@@ -88,5 +89,17 @@ export const getSubjectTeacher = async(req,res)=>{
     } catch (error) {
         console.log(error);
         res.status(500).json({message:error.message});
+    }
+}
+
+export const getSubjectMarks = async(req,res)=>{
+    try {
+        const {subId,term} = req.params;
+        const marks = await MarksModel.find({term, subId}).populate('marks.studentId');
+        res.status(200).json(marks)
+    } catch (error) {
+        res.status(500).json({
+            message: error.mesasge
+        })
     }
 }

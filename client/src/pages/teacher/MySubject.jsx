@@ -7,6 +7,8 @@ import { apiUrl } from '../../utils/Constants';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Loader from '../../components/Loader/Loader';
 import EditIcon from '@mui/icons-material/Edit';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { calculateGrade } from '../../utils/usefulFunctions';
 const MySubject = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { id, subject, grade } = useParams();
@@ -15,7 +17,10 @@ const MySubject = () => {
   const [open, setOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
   const navigate = useNavigate();
+  const [term, setTerm] = useState(1);
   const [selectedActivity, setSelectedAct] = useState({})
+  const [subjectMarks, setSubMarks] = useState([]);
+  const [data, setData] = useState([])
   const [activity, setActivity] = useState({
     title: '',
     desc: '',
@@ -79,7 +84,7 @@ const MySubject = () => {
       }
     }
   }
-  const handleActUpdate = async()=>{
+  const handleActUpdate = async () => {
     try {
       if (!selectedActivity.title || !selectedActivity.desc) {
         throw Error('Title and Description is Required')
@@ -98,12 +103,63 @@ const MySubject = () => {
       }
     }
   }
+  function processDataForChart(data) {
+    // Define mark ranges and initialize count object
+    const markRanges = ["0-35", "36-45", "46-65", "66-75", "76-100"];
+    const countObj = {};
+    if (data) {
+      markRanges.forEach(range => {
+        countObj[range] = 0;
+      });
+
+      // Count the number of students in each mark range
+      data?.forEach(entry => {
+        const mark = entry.mark;
+        if (mark >= 0 && mark <= 35) {
+          countObj["0-35"]++;
+        } else if (mark >= 36 && mark <= 45) {
+          countObj["36-45"]++;
+        } else if (mark >= 46 && mark <= 65) {
+          countObj["46-65"]++;
+        } else if (mark >= 66 && mark <= 75) {
+          countObj["66-75"]++;
+        } else if (mark >= 76 && mark <= 100) {
+          countObj["76-100"]++;
+        }
+      });
+
+      // Convert count object to array of objects
+      const chartData = Object.keys(countObj).map(range => {
+        return { range: range, marks: countObj[range] };
+      });
+
+      return chartData;
+    } else {
+      return null
+    }
+  }
+
+
+  const getSubjectMarks = async () => {
+    try {
+      const resp = await authAxios.get(`${apiUrl}/subject/marks/${id}/${term}`)
+      console.log(resp.data);
+      setSubMarks(resp.data)
+      const da = processDataForChart(resp?.data[0]?.marks)
+      setData(da)
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleShowUpdate = (row) => {
     setSelectedAct(row);
     setUpdateOpen(true);
   }
 
+  useEffect(() => {
+    getSubjectMarks()
+  }, [term])
   useEffect(() => {
     getAllActivity();
   }, [refresh])
@@ -137,7 +193,7 @@ const MySubject = () => {
     <div className='bg-white p-3 rounded-lg shadow-md'>
       <Typography variant='h5' textAlign={'center'}>{subject + ' - ' + grade}</Typography>
       <Button variant='contained' color='warning' onClick={() => setOpen(true)}>Create New Activity</Button>
-      <Button variant='contained' color='secondary' sx={{float:'right'}} onClick={() => navigate(`../subjmarks/${id}/${subject}/${grade}`)}>Publish Marks</Button>
+      <Button variant='contained' color='secondary' sx={{ float: 'right' }} onClick={() => navigate(`../subjmarks/${id}/${subject}/${grade}`)}>Publish Marks</Button>
       {
         !isLoading ? <>
           <div>
@@ -171,12 +227,65 @@ const MySubject = () => {
                   <a href={lmt.link} target='_blank' className='text-xs text-blue-500'>{lmt.link}</a>
                   <p className='text-right text-xs text-gray-900'>{lmt.createdAt}</p>
                   <div className='absolute top-0 right-0 cursor-pointer' >
-                  <EditIcon fontSize='medium' color='warning' onClick={() => handleShowUpdate(lmt)} />
+                    <EditIcon fontSize='medium' color='warning' onClick={() => handleShowUpdate(lmt)} />
                     <DeleteForeverIcon fontSize='medium' color='error' onClick={() => deleteAct(lmt._id)} />
                   </div>
                 </div>
               ))
             }
+
+            <h1 className='text-xl my-5'>Your Subject Marks Distribution</h1>
+            Term
+            <select name="" id="" className='px-4 py-2 border' value={term} onChange={(e) => setTerm(e.target.value)}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+
+
+            <div>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart
+                  data={data}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="range" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="marks" fill="#8884d8" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+
+            <table className='w-full'>
+              <tr>
+                <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Student Id</th>
+                <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Student Name</th>
+                <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Mark</th>
+                <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Grade</th>
+              </tr>
+
+              {
+                subjectMarks[0]?.marks?.map((st) => (
+                  <tr>
+                    <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?._id}</td>
+                    <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?.firstName + ' ' + st?.studentId?.lastName}</td>
+                    <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.mark}</td>
+                    <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{calculateGrade(st?.mark)}</td>
+                  </tr>
+                ))
+              }
+
+
+            </table>
           </div>
         </> : <Loader />
       }
