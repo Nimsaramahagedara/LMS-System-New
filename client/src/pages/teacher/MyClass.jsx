@@ -7,8 +7,18 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { calculateGrade, getTerm } from '../../utils/usefulFunctions';
 import Loader from '../../components/Loader/Loader';
 import { usePDF } from 'react-to-pdf';
-import { Button } from '@mui/material';
+import { Box, Button, Input, Modal, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 const MyClass = () => {
   const [myClassDetails, setMyClassDetails] = useState({});
@@ -18,6 +28,9 @@ const MyClass = () => {
   const [firstTermMarksDist, setFirTermMarkDist] = useState([]);
   const [secondTermMarksDist, setSecTermMarkDist] = useState([]);
   const [thirdTermMarksDist, setThirTermMarkDist] = useState([]);
+  const [filterMark, setFilterMark] = useState(0);
+  const [filteredData, setFilteredData] = useState([]);
+  const [isModal, setModal] = useState(false)
 
   const getMyClass = async () => {
     try {
@@ -46,7 +59,6 @@ const MyClass = () => {
   }, [])
 
   const groupSubjectMarksToTerm = (subjectMarks, allStudents, myClass) => {
-    console.log(subjectMarks);
     const uniqueIds = allStudents.map(obj => obj._id); ((st) => (st._id))
     // console.log('Unique ids', uniqueIds);
     const firstTermAllSubjectAllMarks = [];
@@ -124,18 +136,11 @@ const MyClass = () => {
 
   }
 
-  // useEffect(() => {
-  //   if(allMarksWithTerm && myClassDetails){
-
-  //   }
-
-  // }, [allMarksWithTerm,myClassDetails])
 
   const getTheStudentWithMax = (marks) => {
 
     let maxMark = -Infinity;
     let maxMarkObj = null;
-    console.log(marks);
     marks.forEach((obj) => {
       if (obj.totalMarks > maxMark) {
         // Update the maximum mark and its corresponding object
@@ -143,7 +148,6 @@ const MyClass = () => {
         maxMarkObj = obj;
       }
     });
-    console.log(maxMarkObj);
     const maxStudent = myClassDetails?.allStudents?.filter((st) => (
       st._id === maxMarkObj?.studentId
     ))[0]
@@ -152,12 +156,78 @@ const MyClass = () => {
     return maxStudent.firstName + maxStudent.lastName + ' : ' + maxMarkObj.totalMarks;
 
   }
+  const handleFilterStudentOnMark = (term) => {
+    const filter = allMarksWithTerm.firstTerm.flatMap((sub) => (
+      sub.marks.filter((mark) => mark.mark < filterMark)
+        .map((filteredMark) => ({ ...filteredMark, studentName: getStudentNameById(filteredMark.studentId), subjId: sub.subId, subName: getSubjectNameById(sub.subId) }))
+    ));
+    setFilteredData(filter)
+    console.log(filter);
+    setModal(true)
+  }
+
+  const getStudentNameById = (id) => {
+    const stu = myClassDetails.allStudents.filter((st) => (
+      st._id === id
+    ))[0]
+    return stu.firstName + ' ' + stu.lastName
+  }
+
+  const getSubjectNameById = (id) => {
+    const stu = myClassDetails.classModules.filter((st) => (
+      st._id === id
+    ))[0]
+    return stu.subName
+  }
 
   return (
     <div >
       {
         loading && <Loader />
       }
+      <Modal
+        open={isModal}
+        onClose={() => setModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} className='rounded-xl border'>
+          <table>
+            <tr>
+              <th className='px-4 py-2'>
+                Student id
+              </th>
+              <th className='px-4 py-2'>
+                Student Name
+              </th>
+              <th className='px-4 py-2'>
+                Mark
+              </th>
+              <th className='px-4 py-2'>
+                Subject Name
+              </th>
+            </tr>
+            {
+              filteredData.map((student) => (
+                <tr >
+                  <td className='px-4 py-2'>
+                    {student.studentId}
+                  </td>
+                  <td className='px-4 py-2'>
+                    {student.studentName}
+                  </td>
+                  <td className='px-4 py-2'>
+                    {student.mark}
+                  </td>
+                  <td className='px-4 py-2'>
+                    {student.subName}
+                  </td>
+                </tr>
+              ))
+            }
+          </table>
+        </Box>
+      </Modal>
       <h1 className='mb-5 text-xl font-semibold mt-5'>Welcome to your class</h1>
       <div className='flex items-center justify-between gap-5'>
         <SimpleCard icon={<AccountBalanceIcon />} name={'Your Class'} count={myClassDetails?.myClass?.grade + ' / ' + myClassDetails?.myClass?.subClass} />
@@ -171,14 +241,21 @@ const MyClass = () => {
 
         {
           firstTermMarksDist.length > 0 && <BarChart
-            width={firstTermMarksDist.length * 120} 
+            width={firstTermMarksDist.length * 120}
             height={300}
             series={[
-              { data: firstTermMarksDist?.map((st) => (st.totalMarks)), label: 'StudentId', id: 'uvId' },
+              { data: firstTermMarksDist?.map((st) => (st.totalMarks)), label: 'Student', id: 'uvId' },
             ]}
-            xAxis={[{ data: firstTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band' }]}
+            xAxis={[{ data: firstTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band', label: 'Student Id' }]}
           />
         }
+        <div className='flex items-center justify-start gap-5'>
+          <h2>Filter Student on marks</h2>
+          <Input placeholder='Marks' value={filterMark} onChange={e => setFilterMark(e.target.value)} />
+          <Button variant='outlined' onClick={() => handleFilterStudentOnMark(1)}>Filter</Button>
+        </div>
+
+
         <h2 className='mt-5'>First Term</h2>
         <span> 1st Place : {firstTermMarksDist?.length > 0 && getTheStudentWithMax(firstTermMarksDist)}</span>
         <br />
@@ -254,12 +331,12 @@ const MyClass = () => {
 
         {
           secondTermMarksDist.length > 0 && <BarChart
-            width={secondTermMarksDist.length * 120} 
+            width={secondTermMarksDist.length * 120}
             height={300}
             series={[
               { data: secondTermMarksDist?.map((st) => (st.totalMarks)), label: 'StudentId', id: 'uvId' },
             ]}
-            xAxis={[{ data: secondTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band' }]}
+            xAxis={[{ data: secondTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band', label: 'Student Id' }]}
           />
         }
 
@@ -338,12 +415,12 @@ const MyClass = () => {
 
         {
           thirdTermMarksDist.length > 0 && <BarChart
-            width={thirdTermMarksDist.length * 120} 
+            width={thirdTermMarksDist.length * 120}
             height={300}
             series={[
               { data: thirdTermMarksDist?.map((st) => (st.totalMarks)), label: 'StudentId', id: 'uvId' },
             ]}
-            xAxis={[{ data: thirdTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band' }]}
+            xAxis={[{ data: thirdTermMarksDist?.map((st) => (st.studentId)), scaleType: 'band', label: 'Student Id' }]}
           />
         }
 
