@@ -127,7 +127,7 @@ const PublishSubjectMarks = () => {
                             studentList.length > 0 ? studentList.map((student, index) => (
                                 <div className='flex items-center justify-between mt-5' key={index}>
                                     <div className='w-10'>
-                                        {index}
+                                        {index+1}
                                     </div>
                                     <div className='flex items-center justify-between w-full'>
                                         <Typography>{student.firstName + ' ' + student.lastName}</Typography>

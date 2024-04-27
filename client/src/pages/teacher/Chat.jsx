@@ -125,13 +125,13 @@ const Chat = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {messages.map((item, index) => (
+            {messages?.map((item, index) => (
               <TableRow key={index}>
-                <TableCell>{`${item.stdId.firstName} ${item.stdId.lastName}`}</TableCell>
-                <TableCell>{item.stdId.email}</TableCell>
-                <TableCell>{item.subject}</TableCell>
+                <TableCell>{`${item?.stdId?.firstName} ${item?.stdId?.lastName}`}</TableCell>
+                <TableCell>{item?.stdId?.email}</TableCell>
+                <TableCell>{item?.subject}</TableCell>
                 <TableCell>{'*******'}</TableCell>
-                <TableCell><Button onClick={() => handleOpen(item)}>{item.status == 1 ? <DraftsIcon /> : <EmailIcon />}</Button></TableCell>
+                <TableCell><Button onClick={() => handleOpen(item)}>{item?.status == 1 ? <DraftsIcon /> : <EmailIcon />}</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>
