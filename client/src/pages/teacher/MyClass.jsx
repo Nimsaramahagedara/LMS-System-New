@@ -248,13 +248,14 @@ const MyClass = () => {
       </Modal>
       <h1 className='mb-5 text-xl font-semibold mt-5'>Welcome to your class</h1>
       <div className='flex items-center justify-between gap-5'>
-        <SimpleCard icon={<AccountBalanceIcon />} name={'Your Class'} count={myClassDetails?.myClass?.grade + ' / ' + myClassDetails?.myClass?.subClass} />
+        <SimpleCard icon={<AccountBalanceIcon />} name={'Your Class'} count={myClassDetails?.myClass?.grade ? (myClassDetails?.myClass?.grade + ' / ' + myClassDetails?.myClass?.subClass) :'You have no class'} />
         <SimpleCard icon={<AccountBalanceIcon />} name={'Current Term'} count={getTerm() + '/3'} />
         {/* <SimpleCard icon={<AccountBalanceIcon />} name={'Your Class'} count={'8A'} />
         <SimpleCard icon={<AccountBalanceIcon />} name={'Your Class'} count={'8A'} /> */}
       </div>
       <br />
       <Button type='button' variant='contained' onClick={() => toPDF()} className='mt-10'>Download PDF</Button>
+     {myClassDetails?.myClass?.grade &&
       <div className='w-full bg-white p-3 mt-5' ref={targetRef}>
           <h2>Class Teacher Name : {Cookies.get('firstName')}</h2>
           <h2>Year : {new Date().getFullYear()}</h2>
@@ -531,6 +532,7 @@ const MyClass = () => {
 
 
       </div>
+      }
       <div>
         <h2 className='my-10'>Your Class Modules</h2>
         <div className='flex items-center flex-col justify-center gap-3 bg-amber-100 p-10 rounded-xl'>

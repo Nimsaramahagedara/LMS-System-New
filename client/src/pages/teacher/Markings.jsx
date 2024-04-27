@@ -61,20 +61,25 @@ const Markings = () => {
   const getSubjectList = async () => {
     try {
       const result = await authAxios.get(`${apiUrl}/teacher/marks/`);
+      console.log(result.data);
       if (result) {
 
         setSubjects(result.data.marksData);
         let mark = 0;
+        let min = Infinity;
+        let leastSt = {};
         setLeastStudent( result.data.marksData[0].marks[0]);
         result.data.marksData[0].marks.forEach((std) => {
           if (mark < std.mark) {
             mark = std.mark
             setMaxStudent(std)
           }
-          if(leastStudent.mark > std.mark){
-            setLeastStudent(std);
+          if(min > std.mark){
+            min = std.mark
+            leastSt = std;
           }
         })
+        setLeastStudent(leastSt)
         console.log('Max mark ', mark);
         //  console.log(subjects);
       } else {
