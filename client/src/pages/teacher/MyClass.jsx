@@ -9,6 +9,7 @@ import Loader from '../../components/Loader/Loader';
 import { usePDF } from 'react-to-pdf';
 import { Box, Button, Input, Modal, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
+import Cookies from 'js-cookie'
 const style = {
   position: 'absolute',
   top: '50%',
@@ -255,7 +256,8 @@ const MyClass = () => {
       <br />
       <Button type='button' variant='contained' onClick={() => toPDF()} className='mt-10'>Download PDF</Button>
       <div className='w-full bg-white p-3 mt-5' ref={targetRef}>
-
+          <h2>Class Teacher Name : {Cookies.get('firstName')}</h2>
+          <h2>Year : {new Date().getFullYear()}</h2>
         {
           firstTermMarksDist.length > 0 && <BarChart
             width={firstTermMarksDist.length * 120}

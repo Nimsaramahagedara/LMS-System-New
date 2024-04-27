@@ -283,8 +283,8 @@ const MySubject = () => {
                 </tr>
 
                 {
-                  subjectMarks[0]?.marks?.map((st) => (
-                    <tr>
+                  subjectMarks[0]?.marks?.map((st, index) => (
+                    <tr key={index}>
                       <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?._id}</td>
                       <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?.firstName + ' ' + st?.studentId?.lastName}</td>
                       <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.mark}</td>
