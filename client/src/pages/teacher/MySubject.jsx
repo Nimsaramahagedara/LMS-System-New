@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Modal, Radio, RadioGroup, TextField, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import authAxios from '../../utils/authAxios';
@@ -9,6 +9,8 @@ import Loader from '../../components/Loader/Loader';
 import EditIcon from '@mui/icons-material/Edit';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { calculateGrade } from '../../utils/usefulFunctions';
+import { usePDF } from 'react-to-pdf';
+import Cookies from 'js-cookie'
 const MySubject = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { id, subject, grade } = useParams();
@@ -16,6 +18,7 @@ const MySubject = () => {
   const [refresh, setRefresh] = useState(true);
   const [open, setOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
+  const { toPDF, targetRef } = usePDF({ filename: `${new Date().toUTCString().toString()}-mySubject.pdf` });
   const navigate = useNavigate();
   const [term, setTerm] = useState(1);
   const [selectedActivity, setSelectedAct] = useState({})
@@ -242,50 +245,57 @@ const MySubject = () => {
               <option value="3">3</option>
             </select>
 
+            <Button type='button' variant='contained' onClick={() => toPDF()} className='mt-10 float-right'>Download PDF</Button>
+            <div ref={targetRef}>
+              <div className='space-y-3 my-5'>
+                <h1>Teacher : {Cookies.get('firstName')}</h1>
+                <h2>Subject : {subject} </h2>
+                <h5>Date : {new Date().toDateString()}</h5>
+              </div>
+              <div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <BarChart
+                    data={data}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="range" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="marks" fill="#8884d8" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
 
-            <div>
-              <ResponsiveContainer width="100%" height={400}>
-                <BarChart
-                  data={data}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="range" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="marks" fill="#8884d8" />
-                </BarChart>
-              </ResponsiveContainer>
+
+              <table className='w-full'>
+                <tr>
+                  <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Student Id</th>
+                  <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Student Name</th>
+                  <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Mark</th>
+                  <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Grade</th>
+                </tr>
+
+                {
+                  subjectMarks[0]?.marks?.map((st) => (
+                    <tr>
+                      <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?._id}</td>
+                      <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?.firstName + ' ' + st?.studentId?.lastName}</td>
+                      <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.mark}</td>
+                      <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{calculateGrade(st?.mark)}</td>
+                    </tr>
+                  ))
+                }
+
+
+              </table>
             </div>
-
-
-            <table className='w-full'>
-              <tr>
-                <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Student Id</th>
-                <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Student Name</th>
-                <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Mark</th>
-                <th className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>Grade</th>
-              </tr>
-
-              {
-                subjectMarks[0]?.marks?.map((st) => (
-                  <tr>
-                    <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?._id}</td>
-                    <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.studentId?.firstName + ' ' + st?.studentId?.lastName}</td>
-                    <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{st?.mark}</td>
-                    <td className='px-4 py-2 bg-cyan-50 hover:bg-cyan-100'>{calculateGrade(st?.mark)}</td>
-                  </tr>
-                ))
-              }
-
-
-            </table>
           </div>
         </> : <Loader />
       }
