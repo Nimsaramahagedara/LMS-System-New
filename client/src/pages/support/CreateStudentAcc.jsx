@@ -81,6 +81,11 @@ const handleSubmit = async () => {
   }
 };
 
+// Function to validate password based on the criteria
+const validatePassword = (password) => {
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
+};
 
 useEffect(() => {
   const getAllClasses = async () => {
@@ -254,7 +259,12 @@ useEffect(() => {
                 margin="normal"
                 variant="outlined"
                 value={createStudentData.password}
-                onChange={e => handleCreateChange('password', e.target.value)}
+                onChange={e => {
+                  const password = e.target.value;
+                  if (validatePassword(password)) {
+                    handleCreateChange('password', password); // Valid password
+                  }
+                }}
               />
 
   
